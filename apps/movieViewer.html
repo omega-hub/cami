@@ -1,0 +1,15 @@
+<html lang="en">
+<head>
+    <title>Porthole</title>
+    <script src="porthole/res/porthole.js"></script>
+</head>
+
+<body>
+    <script>
+        porthole.connected = function() {
+            porthole.call("startApplication(%client_id%, 'hello')")
+        }
+        
+    </script>
+</body>
+</html>
