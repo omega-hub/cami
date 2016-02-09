@@ -1,15 +1,29 @@
 <html lang="en">
 <head>
-    <title>Porthole</title>
+    <title>Model Viewer</title>
+    <link rel="stylesheet" href="jquery.mobile-1.4.5.min.css">
+    <script src="jquery-1.12.0.min.js"></script>
+    <script src="jquery.mobile-1.4.5.min.js"></script>
     <script src="porthole/res/porthole.js"></script>
 </head>
 
 <body>
+    <div data-role="header">
+        <button class="ui-btn-left ui-btn">Models</button>
+        <h1>Model Viewer</h1>
+    </div>
+    
     <script>
         porthole.connected = function() {
-            porthole.call("startApplication(%client_id%, 'hello')")
-        }
+            {{py startApplication(%client_id%, 'modelViewer') }}
+             document.addEventListener("mousemove", porthole.sendMouseMove);
+            document.addEventListener("mouseup", porthole.sendMouseUp);
+            document.addEventListener("mousedown", porthole.sendMouseDown);
+            document.addEventListener("keypress", porthole.sendKeyDown);
+            document.addEventListener("keyup", porthole.sendKeyUp);       }
         
     </script>
+    
+    
 </body>
 </html>
