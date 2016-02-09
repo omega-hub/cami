@@ -3,10 +3,41 @@ from cyclops import *
 import porthole
 
 uim = UiModule.createAndInitialize()
-label = Label.create(uim.getUi())
+#label = Label.create(uim.getUi())
 
-label.setText('Hello Launcher')
-label.setFont('fonts/arial.ttf 40')
+#label.setText('Hello Launcher')
+#label.setFont('fonts/arial.ttf 40')
+
+getDefaultCamera().setBackgroundColor(Color('black'))
+
+p = SceneNode.create('pivot')
+tls = []
+for x in range(0, 6):
+    for y in range(0, 6):
+        pl = PlaneShape.create(0.53, 0.3)
+        pl.getMaterial().setProgram('colored')
+        pl.getMaterial().setAdditive(True)
+        pl.getMaterial().setTransparent(True)
+        pl.getMaterial().setDepthTestEnabled(False)
+        pl.getMaterial().setColor(Color('black'), Color(float(x) / 5, 1 - float(y) / 5, 0.2, 1))
+        pl.setPosition(- 3.18 + x * 1.06, 1.55 -1.8 + y * 0.6, -2)
+        p.addChild(pl)
+        tls.append(pl)
+
+def onUpdate(frame, time, dt):
+    sp = 0.1 * dt
+    
+    i = 1
+    for t in tls:
+        t.yaw(sp * i)
+        t.pitch(sp * i)
+        i += 0.2
+
+setUpdateFunction(onUpdate)
+toggleStereo()
+
+#getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/dof.xml')
+
 
 # stores the id of the last web client connected. This is
 # the client in charge of controlling the running application.
