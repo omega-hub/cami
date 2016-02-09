@@ -2,16 +2,17 @@ from omega import *
 from cyclops import *
 import Manipulator
 
+getDefaultCamera().setBackgroundColor(Color('black'))
 
 model = ModelInfo()
 model.name = "model"
 model.path = "../data/R_CueR_Exp.fbx"
-model.size = 1
+model.size = 10
 
 getSceneManager().loadModel(model)
 
 obj = StaticObject.create("model")
-obj.setPosition(0, 2, -2)
+obj.setPosition(0, 2, -10)
 mat = obj.getMaterial()
 mat.setProgram("colored")
 mat.setShininess(50)

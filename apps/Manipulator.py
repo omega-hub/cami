@@ -33,8 +33,8 @@ def onEvent():
     
     if(rotating == True and e.getServiceType() == ServiceType.Pointer 
     and e.getType() == EventType.Move):
-        dx = e.getPosition().x - startPos.x
-        dy = e.getPosition().y - startPos.y
+        dx = e.getPosition().x #- startPos.x
+        dy = e.getPosition().y #- startPos.y
         startPos = e.getPosition()
         root.rotate(Vector3(0, 1, 0), radians(dx), Space.World)
         root.rotate(Vector3(1, 0, 0), radians(dy), Space.World)

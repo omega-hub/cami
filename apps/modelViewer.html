@@ -14,7 +14,7 @@
     </div>
     
     <script>
-        porthole.connected = function() {
+        porthole.connected = function(event) {
             {{py startApplication(%client_id%, 'modelViewer') }}
              document.addEventListener("mousemove", porthole.sendMouseMove);
             document.addEventListener("mouseup", porthole.sendMouseUp);
