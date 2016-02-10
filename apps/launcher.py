@@ -8,7 +8,9 @@ uim = UiModule.createAndInitialize()
 #label.setText('Hello Launcher')
 #label.setFont('fonts/arial.ttf 40')
 
-getDefaultCamera().setBackgroundColor(Color('black'))
+cam = getDefaultCamera()
+cam.setBackgroundColor(Color('black'))
+cam.setControllerEnabled(False)
 
 p = SceneNode.create('pivot')
 tls = []
