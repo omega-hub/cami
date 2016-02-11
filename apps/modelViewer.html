@@ -9,9 +9,28 @@
 
 <body>
     <div data-role="header">
-        <button class="ui-btn-left ui-btn">Models</button>
+        <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
         <h1>Model Viewer</h1>
     </div>
+
+    <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
+        <ul data-role="listview">
+
+
+            <li data-icon="delete"><a href="#" data-rel="close" >Close menu</a></li>
+          
+            <li data-role="collapsible">
+                <h4>    Molecule Demo </h4>
+                <button> <img src="images/images.jpeg" class:"leftimage" alt="colorful boxes" style="width:40%"></img>1st molecule</button>
+            </li>
+
+            <li data-role="collapsible">
+                <h4>Stars Demo</h4>
+                <p>I'm the collapsible content. By default I'm closed, but you can click the header to open me.</p>
+            </li>
+        </ul>
+    </div><!-- /panel -->
+      
     
     <script>
         porthole.connected = function(event) {
