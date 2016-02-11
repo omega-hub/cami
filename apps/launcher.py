@@ -9,9 +9,10 @@ uim = UiModule.createAndInitialize()
 #label.setFont('fonts/arial.ttf 40')
 
 cam = getDefaultCamera()
-cam.setBackgroundColor(Color('black'))
+cam.setBackgroundColor(Color('red'))
 cam.setControllerEnabled(False)
 
+print("Test print, this is in my launcher")
 p = SceneNode.create('pivot')
 tls = []
 for x in range(0, 6):
@@ -55,9 +56,11 @@ ps.setDisconnectedCommand('onClientDisconnected("%id%")')
 
 def startApplication(clientId, appName):
     global appControllerClient
+    print "Preparing to Launch" + appName
     appControllerClient = clientId
     # 'app' is the application identifier, we can use it to send mission controlling
     # messages to the app using it.
+    print("this is Inside my version of the function")
     mc.spawn('app', 1, appName + '.py', 'default.cfg')
     hideLauncher()
 
