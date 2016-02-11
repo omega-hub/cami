@@ -6,4 +6,4 @@ ps = porthole.getService()
 ps.setDisconnectedCommand('onClientDisconnected()')
 
 def onClientDisconnected():
-    print('reload')
+    ps.clearCache()
