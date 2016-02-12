@@ -7,7 +7,7 @@
 <body>
     <script>
         porthole.connected = function() {
-            {{py startApplication(%client_id%, 'hello') }}
+            {{py startApplication(%client_id%, 'volume') }}
             
             document.addEventListener("mousemove", porthole.sendMouseMove);
             document.addEventListener("mouseup", porthole.sendMouseUp);
@@ -17,7 +17,5 @@
         }
         
     </script>
-    
-    <button onclick="{{py print('Hello!')}}">asfsdgdsd</button>
 </body>
 </html>
