@@ -1,0 +1,24 @@
+Grid size 1 1 pool 100 numTimes 1
+Mission control client: connecting to 127.0.0.1:22500
+Equalizer display system initializing
+Running default_init.py
+Running system/quickCommands.py
+
+>> omegalib 11.2.1
+>> to get a list of quick commands type ':?'
+!!! [v10.1 DEPRECATION WARNING] Renderer::createTexture - use GpuContext::createTexture instead
+Running C:/Users/Larry/cami/apps/modelViewer.py
+THis is inside my version of modelView.py
+('', 'A_CueR_Exp.fbx')
+('', 'R_CueR_Exp.fbx')
+initialized Model List
+Loading model......../data/A_CueR_Exp.fbx
+Optimizing model...../data/A_CueR_Exp.fbx
+Generating normals...
+toggling to invisible
+Loading model......../data/R_CueR_Exp.fbx
+Optimizing model...../data/R_CueR_Exp.fbx
+Generating normals...
+Model has already been loaded
+toggling to invisible
+toggling to visible

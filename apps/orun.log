@@ -1,0 +1,25 @@
+Initializing mission control server on port 22500
+Equalizer display system initializing
+Running default_init.py
+Running system/quickCommands.py
+
+>> omegalib 11.2.1
+>> to get a list of quick commands type ':?'
+!!! [v10.1 DEPRECATION WARNING] Renderer::createTexture - use GpuContext::createTexture instead
+Running launcher.py
+Test print, this is in my launcher
+Porthole server thread started
+Porthole GUI client connected: 1588:10.105.225.188:Larry-THINK
+client connected: 1588:10.105.225.188:Larry-THINK
+Preparing to LaunchmodelViewer
+this is Inside my version of the function
+[MissionControlClient::spawn] running app:modelViewer.py
+Mission control client connected: app
+  File "<string>", line 1
+    onModelSelect("R_CueR_Exp.fbx")_
+                                   ^
+SyntaxError: invalid syntax
+[orun :: PYTHON ERROR] !!! Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+NameError: name 'onModelSelect' is not defined
+Mission control client disconnected: app
