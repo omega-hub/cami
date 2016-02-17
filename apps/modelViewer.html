@@ -21,7 +21,8 @@
           
             <li data-role="collapsible">
                 <h4>    Molecule Demo </h4>
-                <button> <img src="images/images.jpeg" class:"leftimage" alt="colorful boxes" style="width:40%"></img>1st molecule</button>
+               <!-- added extra information to the button, class and id -->
+                <button class="panel-button" data-panelid="panel1"> <img src="images/images.jpeg" class:"leftimage" alt="colorful boxes" style="width:40%"></img>1st molecule</button>
             </li>
 
             <li data-role="collapsible">
@@ -47,11 +48,46 @@
             // save the argument to the global modelList variable
             // so we can access it from other parts of the interface
             // and we can pass ot back to the server app using {{mc@app}}
+           
+            //use this $('id of object') to get the object's id and do stuff with it.
+            $('nav-panel').hide(300).show(1000).hide(200).show(1000);
+            //other events, fadeIn/fadeOut, fadeToggle, slideUp, slideDown
             modelList = ml;
-            
-            // Load the first model in the list
             {{mc@app: onModelSelect("%modelList[0][1]%") }}
+            // you can use the .html operator to rewrite HTML code!!!
+            // example $('nav-panel').html('codecodecodecode<tag>')
+            // this completely removes the elements inside of the HTML tag and replaces it with your own code.
+            // to listen to a button, you use the operator.
+
+            /* some links of helpful guides 
+                https://www.youtube.com/watch?v=G-POtu9J-m4&feature=iv&src_vid=hMxGhHNOkCU&annotation_id=annotation_1494025287
+
+                https://www.youtube.com/watch?v=Cc3K2jDdKTo&list=UUVTlvUkGslCV_h-nSAId8Sw&feature=iv&src_vid=G-POtu9J-m4&annotation_id=annotation_4141828117
+
+                http://stackoverflow.com/questions/21192763/how-to-dynamically-add-list-items-in-jquery
+
+                http://stackoverflow.com/questions/20685492/creating-dynamic-list-with-jquery
+                */
+
         }
+        //creating a jquery function for always occuring events.
+        $(function() {
+            // Load the first model in the list
+            //to add a click event for a certain button
+            //$('#buttonID').on('click', function())
+            // other events: 'click', mouseover'
+            //you can also search by attribute using $('button[id=someID')
+            // to listen to all buttons within a panel you set class= instead of id=
+            //This will make it so when ANY button is pressed, it calls the function, instead of a specific button.
+            //You can then get the specific button using the $(this) operator.
+            $('.panel-button').on('click', function() {
+                var panelID = $(this).attr('data-panelid'); // use .attr to get attributes.
+                $('#'+panelID).toggle(); //you can concatenate strings with +.
+                //use the '#' to get the object the id is referring to.
+                var newString = "my new String"
+               // $('#'+panelID+ ' .panel-body').html(newString);
+            })
+        });
     </script>
     
     
