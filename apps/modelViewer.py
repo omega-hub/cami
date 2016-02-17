@@ -32,6 +32,18 @@ l2.setShadow(sm2)
 
 obj = None
 
+# Utility function to send data to the web client
+def calljs(methodname, data):
+    mc = getMissionControlClient()
+    mc.postCommand('@server::calljs console.log' + str(data))
+    
+# example: send ModelDict to console.log to print it on the web client
+calljs('console.log', ModelDict)
+# example 2: set a variable on the web client to a list we pass here
+calljs('x=', [1, 2, 3, 4])
+# example 3: print a single value on the client
+calljs('console.log', 10)
+
 def InitializeModelList():
 	#os.chdir("/fastdata/opt/data/fbx")
 	os.chdir("../data")
