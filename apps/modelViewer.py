@@ -35,68 +35,71 @@ obj = None
 # Utility function to send data to the web client
 def calljs(methodname, data):
     mc = getMissionControlClient()
-    mc.postCommand('@server::calljs console.log ' + str(data))
+    if(mc != None):
+        mc.postCommand('@server::calljs ' + methodname + ' ' + str(data))
     
-# example: send ModelDict to console.log to print it on the web client
-calljs('console.log', ModelDict)
-# example 2: set a variable on the web client to a list we pass here
-calljs('x=', [1, 2, 3, 4])
-# example 3: print a single value on the client
-calljs('console.log', 10)
+# # example: send ModelDict to console.log to print it on the web client
+# calljs('console.log', ModelDict)
+# # example 2: set a variable on the web client to a list we pass here
+# calljs('x=', [1, 2, 3, 4])
+# # example 3: print a single value on the client
+# calljs('console.log', 10)
 
 def InitializeModelList():
-	#os.chdir("/fastdata/opt/data/fbx")
-	os.chdir("../data")
-	fileList = []
-	cwd = os.getcwd()
-	for (path, dirs, files) in os.walk(cwd):
-		for file in glob.glob("*.fbx"):
-			newTuple = (path[len(cwd):],file)
-			print(newTuple)
-			fileList.append(file)
-	#onModelSelect("ben.fbx")
-	onModelSelect("A_CueR_Exp.fbx")
+    os.chdir("/fastdata/opt/data/fbx")
+    #os.chdir("../data")
+    fileList = []
+    cwd = os.getcwd()
+    for (path, dirs, files) in os.walk(cwd):
+        for file in glob.glob("*.fbx"):
+            newTuple = [path[len(cwd):],file]
+            print(newTuple)
+            fileList.append(newTuple)
+    #onModelSelect("ben.fbx")
+    #onModelSelect("A_CueR_Exp.fbx")
+    calljs('createModelButtons', fileList)
 
 def onModelSelect(modelName):
-	global currentModelName
-	if modelName == currentModelName:
-		print "Current model is same as selected model"
-	elif modelName in ModelDict.keys(): 
-		print "Model has already been loaded"
-		#TODO: Make new model reappear
-		toggleModelVisible(currentModelName,False)
-		toggleModelVisible(modelName, True)
-		currentModelName = modelName
-	else:
-		#TODO: Hide current Model
-		if currentModelName != "noModel!":
-			toggleModelVisible(currentModelName,False)
-		currentModelName = modelName
-		LoadModel(modelName)
-	
+    print(modelName)
+    global currentModelName
+    if modelName == currentModelName:
+        print "Current model is same as selected model"
+    elif modelName in ModelDict.keys(): 
+        print "Model has already been loaded"
+        #TODO: Make new model reappear
+        toggleModelVisible(currentModelName,False)
+        toggleModelVisible(modelName, True)
+        currentModelName = modelName
+    else:
+        #TODO: Hide current Model
+        if currentModelName != "noModel!":
+            toggleModelVisible(currentModelName,False)
+        currentModelName = modelName
+        LoadModel(modelName)
+    
 def LoadModel(modelName):
-	#path = "/fastdata/opt/data/fbx/" + modelName
-	path = "../data/" + modelName
-	global currentModelName
-	global ModelDict
-	model = ModelInfo()
-	model.name = "model"
-	model.path = path
-	model.generateNormals = True
-	model.optimize = True
-	model.size = 10
-	getSceneManager().loadModelAsync(model, 'onModelLoaded()')
-	
+    path = "/fastdata/opt/data/fbx/" + modelName
+    #path = "../data/" + modelName
+    global currentModelName
+    global ModelDict
+    model = ModelInfo()
+    model.name = "model"
+    model.path = path
+    model.generateNormals = True
+    model.optimize = True
+    model.size = 10
+    getSceneManager().loadModelAsync(model, 'onModelLoaded()')
+    
 def toggleModelVisible(modelName, visible):
-	parent = getScene()
-	if visible:
-		print "toggling to visible"
-		ModelDict[modelName].setVisible(True)
-		#parent.addChild(ModelDict[modelName])
-	else:
-		ModelDict[modelName].setVisible(False)
-		#parent.removeChildByRef(ModelDict[modelName])
-		print "toggling to invisible"
+    parent = getScene()
+    if visible:
+        print "toggling to visible"
+        ModelDict[modelName].setVisible(True)
+        #parent.addChild(ModelDict[modelName])
+    else:
+        ModelDict[modelName].setVisible(False)
+        #parent.removeChildByRef(ModelDict[modelName])
+        print "toggling to invisible"
 
 def onModelLoaded():
     global obj
@@ -110,6 +113,6 @@ def onModelLoaded():
     l1.lookAt(obj.getPosition(), Vector3(0, 1, 0))
     ModelDict[currentModelName] = obj
 
-	
+    
 InitializeModelList()
 print("initialized Model List")

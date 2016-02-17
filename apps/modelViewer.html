@@ -41,6 +41,17 @@
             document.addEventListener("keypress", porthole.sendKeyDown);
             document.addEventListener("keyup", porthole.sendKeyUp);       }
         
+        // global variable storing the list of models
+        modelList = null;
+        function createModelButtons(ml) {
+            // save the argument to the global modelList variable
+            // so we can access it from other parts of the interface
+            // and we can pass ot back to the server app using {{mc@app}}
+            modelList = ml;
+            
+            // Load the first model in the list
+            {{mc@app: onModelSelect("%modelList[0][1]%") }}
+        }
     </script>
     
     
