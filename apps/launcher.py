@@ -81,7 +81,9 @@ def onClientDisconnected(clientId):
         print "stopping app: " + clientId
         mc.postCommand('@app: :q')
         showLauncher()
-        
+    # Always force a refresh of the html/js files, so we can quickly test
+    # code changes by refreshing an app web page.
+    ps.clearCache()    
         
         
 def hideLauncher():
