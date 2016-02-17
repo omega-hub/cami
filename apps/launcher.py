@@ -22,7 +22,7 @@ for x in range(0, 6):
         pl.getMaterial().setAdditive(True)
         pl.getMaterial().setTransparent(True)
         pl.getMaterial().setDepthTestEnabled(False)
-        pl.getMaterial().setColor(Color('black'), Color(float(x) / 5, 1 - float(y) / 5, 0.2, 1))
+        pl.getMaterial().setColor(Color('black'), Color(float(x) / 5, 1 - float(y) / 5, 1, 1))
         pl.setPosition(- 3.18 + x * 1.06, 1.55 -1.8 + y * 0.6, -2)
         p.addChild(pl)
         tls.append(pl)
@@ -39,7 +39,7 @@ def onUpdate(frame, time, dt):
 setUpdateFunction(onUpdate)
 toggleStereo()
 
-#getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/dof.xml')
+getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/motionblur.xml')
 
 
 # stores the id of the last web client connected. This is
@@ -53,6 +53,11 @@ porthole.initialize()
 ps = porthole.getService()
 ps.setConnectedCommand('onClientConnected("%id%")')
 ps.setDisconnectedCommand('onClientDisconnected("%id%")')
+
+
+# This quick command is used to easily forward js commands to clients from
+# launched apps
+addQuickCommand('calljs', "ps.sendjs(\"%1%({0})\".format(%2%), appControllerClient)", 2, 'call js on porthole clients')
 
 def startApplication(clientId, appName):
     global appControllerClient
