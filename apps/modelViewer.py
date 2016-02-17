@@ -35,7 +35,7 @@ obj = None
 # Utility function to send data to the web client
 def calljs(methodname, data):
     mc = getMissionControlClient()
-    mc.postCommand('@server::calljs console.log' + str(data))
+    mc.postCommand('@server::calljs console.log ' + str(data))
     
 # example: send ModelDict to console.log to print it on the web client
 calljs('console.log', ModelDict)
