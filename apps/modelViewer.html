@@ -45,15 +45,16 @@
             document.addEventListener("keypress", porthole.sendKeyDown);
             document.addEventListener("keyup", porthole.sendKeyUp);       }
         
+        modelList=null
+
         function createModelButtons(ml) {
             // save the argument to the global modelList variable
             // so we can access it from other parts of the interface
             // and we can pass it back to the server app using {{mc@app}}
-           
+           modelList=ml;
             //use this $('id of object') to get the object's id and do stuff with it.
             $('nav-panel').hide(300).show(1000).hide(200).show(1000);
             //other events, fadeIn/fadeOut, fadeToggle, slideUp, slideDown
-            {{mc@app: onModelSelect("%modelList[0][1]%") }}
             // you can use the .html operator to rewrite HTML code!!!
             // example $('nav-panel').html('codecodecodecode<tag>')
             // this completely removes the elements inside of the HTML tag and replaces it with your own code.
@@ -61,9 +62,9 @@
             i=0;
             n = ml.length;
             var pageButtons = $('#pageButtons');
-            while (i <= n)
+            while (i < n)
             {
-                pageButtons.append('<input type="button" id="button'+i+'" value="ml[i]'+i+'"/>');
+                pageButtons.append('<input type="button" id="button'+i+'" value="'+ ml[i][1]+'" onclick="modelButtonClicked(event)"/>');
                 i = i + 1;
             }
 
@@ -81,27 +82,16 @@
 
         }
         //creating a jquery function for always occuring events.
-        $(function() {
-            // Load the first model in the list
-            //to add a click event for a certain button
-            //$('#buttonID').on('click', function())
-            // other events: 'click', mouseover'
-            //you can also search by attribute using $('button[id=someID')
-            // to listen to all buttons within a panel you set class= instead of id=
-            //This will make it so when ANY button is pressed, it calls the function, instead of a specific button.
-            //You can then get the specific button using the $(this) operator.
-            $('.pageButtons').on('click', function() {
-                var panelID = $(this).attr('value'); 
+       function modelButtonClicked(event) {
 
-                onModelSelect(panelID)
+                {{mc@app: onModelSelect("%event.target.value%") }}
                 //$('#'+panelID).toggle(); //you can concatenate strings with +.
                 //use the '#' to get the object the id is referring to.
                 //var newString = "my new String"
                // $('#'+panelID+ ' .panel-body').html(newString);
-
                
-            })
-        });
+            }
+        
     </script>
     
     
