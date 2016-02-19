@@ -31,7 +31,7 @@ sm2.setSoft(True)
 l2.setShadow(sm2)
 
 obj = None
-localDebug = False
+localDebug = True
 
 # Utility function to send data to the web client
 def calljs(methodname, data):
@@ -58,11 +58,12 @@ def InitializeModelList():
     fileList = []
     cwd = os.getcwd()
     for (path, dirs, files) in os.walk(cwd):
-        for file in glob.glob("*.fbx"):
-            newTuple = [path[len(cwd):],file]
+        for file in glob.glob(path + "/*.fbx"):
+            newTuple = [path[len(cwd)+1:],file[len(path)+1:]]
             print(newTuple)
             fileList.append(newTuple)
-    #onModelSelect("ben.fbx")
+    print(fileList)
+    #onModelSelect("ben.fbx=
     #onModelSelect("A_CueR_Exp.fbx")
     calljs('createModelButtons', fileList)
 
