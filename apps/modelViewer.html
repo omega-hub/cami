@@ -84,7 +84,7 @@
         //creating a jquery function for always occuring events.
        function modelButtonClicked(event) {
 
-                {{mc@app: onModelSelect("%event.target.value%") }}
+                {{mc@app: onModelSelect("%event.target.path%" + "%event.target.value%") }}
                 //$('#'+panelID).toggle(); //you can concatenate strings with +.
                 //use the '#' to get the object the id is referring to.
                 //var newString = "my new String"

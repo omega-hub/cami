@@ -31,6 +31,7 @@ sm2.setSoft(True)
 l2.setShadow(sm2)
 
 obj = None
+localDebug = False
 
 # Utility function to send data to the web client
 def calljs(methodname, data):
@@ -44,10 +45,16 @@ def calljs(methodname, data):
 # calljs('x=', [1, 2, 3, 4])
 # # example 3: print a single value on the client
 # calljs('console.log', 10)
+def setLocalDebuggin(debugMode):
+    global localDebug
+    localDebug = debugMode
+    
 
 def InitializeModelList():
-    os.chdir("/fastdata/opt/data/fbx")
-    #os.chdir("../data")
+    if (localDebug):
+        os.chdir("../data")
+    else:
+        os.chdir("/fastdata/opt/data/fbx")
     fileList = []
     cwd = os.getcwd()
     for (path, dirs, files) in os.walk(cwd):
@@ -78,8 +85,10 @@ def onModelSelect(modelName):
         LoadModel(modelName)
     
 def LoadModel(modelName):
-    path = "/fastdata/opt/data/fbx/" + modelName
-    #path = "../data/" + modelName
+    if (localDebug):
+        path = "../data/" + modelName
+    else:
+        path = "/fastdata/opt/data/fbx/" + modelName
     global currentModelName
     global ModelDict
     model = ModelInfo()
