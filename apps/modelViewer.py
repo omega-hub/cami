@@ -59,7 +59,10 @@ def InitializeModelList():
     cwd = os.getcwd()
     for (path, dirs, files) in os.walk(cwd):
         for file in glob.glob(path + "/*.fbx"):
-            newTuple = [path[len(cwd)+1:],file[len(path)+1:]]
+            if len(path[len(cwd)+1:]) > 1:
+                newTuple = [path[len(cwd)+1:] + "/",file[len(path)+1:]]
+            else:
+                newTuple = ["",file[len(path)+1:]]
             print(newTuple)
             fileList.append(newTuple)
     print(fileList)
@@ -68,8 +71,10 @@ def InitializeModelList():
     calljs('createModelButtons', fileList)
 
 def onModelSelect(modelName):
+    print("Inside On Model Select")
     print(modelName)
     global currentModelName
+    
     if modelName == currentModelName:
         print "Current model is same as selected model"
     elif modelName in ModelDict.keys(): 
