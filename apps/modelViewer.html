@@ -64,7 +64,10 @@
             var pageButtons = $('#pageButtons');
             while (i < n)
             {
-                pageButtons.append('<input type="button" id="button'+i+'" value="'+ ml[i][1]+'" onclick="modelButtonClicked(event)"/>');
+                console.log("input")
+                console.log(ml[i][0])
+                console.log(ml[i][1])
+                pageButtons.append('<input type="button" id="button'+i+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick="modelButtonClicked(event)"/>');
                 i = i + 1;
             }
 
@@ -83,10 +86,15 @@
         }
         //creating a jquery function for always occuring events.
        function modelButtonClicked(event) {
-
+                console.log("Outputting")
+                var path = $(event.target).data('path');
+                console.log(path);
+                event.target.path = path
+                console.log(event.target.value)
+                console.log(event.target.id)
                 {{mc@app: onModelSelect("%event.target.path%" + "%event.target.value%") }}
                 //$('#'+panelID).toggle(); //you can concatenate strings with +.
-                //use the '#' to get the object the id is referring to.
+                //use the '#' to gattret the object the id is referring to.
                 //var newString = "my new String"
                // $('#'+panelID+ ' .panel-body').html(newString);
                
