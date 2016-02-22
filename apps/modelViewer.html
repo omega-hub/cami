@@ -5,6 +5,29 @@
     <script src="jquery-1.12.0.min.js"></script>
     <script src="jquery.mobile-1.4.5.min.js"></script>
     <script src="porthole/res/porthole.js"></script>
+
+    <style>
+    .button{
+    background-color: #D3D3D3; 
+    border: 1px black;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    width:200px;
+    height: 30px;
+    font-size: 15px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 3px;
+    float: center;
+    }
+
+    .collapsible{
+        width: 300px;
+        background-color: red; 
+    }
+
+    </style> 
 </head>
 
 <body>
@@ -18,20 +41,23 @@
 
 
             <li data-icon="delete"><a href="#" data-rel="close" >Close menu</a></li>
-          <div id="pageButtons">
-                Where the pageButtons would be displayed
-
-            </div>
+          
             <li data-role="collapsible">
                 <h4>    Molecule Demo </h4>
                <!-- added extra information to the button, class and id -->
                 <button class="panel-button" data-panelid="panel1"> <img src="images/images.jpeg" class:"leftimage" alt="colorful boxes" style="width:40%"></img>1st molecule</button>
             </li>
-
+        <div id="collapsable">
             <li data-role="collapsible">
                 <h4>Stars Demo</h4>
-                <p>I'm the collapsible content. By default I'm closed, but you can click the header to open me.</p>
+                <div id="pageButtons">
+
+
+                </div>
+                
             </li>
+        </div>
+
         </ul>
     </div><!-- /panel -->
       
@@ -64,7 +90,7 @@
             var pageButtons = $('#pageButtons');
             while (i < n)
             {
-                pageButtons.append('<input type="button" id="button'+i+'" value="'+ ml[i][1]+'" onclick="modelButtonClicked(event)"/>');
+                pageButtons.append('<input type="button" class="button" id="button'+i+'" value="'+ ml[i][1]+'" onclick="modelButtonClicked(event)" />');
                 i = i + 1;
             }
 
