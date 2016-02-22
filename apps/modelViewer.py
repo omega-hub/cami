@@ -57,7 +57,9 @@ def InitializeModelList():
         os.chdir("/fastdata/opt/data/fbx")
     fileList = []
     cwd = os.getcwd()
+    numfolders = 0
     for (path, dirs, files) in os.walk(cwd):
+        numfolders = numfolders + 1
         for file in glob.glob(path + "/*.fbx"):
             if len(path[len(cwd)+1:]) > 1:
                 newTuple = [path[len(cwd)+1:] + "/",file[len(path)+1:]]
@@ -68,6 +70,7 @@ def InitializeModelList():
     print(fileList)
     #onModelSelect("ben.fbx=
     #onModelSelect("A_CueR_Exp.fbx")
+    print(numfolders)
     calljs('createModelButtons', fileList)
 
 def onModelSelect(modelName):

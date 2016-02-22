@@ -47,15 +47,15 @@
                <!-- added extra information to the button, class and id -->
                 <button class="panel-button" data-panelid="panel1"> <img src="images/images.jpeg" class:"leftimage" alt="colorful boxes" style="width:40%"></img>1st molecule</button>
             </li>
-        <div id="collapsable">
-            <li data-role="collapsible">
+        <div data-role="collapsible-set" data-content-theme="d" id="Allcollapsable">
+            <!--<li data-role="collapsible">
                 <h4>Stars Demo</h4>
                 <div id="pageButtons">
 
 
                 </div>
                 
-            </li>
+            </li> -->
         </div>
 
         </ul>
@@ -87,15 +87,23 @@
             // to listen to a button, you use the operator.
             i=0;
             n = ml.length;
-            var pageButtons = $('#pageButtons');
+            j = 0
+            lastFolder = "defaultFolder"
             while (i < n)
             {
+                console.log("lastfolder:" + lastFolder)
+                console.log("currentFolder:" + ml[i][0])
+                if (ml[i][0] != lastFolder){
+                    j = j + 1
+                    var content = "<div data-role='collapsible' id='set" + j + "'><h4>" + ml[i][0] + "</h4><div id='pageButtons" + j + "'></div></div>";
+                    //var content = "fjwiofhwiofhi"
+                    $("#Allcollapsable").append( content ).collapsibleset('refresh');;
+                    lastFolder = ml[i][0]
+                }
+                var pageButtons = $('#pageButtons' + j);
                 pageButtons.append('<input type="button" class="button" id="button'+i+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick="modelButtonClicked(event)"/>');
                 i = i + 1;
             }
-
-
-
             /* some links of helpful guides 
                 https://www.youtube.com/watch?v=G-POtu9J-m4&feature=iv&src_vid=hMxGhHNOkCU&annotation_id=annotation_1494025287
 
