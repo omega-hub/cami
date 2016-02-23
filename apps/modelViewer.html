@@ -20,18 +20,21 @@
     color: black;
     text-align: center;
     vertical-align: middle;
-    width:200px;
+    width:235px;
     height: 30px;
     font-size: 15px;
     margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 3px;
+    border-radius: 1px;
     float: center;
+    outline:none;
     }
 
-    .collapsible{
-        width: 300px;
-        background-color: red; 
+    .collapsable{
+        outline:none;
+    }
+
+    #set3{
+        outline:none;
     }
 
     </style> 
@@ -44,18 +47,14 @@
     </div>
 
     <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
-        <ul data-role="listview">
+        <ul data-role="listview" class="panel">
 
 
-            <li data-icon="delete"><a href="#" data-rel="close" >Close menu</a></li>
+            <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
           
-            <li data-role="collapsible">
-                <h4>    Molecule Demo </h4>
-               <!-- added extra information to the button, class and id -->
-                <button class="panel-button" data-panelid="panel1"> <img src="images/images.jpeg" class:"leftimage" alt="colorful boxes" style="width:40%"></img>1st molecule</button>
-            </li>
-        <div data-role="collapsible-set" data-content-theme="d" id="Allcollapsable">
-            <!--<li data-role="collapsible">
+        <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
+            <!--REMOVED data-content-theme="c"
+                <li data-role="collapsible">
                 <h4>Stars Demo</h4>
                 <div id="pageButtons">
 
@@ -102,7 +101,7 @@
                 console.log("currentFolder:" + ml[i][0])
                 if (ml[i][0] != lastFolder){
                     j = j + 1
-                    var content = "<div data-role='collapsible' id='set" + j + "'><h4>" + ml[i][0] + "</h4><div id='pageButtons" + j + "'></div></div>";
+                    var content = "<div data-role='collapsible' id='set" + j + "'><h4>" + ml[i][0].substring(0,(ml[i][0].length)-1) + "</h4><div id='pageButtons" + j + "'></div></div>";
                     //var content = "fjwiofhwiofhi"
                     $("#Allcollapsable").append( content ).collapsibleset('refresh');;
                     lastFolder = ml[i][0]
