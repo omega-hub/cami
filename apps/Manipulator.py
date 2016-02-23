@@ -63,5 +63,6 @@ def onUpdate(frame, time, dt):
     global panSpeedMultiplier
     panSpeedMultiplier = 0.1 + abs(camera.getPosition().z / 100)
 
+
 setEventFunction(onEvent)
 setUpdateFunction(onUpdate)
