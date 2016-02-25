@@ -76,9 +76,16 @@
             document.addEventListener("mousedown", porthole.sendMouseDown);
             document.addEventListener("keypress", porthole.sendKeyDown);
             document.addEventListener("keyup", porthole.sendKeyUp);       }
-        
-        modelList=null
+        document.addEventListener("mousewheel",onMouseWheel);
+        delta = 0;
+        function onMouseWheel(e) {
+            console.log("Scrolling the wheel!")
+            var e = window.event || e; // old IE support
+            delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+            {{mc@app: onMouseWheel(%delta%) }}
+        }
 
+        modelList=null
         function createModelButtons(ml) {
             // save the argument to the global modelList variable
             // so we can access it from other parts of the interface
