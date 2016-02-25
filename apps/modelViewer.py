@@ -3,7 +3,7 @@ from cyclops import *
 import Manipulator
 import os, glob
 getDefaultCamera().setBackgroundColor(Color('black'))
-
+camera = getDefaultCamera()
 getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/dof.xml')
 
 ModelDict = {}
@@ -29,6 +29,7 @@ sm2.setSoft(True)
 #sm2.setSoftShadowParameters(0.005, 5)
 l2.setShadow(sm2)
 
+ScrollSpeed = 0.5
 obj = None
 localDebug = True
 
@@ -138,3 +139,8 @@ def onModelLoaded():
     
 InitializeModelList()
 print("initialized Model List")
+
+#Model Manipulation Functions:
+def onMouseWheel(delta):
+    camera.translate(0,0,-delta * ScrollSpeed,Space.World)
+    print delta
