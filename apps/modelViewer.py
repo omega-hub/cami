@@ -2,7 +2,6 @@ from omega import *
 from cyclops import *
 import Manipulator
 import os, glob
-print("THis is inside my version of modelView.py")
 getDefaultCamera().setBackgroundColor(Color('black'))
 
 getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/dof.xml')
@@ -61,12 +60,17 @@ def InitializeModelList():
     for (path, dirs, files) in os.walk(cwd):
         numfolders = numfolders + 1
         for file in glob.glob(path + "/*.fbx"):
+            name = file[len(path)+1:]
+            image = "../data/" + name[:len(name)-4] + ".jpg"
+
             if len(path[len(cwd)+1:]) > 1:
-                newTuple = [path[len(cwd)+1:] + "/",file[len(path)+1:]]
+                newTuple = [path[len(cwd)+1:] + "/",name,image]
             else:
-                newTuple = ["",file[len(path)+1:]]
+                newTuple = ["",file[len(path)+1:],image]
+
             print(newTuple)
             fileList.append(newTuple)
+
     print(fileList)
     #onModelSelect("ben.fbx=
     #onModelSelect("A_CueR_Exp.fbx")

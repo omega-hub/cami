@@ -5,6 +5,13 @@
     <script src="jquery-1.12.0.min.js"></script>
     <script src="jquery.mobile-1.4.5.min.js"></script>
     <script src="porthole/res/porthole.js"></script>
+    <script src="hammer.js"></script>
+    <!--
+    Some Resources for Hammer .js
+    http://hammerjs.github.io/api/
+    https://www.youtube.com/watch?v=UHSbJmKvGJo
+    http://hammerjs.github.io/examples/
+    -->
 
     <style>
     .button{
@@ -100,7 +107,7 @@
                     lastFolder = ml[i][0]
                 }
                 var pageButtons = $('#pageButtons' + j);
-                pageButtons.append('<input type="button" class="button" id="button'+i+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick="modelButtonClicked(event)"/>');
+                pageButtons.append('<input type="button" class="button" id="button'+i+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick="modelButtonClicked(event)"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
                 i = i + 1;
             }
             /* some links of helpful guides 
