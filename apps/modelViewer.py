@@ -29,7 +29,7 @@ sm2.setSoft(True)
 #sm2.setSoftShadowParameters(0.005, 5)
 l2.setShadow(sm2)
 
-ScrollSpeed = 0.5
+ScrollSpeed = 0.1
 obj = None
 localDebug = True
 
@@ -143,4 +143,3 @@ print("initialized Model List")
 #Model Manipulation Functions:
 def onMouseWheel(delta):
     camera.translate(0,0,-delta * ScrollSpeed,Space.World)
-    print delta

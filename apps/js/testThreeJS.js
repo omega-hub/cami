@@ -2,8 +2,12 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 var renderer = new THREE.WebGLRenderer();
+// get the DOM element to attach to
+// - assume we've got jQuery to hand
+var $container = $('#header');
 renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild( renderer.domElement );
+// attach the render-supplied DOM element
+$container.append(renderer.domElement);
 
 var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 // The following code randomizes colors
@@ -35,4 +39,8 @@ function addLights() {
     var dirLight = new THREE.DirectionalLight(0xff0000, 1);
     dirLight.position.set(0, 0, 7);
     scene.add(dirLight);
+}
+
+function onMouseWheel3JS(delta) {
+	camera.position.z = camera.position.z - (delta * 0.1)
 }
