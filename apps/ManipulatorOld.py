@@ -54,13 +54,14 @@ def onEvent():
     if(e.isKeyDown(ord('f'))): panVector.y -= ps
     elif(e.isKeyUp(ord('f'))): panVector.y = 0
 
+
+
 def onUpdate(frame, time, dt):
     camera.translate(panVector * dt * panSpeedMultiplier, Space.World)
     # cange the pan speed multiplier depending on how far
     # we are from the object, so panning speed looks constant
     global panSpeedMultiplier
     panSpeedMultiplier = 0.1 + abs(camera.getPosition().z / 100)
-
 
 setEventFunction(onEvent)
 setUpdateFunction(onUpdate)

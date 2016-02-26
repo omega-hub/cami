@@ -2,9 +2,8 @@ from omega import *
 from cyclops import *
 import Manipulator
 import os, glob
-print("THis is inside my version of modelView.py")
 getDefaultCamera().setBackgroundColor(Color('black'))
-
+camera = getDefaultCamera()
 getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/dof.xml')
 
 ModelDict = {}
@@ -30,7 +29,9 @@ sm2.setSoft(True)
 #sm2.setSoftShadowParameters(0.005, 5)
 l2.setShadow(sm2)
 
+ScrollSpeed = 0.1
 obj = None
+localDebug = True
 
 # Utility function to send data to the web client
 def calljs(methodname, data):
@@ -44,24 +45,44 @@ def calljs(methodname, data):
 # calljs('x=', [1, 2, 3, 4])
 # # example 3: print a single value on the client
 # calljs('console.log', 10)
+def setLocalDebuggin(debugMode):
+    global localDebug
+    localDebug = debugMode
+    
 
 def InitializeModelList():
-    os.chdir("/fastdata/opt/data/fbx")
-    #os.chdir("../data")
+    if (localDebug):
+        os.chdir("../data")
+    else:
+        os.chdir("/fastdata/opt/data/fbx")
     fileList = []
     cwd = os.getcwd()
+    numfolders = 0
     for (path, dirs, files) in os.walk(cwd):
-        for file in glob.glob("*.fbx"):
-            newTuple = [path[len(cwd):],file]
+        numfolders = numfolders + 1
+        for file in glob.glob(path + "/*.fbx"):
+            name = file[len(path)+1:]
+            image = "../data/" + name[:len(name)-4] + ".jpg"
+
+            if len(path[len(cwd)+1:]) > 1:
+                newTuple = [path[len(cwd)+1:] + "/",name,image]
+            else:
+                newTuple = ["",file[len(path)+1:],image]
+
             print(newTuple)
             fileList.append(newTuple)
-    #onModelSelect("ben.fbx")
+
+    print(fileList)
+    #onModelSelect("ben.fbx=
     #onModelSelect("A_CueR_Exp.fbx")
+    print(numfolders)
     calljs('createModelButtons', fileList)
 
 def onModelSelect(modelName):
+    print("Inside On Model Select")
     print(modelName)
     global currentModelName
+    
     if modelName == currentModelName:
         print "Current model is same as selected model"
     elif modelName in ModelDict.keys(): 
@@ -78,8 +99,10 @@ def onModelSelect(modelName):
         LoadModel(modelName)
     
 def LoadModel(modelName):
-    path = "/fastdata/opt/data/fbx/" + modelName
-    #path = "../data/" + modelName
+    if (localDebug):
+        path = "../data/" + modelName
+    else:
+        path = "/fastdata/opt/data/fbx/" + modelName
     global currentModelName
     global ModelDict
     model = ModelInfo()
@@ -116,3 +139,7 @@ def onModelLoaded():
     
 InitializeModelList()
 print("initialized Model List")
+
+#Model Manipulation Functions:
+def onMouseWheel(delta):
+    camera.translate(0,0,-delta * ScrollSpeed,Space.World)
