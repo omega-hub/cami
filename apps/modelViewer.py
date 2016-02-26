@@ -1,13 +1,13 @@
 from omega import *
 from cyclops import *
 import Manipulator
-import os, glob
+import os, glob,math
 getDefaultCamera().setBackgroundColor(Color('black'))
 camera = getDefaultCamera()
 getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/dof.xml')
 
 ModelDict = {}
-currentModelName = "noModel!"
+currentModelName = "noModel"
 l1 = Light.create()
 l1.setPosition(-0.1, 3, 0)
 l1.setColor(Color(1, 1, 0.8, 1))
@@ -45,7 +45,7 @@ def calljs(methodname, data):
 # calljs('x=', [1, 2, 3, 4])
 # # example 3: print a single value on the client
 # calljs('console.log', 10)
-def setLocalDebuggin(debugMode):
+def setLocalDebugging(debugMode):
     global localDebug
     localDebug = debugMode
     
@@ -93,7 +93,7 @@ def onModelSelect(modelName):
         currentModelName = modelName
     else:
         #TODO: Hide current Model
-        if currentModelName != "noModel!":
+        if currentModelName != "noModel":
             toggleModelVisible(currentModelName,False)
         currentModelName = modelName
         LoadModel(modelName)
@@ -141,5 +141,12 @@ InitializeModelList()
 print("initialized Model List")
 
 #Model Manipulation Functions:
-def onMouseWheel(delta):
+def onZoom(delta):
     camera.translate(0,0,-delta * ScrollSpeed,Space.World)
+
+def onRotate(dx,dy,dz):
+    if currentModelName != "noModel":
+        currentModel = ModelDict[currentModelName]
+        currentModel.rotate(Vector3(0, 1, 0), math.radians(dx), Space.World)
+        currentModel.rotate(Vector3(1, 0, 0), math.radians(dy), Space.World)
+        currentModel.rotate(Vector3(0, 0, 1), math.radians(dz), Space.World)

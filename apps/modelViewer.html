@@ -46,7 +46,7 @@
         <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
         <h1>Model Viewer</h1>
         <script src="js/three.min.js"></script>
-        <script src="js/testThreeJS.js"></script>
+        <script src="js/modelViewerPreview.js"></script>
     </div>
     <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
         <ul data-role="listview" class="panel">
@@ -67,11 +67,12 @@
     </div><!-- /panel -->
     
     <script>
+
         porthole.connected = function(event) {
             {{py startApplication(%client_id%, 'modelViewer') }}
-            document.addEventListener("mousemove", porthole.sendMouseMove);
-            document.addEventListener("mouseup", porthole.sendMouseUp);
-            document.addEventListener("mousedown", porthole.sendMouseDown);
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+            document.addEventListener("mousedown", onMouseDown);
             document.addEventListener("keypress", porthole.sendKeyDown);
             document.addEventListener("keyup", porthole.sendKeyUp);       }
         document.addEventListener("mousewheel",onMouseWheel);
@@ -80,10 +81,36 @@
             console.log("Scrolling the wheel!")
             var e = window.event || e; // old IE support
             delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-            {{mc@app: onMouseWheel(%delta%) }}
-            onMouseWheel3JS(delta)
+            {{mc@app: onZoom(%delta%) }}
+            onZoom3JS(delta)
+        }
+        var isMouseDown = false
+        var startMouseX = 0
+        var startMouseX = 0
+        var dx = 0
+        var dy = 0
+        function onMouseDown(e) {
+            startMouseX = e.clientX
+            startMouseY = e.clientY
+            dx = 0
+            dy = 0
+            isMouseDown = true
+        }
+        function onMouseUp(e) {
+            isMouseDown = false
+        }
+        function onMouseMove(e) {
+            if (isMouseDown) {
+                dx = (e.clientX - startMouseX)
+                dy = (e.clientY - startMouseY)
+                startMouseX = e.clientX
+                startMouseY = e.clientY
+                {{mc@app: onRotate(%dx%, %dy%,0) }}
+                onRotate3JS(dx,dy,0)
+            }
         }
 
+        
         modelList=null
         function createModelButtons(ml) {
             // save the argument to the global modelList variable

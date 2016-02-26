@@ -4,7 +4,7 @@ var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHe
 var renderer = new THREE.WebGLRenderer();
 // get the DOM element to attach to
 // - assume we've got jQuery to hand
-var $container = $('#header');
+var $container = $('#test');
 renderer.setSize( window.innerWidth, window.innerHeight );
 // attach the render-supplied DOM element
 $container.append(renderer.domElement);
@@ -27,8 +27,6 @@ scene.add( cube );
 camera.position.z = 5;
 
 function render() {
-	cube.rotation.x += 0.1;
-	cube.rotation.y += 0.1;
 	requestAnimationFrame( render );
 	renderer.render( scene, camera );
 }
@@ -43,4 +41,13 @@ function addLights() {
 
 function onMouseWheel3JS(delta) {
 	camera.position.z = camera.position.z - (delta * 0.1)
+}
+
+function onRotate3JS(dx,dy,dz) {
+	var radX = dx * (Math.PI/180)
+	var radY = dy * (Math.PI/180)
+	var radZ = dz * (Math.PI/180)
+    cube.rotation.y += radX
+    cube.rotation.x += radY
+    cube.rotation.z += radZ
 }

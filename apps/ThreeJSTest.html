@@ -7,9 +7,49 @@
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
 		</style>
+	    <script src="js/jquery-1.12.0.min.js"></script>
+	    <script src="js/jquery.mobile-1.4.5.min.js"></script>
 	</head>
 	<body>
-		<script src="js/three.min.js"></script>
-		<script src="js/testThreeJS.js"></script>
+		<div id="test">
+			<script src="js/three.min.js"></script>
+			<script src="js/testThreeJS.js"></script>
+			<script>
+			    document.addEventListener("mousemove", onMouseMove);
+		        document.addEventListener("mouseup", onMouseUp);
+		        document.addEventListener("mousedown", onMouseDown);
+		        document.addEventListener("mousewheel",onMouseWheel);
+		        delta = 0;
+		        function onMouseWheel(e) {
+		            console.log("Scrolling the wheel!")
+		            var e = window.event || e; // old IE support
+		            delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+		            onZoom3JS(delta)
+		        }
+		        var isMouseDown = false
+		        var startMouseX = 0
+		        var startMouseX = 0
+		        var dx = 0
+		        var dy = 0
+		        function onMouseDown(e) {
+		            startMouseX = e.clientX
+		            startMouseY = e.clientY
+		            dx = 0
+		            dy = 0
+		            isMouseDown = true
+		        }
+		        function onMouseUp(e) {
+		            isMouseDown = false
+		        }
+		        function onMouseMove(e) {
+		            if (isMouseDown) {
+		                dx = (e.clientX - startMouseX)/3
+		                dy = (e.clientY - startMouseY)/3
+		                console.log(dx)
+		                onRotate3JS(dx,dy,0)
+		            }
+		        }
+	        </script>
+	    </div>
 	</body>
 </html>
