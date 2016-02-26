@@ -75,6 +75,8 @@
             document.addEventListener("mousedown", onMouseDown);
             document.addEventListener("keypress", porthole.sendKeyDown);
             document.addEventListener("keyup", porthole.sendKeyUp);       }
+        
+
         document.addEventListener("mousewheel",onMouseWheel);
         delta = 0;
         function onMouseWheel(e) {
@@ -156,6 +158,7 @@
         }
         //creating a jquery function for always occuring events.
        function modelButtonClicked(event) {
+
                 console.log("Outputting")
                 var path = $(event.target).data('path');
                 console.log(path);
