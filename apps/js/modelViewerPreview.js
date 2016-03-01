@@ -95,3 +95,9 @@ function rotateAroundWorldAxis(object, axis, radians) {
     // code for r59+:
     object.rotation.setFromRotationMatrix(object.matrix);
 }
+
+function onPan3JS(dx,dy,dz) {
+    camera.position.x += dx
+    camera.position.y += dy
+    camera.position.z += dz
+}

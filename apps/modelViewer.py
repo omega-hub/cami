@@ -150,3 +150,6 @@ def onRotate(dx,dy,dz):
         currentModel.rotate(Vector3(0, 1, 0), math.radians(dx), Space.World)
         currentModel.rotate(Vector3(1, 0, 0), math.radians(dy), Space.World)
         currentModel.rotate(Vector3(0, 0, 1), math.radians(dz), Space.World)
+
+def onPan(dx,dy,dz):
+    camera.translate(dx,dy,dz, Space.World)
