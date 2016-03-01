@@ -6,6 +6,8 @@
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
     <script src="porthole/res/porthole.js"></script>
     <script src="js/hammer.js"></script>
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+
     <!--
     Some Resources for Hammer .js
     http://hammerjs.github.io/api/
@@ -48,6 +50,7 @@
         <script src="js/three.min.js"></script>
         <script src="js/modelViewerPreview.js"></script>
     </div>
+
     <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
         <ul data-role="listview" class="panel">
 
@@ -68,6 +71,48 @@
     
     <script>
 
+        var myElement = document.getElementById('header');
+
+        // create a simple instance
+        // by default, it only adds horizontal recognizers
+        var mc = new Hammer(myElement);
+        // let the pan gesture support all directions.
+        // this will block the vertical scrolling on a touch-device while on the element
+        mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+
+        // listen to events...
+        mc.on("panleft", function(ev) {
+        console.log(ev.type +" gesture detected.");
+        });
+        mc.on("panright", function(ev) {
+        console.log(ev.type +" gesture detected.");
+        });
+        mc.on("panup", function(ev) {
+       console.log(ev.type +" gesture detected.");
+        });
+        mc.on("pandown", function(ev) {
+        console.log(ev.type +" gesture detected.");
+       // console.log("number of touches" + ev.pandown.touches.length);
+        });
+        mc.on("tap", function(ev) {
+        console.log(ev.type +" gesture detected.");
+        });
+        
+        /* //getting pinch and rotate to work
+        var pinch = new Hammer.Pinch();
+        var rotate = new Hammer.Rotate();
+
+        // we want to detect both the same time
+        pinch.recognizeWith(rotate);
+
+        // add to the Manager
+        mc.add([pinch, rotate]);
+
+
+        mc.on("pinch rotate", function(ev) {
+        console.log(ev.type +" ");
+        });
+        */
         porthole.connected = function(event) {
             {{py startApplication(%client_id%, 'modelViewer') }}
             document.addEventListener("mousemove", onMouseMove);
