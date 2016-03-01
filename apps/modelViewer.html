@@ -78,12 +78,32 @@
         var mc = new Hammer(myElement);
         // let the pan gesture support all directions.
         // this will block the vertical scrolling on a touch-device while on the element
-        mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+       // mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 
-        // listen to events...
-        mc.on("panleft", function(ev) {
-        console.log(ev.type +" gesture detected.");
+        var startMouseX = -1
+        var startMouseY = -1
+        var dx = 0
+        var dy = 0
+
+        mc.on("panstart", function(ev) {
+            startMouseX = ev.center.x 
+            startMouseY = ev.center.y
         });
+        // listen to events...
+        mc.on("pan", function(ev) {
+            console.log(startMouseX)
+            dx = (ev.center.x - startMouseX)
+            dy = (ev.center.y - startMouseY)
+            startMouseX = ev.center.x 
+            startMouseY = ev.center.y
+            console.log(dx)
+            console.log(dy)
+            console.log(startMouseX)
+            {{mc@app: onRotate(%dx%, %dy%,0) }}
+            onRotate3JS(dx,dy,0)
+            console.log(ev.type +" gesture detected.");
+        });
+        /*
         mc.on("panright", function(ev) {
         console.log(ev.type +" gesture detected.");
         });
@@ -94,6 +114,7 @@
         console.log(ev.type +" gesture detected.");
        // console.log("number of touches" + ev.pandown.touches.length);
         });
+        */
         mc.on("tap", function(ev) {
         console.log(ev.type +" gesture detected.");
         });
@@ -132,13 +153,9 @@
             onZoom3JS(delta)
         }
         var isMouseDown = false
-        var startMouseX = 0
-        var startMouseX = 0
-        var dx = 0
-        var dy = 0
         function onMouseDown(e) {
-            startMouseX = e.clientX
-            startMouseY = e.clientY
+            //startMouseX = e.clientX
+            //startMouseY = e.clientY
             dx = 0
             dy = 0
             isMouseDown = true
@@ -150,10 +167,10 @@
             if (isMouseDown) {
                 dx = (e.clientX - startMouseX)
                 dy = (e.clientY - startMouseY)
-                startMouseX = e.clientX
-                startMouseY = e.clientY
-                {{mc@app: onRotate(%dx%, %dy%,0) }}
-                onRotate3JS(dx,dy,0)
+                //startMouseX = e.clientX
+                //startMouseY = e.clientY
+                //{{mc@app: onRotate(%dx%, %dy%,0) }}
+                //onRotate3JS(dx,dy,0)
             }
         }
 
