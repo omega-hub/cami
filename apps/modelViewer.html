@@ -105,10 +105,11 @@
                 {{mc@app: onPan(%dx%, %dy%,0) }}
                 onPan3JS(dx,dy,0)
             } else {
+                console.log("rotating camera")
                 {{mc@app: onRotate(%dx%, %dy%,0) }}
                 onRotate3JS(dx,dy,0)
             }
-            console.log(ev.type +" gesture detected.");
+            //console.log(ev.type +" gesture detected.");
         });
         /*
         mc.on("panright", function(ev) {
