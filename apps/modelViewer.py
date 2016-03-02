@@ -142,9 +142,11 @@ print("initialized Model List")
 
 #Model Manipulation Functions:
 def onZoom(delta):
+    print "inside On Zoom"
     camera.translate(0,0,-delta * ScrollSpeed,Space.World)
 
 def onRotate(dx,dy,dz):
+    print "inside on Rotate!"
     if currentModelName != "noModel":
         currentModel = ModelDict[currentModelName]
         currentModel.rotate(Vector3(0, 1, 0), math.radians(dx), Space.World)
@@ -152,4 +154,5 @@ def onRotate(dx,dy,dz):
         currentModel.rotate(Vector3(0, 0, 1), math.radians(dz), Space.World)
 
 def onPan(dx,dy,dz):
+    print "inside on Pan"
     camera.translate(dx,dy,dz, Space.World)
