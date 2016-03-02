@@ -164,6 +164,10 @@
             document.addEventListener("keyup", porthole.sendKeyUp);       }
         
 
+        document.ontouchmove = function(e){ 
+            e.preventDefault(); 
+        }
+
         document.addEventListener("mousewheel",onMouseWheel);
 
         function onMouseWheel(e) {
