@@ -7,6 +7,7 @@
     <script src="porthole/res/porthole.js"></script>
     <script src="js/hammer.js"></script>
     <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <script src='js/THREEx.WindowResize.js'></script>
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
     <!--
     Some Resources for Hammer .js
@@ -124,7 +125,6 @@
         });
         */
         mc.on("tap", function(ev) {
-            ev.preventDefault()
         console.log(ev.type +" gesture detected.");
         });
 

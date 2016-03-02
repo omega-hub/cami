@@ -26,6 +26,8 @@ scene.add( cube );
 
 camera.position.z = 5;
 
+THREEx.WindowResize(renderer, camera);
+
 function render() {
 	requestAnimationFrame( render );
 	renderer.render( scene, camera );
