@@ -144,11 +144,11 @@ print("initialized Model List")
 def onZoom(delta):
     print "inside On Zoom"
     print delta
-    camera.translate(0,0,-delta * ScrollSpeed,Space.World)
-    if (camera.getPosition().z < -12):
-        camera.translate(0,0,delta * ScrollSpeed,Space.World)
+    camera.translate(0,0,delta,Space.World)
+    if (camera.getPosition().z < -10):
+        camera.translate(0,0,delta ,Space.World)
     elif (camera.getPosition().z > 15 ):
-        camera.translate(0,0,-delta * ScrollSpeed,Space.World)
+        camera.translate(0,0,-delta ,Space.World)
 
 def onRotate(dx,dy,dz):
     print "inside on Rotate!"

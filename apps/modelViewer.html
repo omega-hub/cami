@@ -79,8 +79,9 @@
         var mc = new Hammer(myElement);
         // let the pan gesture support all directions.
         // this will block the vertical scrolling on a touch-device while on the element
-        mc.get('pan').set({ swieMaxTouches: 0 });
+        mc.get('pan').set({ swipeMaxTouches: 0 });
         mc.get('pinch').set({ enable: true });
+        mc.get('pinch').set({ threshold: 0.1 });
 
         var startMouseX = -1
         var startMouseY = -1
@@ -130,16 +131,28 @@
         mc.on("tap", function(ev) {
             console.log(ev.type +" gesture detected.");
         });
-
+        lastScale = 0
+        mc.on("pinchstart", function(ev){
+            if (lastScale != 0) {
+                delta = ev.scale - lastScale
+            }
+            lastScale = ev.scale
+        });
         mc.on("pinchout", function(ev){
             ev.preventDefault()
-            delta = ev.scale/2
+            //delta = ev.scale
+            delta = ev.scale - lastScale
+            lastScale = ev.scale
+            delta = - delta
             {{mc@app: onZoom(%delta%) }}
             onZoom3JS(delta)
         });
         mc.on("pinchin", function(ev){
             ev.preventDefault()
-            delta = -(ev.scale/2)
+            delta = ev.scale - lastScale
+            lastScale = ev.scale
+            //delta = -(ev.scale/2
+            delta = - delta
             {{mc@app: onZoom(%delta%) }}
             onZoom3JS(delta)
         });

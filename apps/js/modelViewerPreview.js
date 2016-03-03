@@ -44,7 +44,7 @@ function addLights() {
 
 function onZoom3JS(delta) {
 
-	camera.position.z = Math.max(Math.min(camera.position.z - (delta * 0.8),15),-12)
+	camera.position.z = Math.max(Math.min(camera.position.z + (delta ),15),-10)
 }
 
 
