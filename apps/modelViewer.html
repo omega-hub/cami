@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <title>Model Viewer Test</title>
-    <link rel="stylesheet" href="jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css">
     <script src="js/jquery-1.12.0.min.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
     <script src="porthole/res/porthole.js"></script>
@@ -79,7 +79,7 @@
         var mc = new Hammer(myElement);
         // let the pan gesture support all directions.
         // this will block the vertical scrolling on a touch-device while on the element
-       // mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+        mc.get('pan').set({ swieMaxTouches: 0 });
 
         var startMouseX = -1
         var startMouseY = -1
@@ -93,13 +93,15 @@
             startMouseY = ev.center.y
         });
         // listen to events...
+        numTouch = 0
         mc.on("pan", function(ev) {
             ev.preventDefault()
             dx = (ev.center.x - startMouseX)
             dy = (ev.center.y - startMouseY)
             startMouseX = ev.center.x 
             startMouseY = ev.center.y
-            var numTouch = ev.pointers.length
+            numTouch = ev.pointers.length
+            {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
             console.log(numTouch)
             if (numTouch >= 2) {
                 console.log("panning camera")
@@ -125,7 +127,7 @@
         });
         */
         mc.on("tap", function(ev) {
-        console.log(ev.type +" gesture detected.");
+            console.log(ev.type +" gesture detected.");
         });
 
         mc.on("pinchin", function(ev){
@@ -163,7 +165,7 @@
             document.addEventListener("keypress", porthole.sendKeyDown);
             document.addEventListener("keyup", porthole.sendKeyUp);       }
         
-
+        //window.blockMenuHeaderScroll = true;
         document.ontouchmove = function(e){ 
             e.preventDefault(); 
         }

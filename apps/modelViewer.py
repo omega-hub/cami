@@ -143,6 +143,7 @@ print("initialized Model List")
 #Model Manipulation Functions:
 def onZoom(delta):
     print "inside On Zoom"
+    print delta
     camera.translate(0,0,-delta * ScrollSpeed,Space.World)
 
 def onRotate(dx,dy,dz):
@@ -156,3 +157,10 @@ def onRotate(dx,dy,dz):
 def onPan(dx,dy,dz):
     print "inside on Pan"
     camera.translate(dx,dy,dz, Space.World)
+
+def logPan(dx,dy,dz,numTouch):
+    print "Pan Gesture detected."
+    print dx
+    print dy
+    print dz
+    print numTouch
