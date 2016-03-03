@@ -1,72 +1,5091 @@
-Grid size 1 1 pool 100 numTimes 1
+Grid size 5 5 pool 100 numTimes 25
 Mission control client: connecting to 127.0.0.1:22500
+Equalizer display system initializing
 Running default_init.py
 Running system/quickCommands.py
 
 >> omegalib 11.2.1
 >> to get a list of quick commands type ':?'
-!!! [v10.1 DEPRECATION WARNING] Renderer::createTexture - use GpuContext::createTexture instead
-Running /Users/gracealexander/Documents/InterfacesLab/cami/apps/modelViewer.py
-./Manipulator.py:61: SyntaxWarning: name 'panSpeedMultiplier' is used prior to global declaration
-  global panSpeedMultiplier
-['other/', 'A_CueR_Exp.fbx', '../data/A_CueR_Exp.jpg']
+Running /fastdata/home/lzhao/cami/apps/modelViewer.py
 ['other/', 'testFBX.fbx', '../data/testFBX.jpg']
 ['other/', 'testFBX2.fbx', '../data/testFBX2.jpg']
+['other/', 'A_CueR_Exp.fbx', '../data/A_CueR_Exp.jpg']
 ['testdir/', 'R_CueR_Exp.fbx', '../data/R_CueR_Exp.jpg']
 ['testdir/', 'testFBXInTestDir.fbx', '../data/testFBXInTestDir.jpg']
 ['testdir2/', 'inTestDir2.fbx', '../data/inTestDir2.jpg']
-[['other/', 'A_CueR_Exp.fbx', '../data/A_CueR_Exp.jpg'], ['other/', 'testFBX.fbx', '../data/testFBX.jpg'], ['other/', 'testFBX2.fbx', '../data/testFBX2.jpg'], ['testdir/', 'R_CueR_Exp.fbx', '../data/R_CueR_Exp.jpg'], ['testdir/', 'testFBXInTestDir.fbx', '../data/testFBXInTestDir.jpg'], ['testdir2/', 'inTestDir2.fbx', '../data/inTestDir2.jpg']]
+[['other/', 'testFBX.fbx', '../data/testFBX.jpg'], ['other/', 'testFBX2.fbx', '../data/testFBX2.jpg'], ['other/', 'A_CueR_Exp.fbx', '../data/A_CueR_Exp.jpg'], ['testdir/', 'R_CueR_Exp.fbx', '../data/R_CueR_Exp.jpg'], ['testdir/', 'testFBXInTestDir.fbx', '../data/testFBXInTestDir.jpg'], ['testdir2/', 'inTestDir2.fbx', '../data/inTestDir2.jpg']]
 4
 initialized Model List
+inside On Zoom
+-0.985292599636
+inside On Zoom
+-0.980434197496
+inside On Zoom
+-0.973628555888
+inside On Zoom
+-0.956139721354
+inside On Zoom
+-0.944478029805
+inside On Zoom
+-0.933793548271
+inside On Zoom
+-0.919218349893
+inside On Zoom
+-0.907555591999
+inside On Zoom
+-0.896873401518
+inside On Zoom
+-0.884246425684
+inside On Zoom
+-0.872581518439
+inside On Zoom
+-0.86094773962
+inside On Zoom
+-0.848325821466
+inside On Zoom
+-0.840563431764
+inside On Zoom
+-0.827944361636
+inside On Zoom
+-0.818306219965
+inside On Zoom
+-0.807659390725
+inside On Zoom
+-0.797018416355
+inside On Zoom
+-0.789271796259
+inside On Zoom
+-0.781526917631
+inside On Zoom
+-0.772871194936
+inside On Zoom
+-0.767107994394
+inside On Zoom
+-0.759373303926
+inside On Zoom
+-0.753619636572
+inside On Zoom
+-0.745890645903
+inside On Zoom
+-0.740146977542
+inside On Zoom
+-0.735293145706
+inside On Zoom
+-0.729556637146
+inside On Zoom
+-0.723826841985
+inside On Zoom
+-0.717863927755
+inside On Zoom
+-0.71014464758
+inside On Zoom
+-0.704417796439
+inside On Zoom
+-0.699565748893
+inside On Zoom
+-0.694713790469
+inside On Zoom
+-0.689861923046
+inside On Zoom
+-0.685881389269
+inside On Zoom
+-0.685010148559
+inside On Zoom
+-0.683019011327
+inside On Zoom
+-0.681028984516
+inside On Zoom
+-0.679040077889
+inside On Zoom
+-0.681028984516
+inside On Zoom
+-0.683019011327
+inside On Zoom
+-0.685010148559
+inside On Zoom
+-0.688995715772
+inside On Zoom
+-0.693846836441
+inside On Zoom
+-0.70069180305
+inside On Zoom
+-0.709269931276
+inside On Zoom
+-0.717863927755
+inside On Zoom
+-0.728455761067
+inside On Zoom
+-0.739952414795
+inside On Zoom
+-0.751640669881
+inside On Zoom
+-0.76513306457
+inside On Zoom
+-0.775754995823
+inside On Zoom
+-0.789271796259
+inside On Zoom
+-0.806732409253
+inside On Zoom
+-0.827000158825
+inside On Zoom
+-0.84732911728
+inside On Zoom
+-0.863829885748
+inside On Zoom
+-0.881326594858
+inside On Zoom
+-0.893012074646
+inside On Zoom
+-0.903719012103
+inside On Zoom
+-0.9124993719
+inside On Zoom
+-0.917357332332
+inside On Zoom
+-0.923215527286
+inside On Zoom
+-0.928073348456
+inside On Zoom
+-0.933935093418
+inside On Zoom
+-0.939800463403
+inside On Zoom
+-0.941724910687
+inside On Zoom
+-0.944657954183
+inside On Zoom
+-0.949515454508
+inside On Zoom
+-0.95538399865
+inside On Zoom
+-0.957306707143
+inside On Zoom
+-0.960241319488
+inside On Zoom
+-0.963176793317
+inside On Zoom
+-0.968034026082
+inside On Zoom
+-0.969955994299
+inside On Zoom
+-0.9758273935
+inside On Zoom
+-0.980684548988
+inside On Zoom
+-0.983621406033
+inside On Zoom
+-0.988478470589
+inside On Zoom
+-0.993335548437
+inside On Zoom
+1.00113000651
+inside On Zoom
+1.00406818392
+inside On Zoom
+1.00803097343
+inside On Zoom
+1.00994694133
+inside On Zoom
+1.01097244275
+inside On Zoom
+1.00905842204
+Pan Gesture detected.
+0
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+0
+0
+0
+1
 inside on Rotate!
+inside On Zoom
+1.03036768156
+inside On Zoom
+1.04480674257
+inside On Zoom
+1.06582104459
+inside On Zoom
+1.07771768559
+inside On Zoom
+1.14444090756
+inside On Zoom
+1.17192414135
+inside On Zoom
+1.22042424467
+inside On Zoom
+1.24798562646
+inside On Zoom
+1.30170827932
+inside On Zoom
+1.34370962472
+inside On Zoom
+1.37387145275
+inside On Zoom
+1.39766263379
+inside On Zoom
+1.43695691412
+inside On Zoom
+1.46084288367
+inside On Zoom
+1.49101742748
+inside On Zoom
+1.52409308935
+inside On Zoom
+1.55427022099
+inside On Zoom
+1.59353200856
+inside On Zoom
+1.61462464692
+inside On Zoom
+1.63572368859
+inside On Zoom
+1.65388541814
+inside On Zoom
+1.66297405145
+inside On Zoom
+1.68406222384
+inside On Zoom
+1.68700702845
+inside On Zoom
+1.69607926749
+inside On Zoom
+1.71718518351
+inside On Zoom
+1.7262570985
+inside On Zoom
+1.73533407019
+inside On Zoom
+1.75643495532
+inside On Zoom
+1.7655115308
+inside On Zoom
+1.77459300344
+inside On Zoom
+1.78661283664
+inside On Zoom
+1.79568902911
+inside On Zoom
+1.80771973423
+inside On Zoom
+1.81679074124
+inside On Zoom
+1.82883202996
+inside On Zoom
+1.84994953902
+inside On Zoom
+1.85901045029
+inside On Zoom
+1.88012808152
+inside On Zoom
+1.88918887578
+inside On Zoom
+1.90125066689
+inside On Zoom
+1.92543137361
+inside On Zoom
+1.94657702466
+inside On Zoom
+1.96772686066
+inside On Zoom
+1.98578738748
+inside On Zoom
+2.01003855911
+inside On Zoom
+2.03120017103
+inside On Zoom
+2.05236546631
+inside On Zoom
+2.08254083287
+inside On Zoom
+2.1037091019
+inside On Zoom
+2.13388397948
+inside On Zoom
+2.14605581371
+inside On Zoom
+2.1672340577
+inside On Zoom
+2.19740698322
+inside On Zoom
+2.21858764703
+inside On Zoom
+2.23078722821
+inside On Zoom
+2.24876003072
+inside On Zoom
+2.26994298734
+inside On Zoom
+2.27893257856
+inside On Zoom
+2.29112884896
+inside On Zoom
+2.30333962025
+inside On Zoom
+2.31231753575
+inside On Zoom
+2.32129996241
+inside On Zoom
+2.33350897075
+inside On Zoom
+2.34248789637
+inside On Zoom
+2.35147126753
+inside On Zoom
+2.3604590335
+inside On Zoom
+2.36945114424
+inside On Zoom
+2.37265846609
+inside On Zoom
+2.38164275705
+inside On Zoom
+2.38487187147
+inside On Zoom
+2.38487187147
+Pan Gesture detected.
+29
+-37
+0
+1
 inside on Rotate!
+inside On Zoom
+-0.997014680014
+inside On Zoom
+-0.992712916377
+inside On Zoom
+-0.990563089532
+inside On Zoom
+-0.986265568788
+inside On Zoom
+-0.984117884202
+inside On Zoom
+-0.981970923083
+inside On Zoom
+-0.953779739872
+inside On Zoom
+-0.950800454777
+inside On Zoom
+-0.947005556826
+inside On Zoom
+-0.944847503931
+inside On Zoom
+-0.941062538408
+inside On Zoom
+-0.935932394003
+inside On Zoom
+-0.933771551795
+inside On Zoom
+-0.92783555793
+inside On Zoom
+-0.924870540235
+inside On Zoom
+-0.921907534255
+inside On Zoom
+-0.917578517991
+inside On Zoom
+-0.913820406212
+inside On Zoom
+-0.907322858551
+inside On Zoom
+-0.903569219994
+inside On Zoom
+-0.898444199795
+inside On Zoom
+-0.891942061992
+inside On Zoom
+-0.88681587274
+inside On Zoom
+-0.880901854093
+inside On Zoom
+-0.878732898061
+inside On Zoom
+-0.872825097005
+inside On Zoom
+-0.868484329588
+inside On Zoom
+-0.863360664851
+inside On Zoom
+-0.859021644623
+inside On Zoom
+-0.857458691953
+inside On Zoom
+-0.850943638235
+inside On Zoom
+-0.850164487381
+inside On Zoom
+-0.84582070402
+inside On Zoom
+-0.842870311631
+inside On Zoom
+-0.83774883925
+inside On Zoom
+-0.835576165456
+inside On Zoom
+-0.831857119182
+inside On Zoom
+-0.827507291614
+inside On Zoom
+-0.822387233759
+inside On Zoom
+-0.821619874428
+inside On Zoom
+-0.818679794592
+inside On Zoom
+-0.813563067089
+inside On Zoom
+-0.808446876363
+inside On Zoom
+-0.803331232671
+inside On Zoom
+-0.801151594427
+inside On Zoom
+-0.797465577967
+inside On Zoom
+-0.790920719875
+inside On Zoom
+-0.785057263504
+inside On Zoom
+-0.782874342693
+inside On Zoom
+-0.777018672701
+inside On Zoom
+-0.774833714431
+inside On Zoom
+-0.769722884294
+inside On Zoom
+-0.768986037405
+inside On Zoom
+-0.764612700592
+inside On Zoom
+-0.762427097441
+inside On Zoom
+-0.760242212628
+inside On Zoom
+-0.758058052363
+inside On Zoom
+-0.755874622928
+inside On Zoom
+-0.751509982023
+inside On Zoom
+-0.751509982023
+inside On Zoom
+1.03140853431
+inside On Zoom
+1.06036963811
+inside On Zoom
+1.10300895046
+inside On Zoom
+1.16373758749
+inside On Zoom
+1.20704542796
+inside On Zoom
+1.2488902924
+inside On Zoom
+1.28130130335
+inside On Zoom
+1.31385083618
+inside On Zoom
+1.34652884549
+inside On Zoom
+1.3698428643
+inside On Zoom
+1.41223458482
+inside On Zoom
+1.43580230248
+inside On Zoom
+1.4665076447
+inside On Zoom
+1.48539214921
+inside On Zoom
+1.50429167368
+inside On Zoom
+1.52553788297
+inside On Zoom
+1.53498575452
+inside On Zoom
+1.55389219807
+inside On Zoom
+1.56568361674
+inside On Zoom
+1.57513144199
+inside On Zoom
+1.57750709381
+inside On Zoom
+1.58694426879
+inside On Zoom
+1.59638504218
+inside On Zoom
+1.59638504218
+inside On Zoom
+-0.995065174792
+inside On Zoom
+-0.987668479962
+inside On Zoom
+-0.960336759439
+inside On Zoom
+-0.949609594053
+inside On Zoom
+-0.940508576281
+inside On Zoom
+-0.929779969773
+inside On Zoom
+-0.920682881938
+inside On Zoom
+-0.911592242125
+inside On Zoom
+-0.904986522998
+inside On Zoom
+-0.896729374316
+inside On Zoom
+-0.893431093729
+inside On Zoom
+-0.881878877515
+inside On Zoom
+-0.873621846492
+inside On Zoom
+-0.870330002303
+inside On Zoom
+-0.862073079862
+inside On Zoom
+-0.855499424639
+inside On Zoom
+-0.84724282134
+inside On Zoom
+-0.838986229049
+inside On Zoom
+-0.832426831973
+inside On Zoom
+-0.824960379328
+inside On Zoom
+-0.812640725303
+inside On Zoom
+-0.804384958092
+inside On Zoom
+-0.796912443169
+inside On Zoom
+-0.788656288409
+inside On Zoom
+-0.779617833785
+inside On Zoom
+-0.772144043549
+inside On Zoom
+-0.768093670638
+inside On Zoom
+-0.759838437551
+inside On Zoom
+-0.748319450694
+inside On Zoom
+-0.745823380007
+inside On Zoom
+-0.740064748594
+inside On Zoom
+-0.734307381682
+inside On Zoom
+-0.728551309248
+inside On Zoom
+-0.723555512842
+inside On Zoom
+-0.717798707785
+inside On Zoom
+-0.712043236304
+inside On Zoom
+-0.709544469467
+inside On Zoom
+-0.703789309841
+inside On Zoom
+-0.701290299998
+inside On Zoom
+-0.695535460198
+inside On Zoom
+-0.68978202981
+inside On Zoom
+-0.684030044396
+inside On Zoom
+-0.680782897817
+inside On Zoom
+-0.677540315093
+inside On Zoom
+-0.676810355965
+inside On Zoom
+-0.67357901615
+inside On Zoom
+-0.671069105749
+inside On Zoom
+-0.67035244189
+inside On Zoom
+-0.667840614359
+inside On Zoom
+-0.664616957335
+inside On Zoom
+-0.662103966239
+inside On Zoom
+-0.658883285826
+inside On Zoom
+-0.656369117773
+inside On Zoom
+-0.653855709877
+inside On Zoom
+-0.650636116547
+inside On Zoom
+-0.646731418486
+inside On Zoom
+-0.639175854625
+Pan Gesture detected.
+0
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+2
+-5
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+0
+0
+0
+1
 inside on Rotate!
+inside On Zoom
+1.05574031263
+inside On Zoom
+1.06574984535
+inside On Zoom
+1.08898314218
+inside On Zoom
+1.10895929876
+inside On Zoom
+1.11066933724
+inside On Zoom
+1.13239318299
+inside On Zoom
+1.15415255341
+inside On Zoom
+1.18783672849
+inside On Zoom
+1.20970124535
+inside On Zoom
+1.24361314569
+inside On Zoom
+1.27545883511
+inside On Zoom
+1.29742809254
+inside On Zoom
+1.30954796788
+inside On Zoom
+1.32929648092
+inside On Zoom
+1.35130144414
+inside On Zoom
+1.36117240494
+inside On Zoom
+1.38092551315
+inside On Zoom
+1.39305534731
+inside On Zoom
+1.40292501754
+inside On Zoom
+1.41279835055
+inside On Zoom
+1.42267527008
+inside On Zoom
+1.42494483692
+inside On Zoom
+1.44467809171
+inside On Zoom
+1.00901706686
+inside On Zoom
+1.00089805109
+inside On Zoom
+-0.975656839283
+inside On Zoom
+-0.965751989936
+inside On Zoom
+-0.953141972703
+inside On Zoom
+-0.937821704608
+inside On Zoom
+-0.924351667699
+inside On Zoom
+-0.90903813122
+inside On Zoom
+-0.897303352492
+inside On Zoom
+-0.884710277482
+inside On Zoom
+-0.875694545486
+inside On Zoom
+-0.865829393557
+inside On Zoom
+-0.857663167757
+inside On Zoom
+-0.850523307533
+inside On Zoom
+-0.847799190051
+inside On Zoom
+-0.844233620975
+inside On Zoom
+-0.838784152722
+inside On Zoom
+-0.836060686385
+inside On Zoom
+-0.835219038012
+inside On Zoom
+-0.832493675373
+inside On Zoom
+-0.829769160207
+inside On Zoom
+-0.828930932579
+inside On Zoom
+-0.825372513276
+inside On Zoom
+-0.822644181041
+inside On Zoom
+-0.819916686711
+inside On Zoom
+-0.817190038675
+inside On Zoom
+-0.810902504298
+inside On Zoom
+-0.803792367437
+inside On Zoom
+-0.794779452039
+inside On Zoom
+1.06425281559
+inside On Zoom
+1.08572832671
+inside On Zoom
+1.10722998487
+inside On Zoom
+1.11911850701
+inside On Zoom
+1.14067828347
+inside On Zoom
+1.16225984878
+inside On Zoom
+1.17187744053
+inside On Zoom
+1.19346979844
+inside On Zoom
+1.20548366378
+inside On Zoom
+1.21754001409
+inside On Zoom
+1.22712377595
+inside On Zoom
+1.23920690823
+inside On Zoom
+1.25133004428
+inside On Zoom
+1.26349203261
+inside On Zoom
+1.27569176199
+inside On Zoom
+1.28522326592
+inside On Zoom
+1.30430278852
+inside On Zoom
+1.31385056738
+inside On Zoom
+1.32340353705
+inside On Zoom
+1.3904106728
+inside On Zoom
+-0.988105207171
+inside On Zoom
+-0.981669276648
+inside On Zoom
+-0.978453233777
+inside On Zoom
+-0.972025056417
+inside On Zoom
+-0.964465349597
+inside On Zoom
+-0.953692243595
+inside On Zoom
+-0.923386935489
+inside On Zoom
+-0.916927222751
+inside On Zoom
+-0.909381833266
+inside On Zoom
+-0.900762148883
+inside On Zoom
+-0.897527827154
+inside On Zoom
+-0.88998754407
+inside On Zoom
+-0.883520153592
+inside On Zoom
+-0.878149360942
+inside On Zoom
+-0.874911060117
+inside On Zoom
+-0.868438336768
+inside On Zoom
+-0.864136556457
+inside On Zoom
+-0.860899486248
+inside On Zoom
+-0.853362056139
+inside On Zoom
+-0.846889132759
+inside On Zoom
+-0.841532872512
+inside On Zoom
+-0.838291610404
+inside On Zoom
+-0.835051669769
+inside On Zoom
+-0.828575814923
+inside On Zoom
+-0.827517298959
+inside On Zoom
+-0.824277260912
+inside On Zoom
+-0.816742996078
+inside On Zoom
+-0.812453282475
+inside On Zoom
+-0.804923725232
+inside On Zoom
+-0.801679261025
+inside On Zoom
+-0.79090525632
+inside On Zoom
+-0.789869746387
+inside On Zoom
+-0.786622224832
+inside On Zoom
+-0.782345423606
+inside On Zoom
+-0.782345423606
+inside On Zoom
+1.02195162922
+inside On Zoom
+1.04755453422
+inside On Zoom
+1.0666314496
+inside On Zoom
+1.08573736363
+inside On Zoom
+1.10759625952
+inside On Zoom
+1.12946972445
+inside On Zoom
+1.15135692806
+inside On Zoom
+1.16373976184
+inside On Zoom
+1.17325710148
+inside On Zoom
+1.18566133591
+inside On Zoom
+1.19810216342
+inside On Zoom
+1.23327081371
+inside On Zoom
+1.25515938
+inside On Zoom
+1.27705981514
+inside On Zoom
+1.29241024401
+inside On Zoom
+1.311392729
+inside On Zoom
+1.33333333333
+inside On Zoom
+1.34580466404
+inside On Zoom
+1.35830704295
+inside On Zoom
+1.37724259048
+inside On Zoom
+1.38028971005
+inside On Zoom
+1.38340157616
+inside On Zoom
+1.39283740827
+inside On Zoom
+1.40228024211
+inside On Zoom
+1.41484252107
+inside On Zoom
+1.4557191448
+inside On Zoom
+1.4557191448
+inside On Zoom
+-0.985389002695
+inside On Zoom
+-0.95305301401
+inside On Zoom
+-0.938452581078
+inside On Zoom
+-0.923856783595
+inside On Zoom
+-0.907170828375
+inside On Zoom
+-0.896743577474
+inside On Zoom
+-0.885279128277
+inside On Zoom
+-0.877984432923
+inside On Zoom
+-0.863399042231
+inside On Zoom
+-0.852972068433
+inside On Zoom
+-0.842545101494
+inside On Zoom
+-0.835254690139
+inside On Zoom
+-0.827965744647
+inside On Zoom
+-0.814401005027
+inside On Zoom
+-0.807112328657
+inside On Zoom
+-0.803974178358
+inside On Zoom
+-0.796685641978
+inside On Zoom
+-0.790410379179
+inside On Zoom
+-0.783120558913
+inside On Zoom
+-0.775832314119
+inside On Zoom
+-0.771687017846
+inside On Zoom
+-0.765405674178
+inside On Zoom
+-0.762266987746
+inside On Zoom
+-0.758119226804
+inside On Zoom
+-0.754979051113
+inside On Zoom
+-0.751840221523
+inside On Zoom
+-0.748702754966
+inside On Zoom
+-0.74769278597
+inside On Zoom
+-0.740408241664
+inside On Zoom
+-0.737266368048
+inside On Zoom
+-0.734125858486
+inside On Zoom
+-0.729982039624
+inside On Zoom
+-0.726839974025
+inside On Zoom
+-0.722699513252
+inside On Zoom
+-0.719555867981
+inside On Zoom
+-0.716413604945
+inside On Zoom
+-0.711288330054
+inside On Zoom
+-0.708140089036
+inside On Zoom
+-0.701847716171
+inside On Zoom
+-0.69870362133
+inside On Zoom
+-0.69142187881
+inside On Zoom
+-0.687289524351
+inside On Zoom
+-0.683164004535
+inside On Zoom
+-0.680013469293
+inside On Zoom
+-0.67371661521
+inside On Zoom
+-0.666439206047
+inside On Zoom
+-0.663291191141
+inside On Zoom
+-0.659163925488
+inside On Zoom
+-0.658198274228
+inside On Zoom
+-0.655043852051
+inside On Zoom
+-0.6518908448
+inside On Zoom
+-0.650931107399
+inside On Zoom
+-0.647774866382
+inside On Zoom
+-0.644620038446
+inside On Zoom
+-0.64050826262
+inside On Zoom
+-0.634196337851
+inside On Zoom
+-0.630085563643
+inside On Zoom
+-0.621887397943
+inside On Zoom
+-0.611467364598
+inside On Zoom
+-0.611467364598
+inside On Zoom
+1.02656254876
+inside On Zoom
+1.06282466569
+inside On Zoom
+1.10726023133
+inside On Zoom
+1.14337266412
+inside On Zoom
+1.19520961117
+inside On Zoom
+1.22774778704
+inside On Zoom
+1.25679250164
+inside On Zoom
+1.27620357311
+inside On Zoom
+1.30875225614
+inside On Zoom
+1.32188401325
+inside On Zoom
+1.35790730915
+inside On Zoom
+1.36758830213
+inside On Zoom
+1.37727818532
+inside On Zoom
+1.39398790843
+inside On Zoom
+1.40364653243
+inside On Zoom
+1.41331412605
+inside On Zoom
+1.42299050649
+inside On Zoom
+1.42652330513
+inside On Zoom
+1.43618447091
+inside On Zoom
+1.43975849528
+inside On Zoom
+1.44940455047
+inside On Zoom
+1.45905946035
+inside On Zoom
+1.46265003705
+inside On Zoom
+1.48193887931
+inside On Zoom
+1.49159632448
+inside On Zoom
+1.50482252573
+inside On Zoom
+1.50844466902
+inside On Zoom
+1.51807309976
+inside On Zoom
+1.5217333385
+inside On Zoom
+1.54097027298
+inside On Zoom
+1.54097027298
+inside On Zoom
+-0.982878463222
+inside On Zoom
+-0.97994862725
+inside On Zoom
+-0.974092486667
+inside On Zoom
+-0.967959692444
+inside On Zoom
+-0.962091260462
+inside On Zoom
+-0.95622751749
+inside On Zoom
+-0.953297431424
+inside On Zoom
+-0.946367023958
+inside On Zoom
+-0.940508706498
+inside On Zoom
+-0.936506611873
+inside On Zoom
+-0.927721995159
+inside On Zoom
+-0.919716069191
+inside On Zoom
+-0.90879084869
+inside On Zoom
+-0.902925818825
+inside On Zoom
+-0.892002216558
+inside On Zoom
+-0.878149725957
+inside On Zoom
+-0.872279467271
+inside On Zoom
+-0.868287883499
+inside On Zoom
+-0.860317019812
+inside On Zoom
+-0.854438127437
+inside On Zoom
+-0.84751448632
+inside On Zoom
+-0.844575921968
+inside On Zoom
+-0.843532605457
+inside On Zoom
+-0.840591696982
+inside On Zoom
+-0.836611759627
+inside On Zoom
+-0.832636171385
+inside On Zoom
+-0.829691823408
+inside On Zoom
+-0.826748759227
+inside On Zoom
+-0.823806992601
+inside On Zoom
+-0.819828655403
+inside On Zoom
+-0.812909492602
+inside On Zoom
+-0.809965516441
+inside On Zoom
+-0.807022858168
+inside On Zoom
+-0.804081532253
+inside On Zoom
+-0.80114155337
+inside On Zoom
+-0.797159959977
+inside On Zoom
+-0.79421886282
+inside On Zoom
+-0.791279131185
+inside On Zoom
+-0.788340780349
+inside On Zoom
+-0.781416757933
+inside On Zoom
+-0.780376284833
+inside On Zoom
+-0.77743427491
+inside On Zoom
+-0.774493653172
+inside On Zoom
+-0.771554435489
+inside On Zoom
+-0.770513273341
+inside On Zoom
+-0.767571490896
+inside On Zoom
+-0.76463111629
+inside On Zoom
+-0.761692165827
+inside On Zoom
+-0.760650296836
+inside On Zoom
+-0.757708747925
+inside On Zoom
+-0.753730097664
+inside On Zoom
+-0.747846047622
+inside On Zoom
+-0.747846047622
+inside On Zoom
+1.00598807747
+inside On Zoom
+1.01446401876
+inside On Zoom
+1.03144301127
+inside On Zoom
+1.04294601252
+inside On Zoom
+1.06294853559
+inside On Zoom
+1.07991679047
+inside On Zoom
+1.1399155739
+inside On Zoom
+1.15992521638
+inside On Zoom
+1.17993945692
+inside On Zoom
+1.1968765996
+inside On Zoom
+1.21998082693
+inside On Zoom
+1.22843379558
+inside On Zoom
+1.24317795886
+inside On Zoom
+1.26003801685
+inside On Zoom
+1.28007208019
+inside On Zoom
+1.28850876964
+inside On Zoom
+1.30540509454
+inside On Zoom
+1.31698031111
+inside On Zoom
+1.33701099817
+inside On Zoom
+1.34545259118
+inside On Zoom
+1.35704506227
+inside On Zoom
+1.36548167908
+inside On Zoom
+1.36865794701
+inside On Zoom
+1.38029073017
+inside On Zoom
+1.39712274047
+inside On Zoom
+1.40554977313
+inside On Zoom
+1.4087509268
+Pan Gesture detected.
+-1
+-16
+0
+1
 inside on Rotate!
+inside On Zoom
+-0.995377856064
+inside On Zoom
+-0.989647640894
+inside On Zoom
+-0.983922588791
+inside On Zoom
+-0.978202790407
+inside On Zoom
+-0.974202301656
+inside On Zoom
+-0.970204857417
+inside On Zoom
+-0.967342926028
+inside On Zoom
+-0.925733801246
+inside On Zoom
+-0.919981932305
+inside On Zoom
+-0.916006571595
+inside On Zoom
+-0.90915644007
+inside On Zoom
+-0.902306829389
+inside On Zoom
+-0.896552679566
+inside On Zoom
+-0.891489990368
+inside On Zoom
+-0.885729779353
+inside On Zoom
+-0.88176124379
+inside On Zoom
+-0.876001984238
+inside On Zoom
+-0.872032657775
+inside On Zoom
+-0.869152830726
+inside On Zoom
+-0.865184949079
+inside On Zoom
+-0.859424899863
+inside On Zoom
+-0.858337826574
+inside On Zoom
+-0.855456218799
+inside On Zoom
+-0.852575989423
+inside On Zoom
+-0.849697152464
+inside On Zoom
+-0.846819722122
+inside On Zoom
+-0.843943712786
+inside On Zoom
+-0.841069139032
+inside On Zoom
+-0.835324357545
+inside On Zoom
+-0.835324357545
+Inside On Model Select
+other/testFBX.fbx
+Loading model......../data/other/testFBX.fbx
+Optimizing model...../data/other/testFBX.fbx
+Generating normals...
+Pan Gesture detected.
+0
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+2
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-2
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-2
+2
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-2
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-2
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-2
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-2
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-2
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+0
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+0
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+0
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+0
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+0
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+0
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+0
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+0
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+-1
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+0
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+0
+1
+0
+1
 inside on Rotate!
+Pan Gesture detected.
+0
+2
+0
+1
 inside on Rotate!
-Mission control client disconnected: server
+Pan Gesture detected.
+-1
+2
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+0
+1
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+0
+1
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+inside On Zoom
+1.09599063163
+inside On Zoom
+1.10313600526
+inside On Zoom
+1.10970798487
+inside On Zoom
+1.12353209906
+inside On Zoom
+1.12695479662
+inside On Zoom
+1.14797460721
+inside On Zoom
+1.1585010672
+inside On Zoom
+1.16203288844
+inside On Zoom
+1.16903816626
+inside On Zoom
+1.17259080205
+inside On Zoom
+1.18315866723
+inside On Zoom
+1.18677288235
+inside On Zoom
+1.19042788967
+inside On Zoom
+1.1973699714
+inside On Zoom
+1.20104403683
+inside On Zoom
+1.21166888375
+inside On Zoom
+1.21540112778
+inside On Zoom
+1.21917249097
+inside On Zoom
+1.22605233909
+inside On Zoom
+1.22984114555
+inside On Zoom
+1.24051739665
+inside On Zoom
+1.24436120321
+inside On Zoom
+1.25506123495
+inside On Zoom
+1.25895853136
+inside On Zoom
+1.29114559157
+inside On Zoom
+1.29512462487
+inside On Zoom
+1.30588059605
+inside On Zoom
+1.31664230369
+inside On Zoom
+1.32338795579
+inside On Zoom
+1.32740960829
+inside On Zoom
+1.3341470075
+inside On Zoom
+1.34089651011
+inside On Zoom
+1.35165296516
+inside On Zoom
+1.35568167813
+inside On Zoom
+1.36241495631
+inside On Zoom
+1.36645703597
+inside On Zoom
+1.3731823534
+inside On Zoom
+1.37991954983
+inside On Zoom
+1.39068434875
+inside On Zoom
+1.39742535891
+inside On Zoom
+1.40417789235
+inside On Zoom
+1.41094178363
+inside On Zoom
+1.41771687018
+inside On Zoom
+1.42168840802
+inside On Zoom
+1.42845566276
+inside On Zoom
+1.43523394442
+inside On Zoom
+1.44202309751
+inside On Zoom
+1.44597049176
+inside On Zoom
+1.45671251056
+inside On Zoom
+1.46348623653
+inside On Zoom
+1.47027066704
+inside On Zoom
+1.48100286456
+inside On Zoom
+1.48497113287
+inside On Zoom
+1.49572144709
+inside On Zoom
+1.50248336046
+inside On Zoom
+1.50647685566
+inside On Zoom
+1.51323143028
+inside On Zoom
+1.51999652971
+inside On Zoom
+1.5239845676
+inside On Zoom
+1.53074239988
+inside On Zoom
+1.53751060845
+inside On Zoom
+1.54428905686
+inside On Zoom
+1.55107761089
+inside On Zoom
+1.55502556594
+inside On Zoom
+1.56180690815
+inside On Zoom
+1.57254137282
+inside On Zoom
+1.58611954258
+inside On Zoom
+1.58611954258
+Pan Gesture detected.
+-59
+146
+0
+1
+inside on Rotate!
+inside On Zoom
+-0.990917206873
+inside On Zoom
+-0.988387147627
+inside On Zoom
+-0.985859338201
+inside On Zoom
+-0.981838177006
+inside On Zoom
+-0.979311065885
+inside On Zoom
+-0.977818108724
+inside On Zoom
+-0.973799146891
+inside On Zoom
+-0.949096595467
+inside On Zoom
+-0.945074056123
+inside On Zoom
+-0.942548965292
+inside On Zoom
+-0.940026260696
+inside On Zoom
+-0.936001575029
+inside On Zoom
+-0.931978005604
+inside On Zoom
+-0.925430335936
+inside On Zoom
+-0.92290753466
+inside On Zoom
+-0.918882910086
+inside On Zoom
+-0.916360895129
+inside On Zoom
+-0.91384135177
+inside On Zoom
+-0.909814516673
+inside On Zoom
+-0.907295793909
+inside On Zoom
+-0.900750515472
+inside On Zoom
+-0.898235163662
+inside On Zoom
+-0.894205522593
+inside On Zoom
+-0.889179141066
+inside On Zoom
+-0.885147222743
+inside On Zoom
+-0.882636230892
+inside On Zoom
+-0.877622157658
+inside On Zoom
+-0.874572321417
+inside On Zoom
+-0.872060531594
+inside On Zoom
+-0.86955139845
+inside On Zoom
+-0.865517672399
+inside On Zoom
+-0.861485069364
+inside On Zoom
+-0.858975147336
+inside On Zoom
+-0.854941929294
+inside On Zoom
+-0.850909853042
+inside On Zoom
+-0.846878934888
+inside On Zoom
+-0.844366426967
+inside On Zoom
+-0.839349655075
+inside On Zoom
+-0.837823334606
+inside On Zoom
+-0.835314544267
+inside On Zoom
+-0.831280583839
+inside On Zoom
+-0.824738182795
+inside On Zoom
+-0.82223139787
+inside On Zoom
+-0.819727461741
+inside On Zoom
+-0.817226400595
+inside On Zoom
+-0.813187505001
+inside On Zoom
+-0.811654463706
+inside On Zoom
+-0.807619720002
+inside On Zoom
+-0.799553831798
+inside On Zoom
+-0.795522723791
+inside On Zoom
+-0.790501271318
+inside On Zoom
+-0.788978771676
+inside On Zoom
+-0.786467601182
+inside On Zoom
+-0.782435168098
+inside On Zoom
+-0.780919017115
+inside On Zoom
+-0.778403991292
+inside On Zoom
+-0.774374090383
+inside On Zoom
+-0.771860072189
+inside On Zoom
+-0.769349042132
+inside On Zoom
+-0.763800232188
+inside On Zoom
+-0.761285261315
+inside On Zoom
+-0.758773313913
+inside On Zoom
+-0.752230493528
+inside On Zoom
+-0.74819785784
+inside On Zoom
+-0.741654714285
+inside On Zoom
+-0.740136543542
+inside On Zoom
+-0.736107908266
+inside On Zoom
+-0.732080650579
+inside On Zoom
+-0.728054793341
+inside On Zoom
+-0.722534803297
+inside On Zoom
+-0.718515439755
+inside On Zoom
+-0.715985860514
+inside On Zoom
+-0.711965843892
+inside On Zoom
+-0.707947349804
+inside On Zoom
+-0.705416529865
+inside On Zoom
+-0.70288886001
+inside On Zoom
+-0.701397378848
+inside On Zoom
+-0.699915034122
+inside On Zoom
+-0.695901266459
+inside On Zoom
+-0.690829430854
+inside On Zoom
+-0.687878650956
+inside On Zoom
+-0.685336604151
+inside On Zoom
+-0.681325507749
+inside On Zoom
+-0.678784315428
+inside On Zoom
+-0.676246319502
+inside On Zoom
+-0.669302523493
+inside On Zoom
+-0.666754289478
+inside On Zoom
+-0.662747776097
+inside On Zoom
+-0.660200353014
+inside On Zoom
+-0.657295656252
+inside On Zoom
+-0.654740184755
+inside On Zoom
+-0.652187915976
+inside On Zoom
+-0.645632963692
+inside On Zoom
+-0.641628895906
+inside On Zoom
+-0.64018318573
+inside On Zoom
+-0.636185462557
+inside On Zoom
+-0.632189727107
+inside On Zoom
+-0.629628183705
+inside On Zoom
+-0.625631899146
+inside On Zoom
+-0.621637654551
+inside On Zoom
+-0.620214831185
+inside On Zoom
+-0.613655444573
+inside On Zoom
+-0.609667561401
+inside On Zoom
+-0.603107793446
+inside On Zoom
+-0.595137742832
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+inside On Zoom
+1.06875693182
+inside On Zoom
+1.17859554914
+inside On Zoom
+1.24386636436
+inside On Zoom
+1.30487215361
+inside On Zoom
+1.36465351875
+inside On Zoom
+1.40155656589
+inside On Zoom
+1.45249994753
+inside On Zoom
+1.48941456994
+inside On Zoom
+1.5492001246
+inside On Zoom
+1.59494180483
+inside On Zoom
+1.65116494289
+inside On Zoom
+1.7021729545
+inside On Zoom
+1.74444932522
+inside On Zoom
+1.78139270414
+inside On Zoom
+1.81298117942
+inside On Zoom
+1.84656387642
+inside On Zoom
+1.86939518336
+inside On Zoom
+1.9117680358
+inside On Zoom
+1.9432930095
+inside On Zoom
+1.99436759465
+inside On Zoom
+2.02590456803
+inside On Zoom
+2.05746911086
+inside On Zoom
+2.07157460944
+inside On Zoom
+2.10315354551
+inside On Zoom
+2.13675138377
+inside On Zoom
+2.15958169641
+inside On Zoom
+2.18241403828
+inside On Zoom
+2.21936200381
+inside On Zoom
+2.24760408834
+inside On Zoom
+2.27043102135
+inside On Zoom
+2.30197651571
+inside On Zoom
+2.33564005488
+inside On Zoom
+2.36716038237
+inside On Zoom
+2.40411145589
+inside On Zoom
+2.43565210518
+inside On Zoom
+2.47260005891
+inside On Zoom
+2.4813221536
+inside On Zoom
+2.52699887156
+inside On Zoom
+2.55325943175
+inside On Zoom
+2.57268190383
+inside On Zoom
+2.59019387099
+inside On Zoom
+2.6183709199
+inside On Zoom
+2.64121757482
+inside On Zoom
+2.67283156885
+inside On Zoom
+2.6781558811
+inside On Zoom
+2.69568464912
+inside On Zoom
+2.7097656927
+inside On Zoom
+2.72385113628
+inside On Zoom
+2.73794091195
+inside On Zoom
+2.74670075047
+inside On Zoom
+2.76425124497
+inside On Zoom
+2.76955164534
+inside On Zoom
+2.77487980782
+inside On Zoom
+2.78363670498
+inside On Zoom
+2.78363670498
+Pan Gesture detected.
+-35
+33
+0
+1
+inside on Rotate!
+inside On Zoom
+-0.986033382628
+inside On Zoom
+-0.980465338895
+inside On Zoom
+-0.974908198981
+inside On Zoom
+-0.972133776405
+inside On Zoom
+-0.967712573508
+inside On Zoom
+-0.963292688593
+inside On Zoom
+-0.936802101013
+inside On Zoom
+-0.930777516032
+inside On Zoom
+-0.922403372567
+inside On Zoom
+-0.916374990222
+inside On Zoom
+-0.906382130026
+inside On Zoom
+-0.901973277758
+inside On Zoom
+-0.89198243796
+inside On Zoom
+-0.890364849628
+inside On Zoom
+-0.880372321404
+inside On Zoom
+-0.875963261478
+inside On Zoom
+-0.868762795726
+inside On Zoom
+-0.861562556173
+inside On Zoom
+-0.852746832293
+inside On Zoom
+-0.845545614353
+inside On Zoom
+-0.841139611875
+inside On Zoom
+-0.832332666614
+inside On Zoom
+-0.826736625512
+inside On Zoom
+-0.819535461947
+inside On Zoom
+-0.813525248044
+inside On Zoom
+-0.806322270782
+inside On Zoom
+-0.80192141005
+inside On Zoom
+-0.793125169686
+inside On Zoom
+-0.785920633943
+inside On Zoom
+-0.778716273175
+inside On Zoom
+-0.774319815893
+inside On Zoom
+-0.771512092285
+inside On Zoom
+-0.767115051103
+inside On Zoom
+-0.758326834302
+inside On Zoom
+-0.755514781739
+inside On Zoom
+-0.752706051435
+inside On Zoom
+-0.746729427428
+inside On Zoom
+-0.739523277677
+inside On Zoom
+-0.736710091701
+inside On Zoom
+-0.729504843103
+inside On Zoom
+-0.723537965102
+inside On Zoom
+-0.720720149904
+inside On Zoom
+-0.715094874443
+inside On Zoom
+-0.712287495958
+inside On Zoom
+-0.709124166406
+inside On Zoom
+-0.706307792298
+inside On Zoom
+-0.701917485446
+inside On Zoom
+-0.696289787171
+inside On Zoom
+-0.691896085535
+inside On Zoom
+-0.687504583193
+inside On Zoom
+-0.684690489062
+inside On Zoom
+-0.680298371639
+inside On Zoom
+-0.674675466753
+inside On Zoom
+-0.671520953925
+inside On Zoom
+-0.668701855843
+inside On Zoom
+-0.661495359642
+inside On Zoom
+-0.657106601578
+inside On Zoom
+-0.655544542443
+inside On Zoom
+-0.645512676826
+inside On Zoom
+-0.642692860429
+inside On Zoom
+-0.638305272538
+inside On Zoom
+-0.635486232051
+inside On Zoom
+-0.631098018647
+inside On Zoom
+-0.628279772545
+inside On Zoom
+-0.625465468812
+inside On Zoom
+-0.62107348779
+inside On Zoom
+-0.615120798037
+inside On Zoom
+-0.612297008138
+inside On Zoom
+-0.606361150583
+inside On Zoom
+-0.60353086765
+inside On Zoom
+-0.599151816431
+inside On Zoom
+-0.591942595623
+inside On Zoom
+-0.589113712562
+inside On Zoom
+-0.58628893285
+inside On Zoom
+-0.584733492349
+inside On Zoom
+-0.581905336086
+inside On Zoom
+-0.577524511013
+inside On Zoom
+-0.567489010807
+inside On Zoom
+-0.565937073878
+inside On Zoom
+-0.563106932885
+inside On Zoom
+-0.558727743728
+inside On Zoom
+-0.555898346066
+inside On Zoom
+-0.5543515118
+inside On Zoom
+-0.549978307691
+inside On Zoom
+-0.542767944849
+inside On Zoom
+-0.539932021693
+inside On Zoom
+-0.537100503425
+inside On Zoom
+-0.532722448871
+inside On Zoom
+-0.529891690381
+inside On Zoom
+-0.525512997172
+inside On Zoom
+-0.51830367165
+inside On Zoom
+-0.515474498492
+inside On Zoom
+-0.508266131964
+inside On Zoom
+-0.505442551989
+inside On Zoom
+-0.496676507087
+inside On Zoom
+-0.491028200889
+inside On Zoom
+-0.486642031597
+inside On Zoom
+-0.479434356253
+inside On Zoom
+-0.475050689914
+inside On Zoom
+-0.470670423219
+inside On Zoom
+-0.469130995614
+inside On Zoom
+-0.464762122232
+inside On Zoom
+-0.463247997607
+inside On Zoom
+-0.463247997607
+inside On Zoom
+-0.458891159658
+inside On Zoom
+-0.456035753546
+inside On Zoom
+-0.451678478065
+inside On Zoom
+-0.448823565469
+inside On Zoom
+-0.445973715515
+inside On Zoom
+-0.443129025879
+inside On Zoom
+-0.44161143612
+inside On Zoom
+-0.438762185922
+inside On Zoom
+-0.434399368424
+inside On Zoom
+-0.431550738434
+inside On Zoom
+-0.427187365502
+inside On Zoom
+-0.424339377238
+inside On Zoom
+-0.421496839301
+inside On Zoom
+-0.418659862709
+inside On Zoom
+-0.414286337246
+inside On Zoom
+-0.408619924402
+inside On Zoom
+-0.407075958637
+inside On Zoom
+-0.404240767056
+inside On Zoom
+-0.401411479701
+inside On Zoom
+-0.397031461068
+inside On Zoom
+-0.39420323773
+inside On Zoom
+-0.39138117077
+inside On Zoom
+-0.386995209818
+inside On Zoom
+-0.384174379535
+inside On Zoom
+-0.385756046143
+inside On Zoom
+-0.387358125017
+inside On Zoom
+-0.388980363944
+inside On Zoom
+-0.390622511753
+inside On Zoom
+-0.393397108809
+inside On Zoom
+-0.396178546096
+inside On Zoom
+-0.397817144147
+inside On Zoom
+-0.400593874118
+inside On Zoom
+-0.403377292893
+inside On Zoom
+-0.408963650234
+inside On Zoom
+-0.414575156697
+inside On Zoom
+-0.420210804757
+inside On Zoom
+-0.426175028391
+inside On Zoom
+-0.431803907495
+inside On Zoom
+-0.434626931212
+inside On Zoom
+-0.440584993863
+inside On Zoom
+-0.444980727529
+inside On Zoom
+-0.44937978615
+inside On Zoom
+-0.453782073028
+inside On Zoom
+-0.459808840929
+inside On Zoom
+-0.467007389926
+inside On Zoom
+-0.475838792983
+inside On Zoom
+-0.483035476915
+inside On Zoom
+-0.496299156993
+inside On Zoom
+-0.507917885172
+inside On Zoom
+-0.517881788322
+inside On Zoom
+-0.526729658697
+inside On Zoom
+-0.538348979607
+inside On Zoom
+-0.548310381905
+inside On Zoom
+-0.559927999547
+inside On Zoom
+-0.568780581834
+inside On Zoom
+-0.577091813788
+inside On Zoom
+-0.58870721389
+inside On Zoom
+-0.59755147775
+inside On Zoom
+-0.60474546802
+inside On Zoom
+-0.609169740999
+inside On Zoom
+-0.616363220003
+inside On Zoom
+-0.620788526322
+inside On Zoom
+-0.626886652522
+inside On Zoom
+-0.629645015158
+inside On Zoom
+-0.636836025717
+inside On Zoom
+-0.639600299847
+inside On Zoom
+-0.639600299847
+inside On Zoom
+1.02496233484
+inside On Zoom
+1.03220847782
+inside On Zoom
+1.0512651674
+inside On Zoom
+1.0657711737
+inside On Zoom
+1.08028989377
+inside On Zoom
+1.13127277121
+inside On Zoom
+1.15490273644
+inside On Zoom
+1.18312596507
+inside On Zoom
+1.19757897875
+inside On Zoom
+1.2139849347
+inside On Zoom
+1.22580252693
+inside On Zoom
+1.23762047767
+inside On Zoom
+1.24682341757
+inside On Zoom
+1.25403883923
+inside On Zoom
+1.25864435144
+inside On Zoom
+1.26325525378
+inside On Zoom
+1.27507767714
+inside On Zoom
+1.28431764998
+inside On Zoom
+1.28894540506
+inside On Zoom
+1.29357826515
+inside On Zoom
+1.2982161756
+inside On Zoom
+1.30750693255
+inside On Zoom
+1.31681725286
+inside On Zoom
+1.3239898368
+inside On Zoom
+1.32864812367
+inside On Zoom
+1.33331115078
+inside On Zoom
+1.33797886856
+inside On Zoom
+1.34514276626
+inside On Zoom
+1.34981108637
+inside On Zoom
+1.35448400354
+inside On Zoom
+1.36384343999
+inside On Zoom
+1.36631684092
+inside On Zoom
+1.37099481245
+inside On Zoom
+1.36631684092
+inside On Zoom
+1.35697446432
+inside On Zoom
+1.34765048977
+inside On Zoom
+1.34299552307
+inside On Zoom
+1.33116587164
+inside On Zoom
+1.31933634038
+inside On Zoom
+1.30750693255
+inside On Zoom
+1.29315581211
+inside On Zoom
+1.27881892679
+inside On Zoom
+1.26698718289
+inside On Zoom
+1.25049235169
+inside On Zoom
+1.2314924824
+inside On Zoom
+1.21716592828
+inside On Zoom
+1.20533339896
+inside On Zoom
+1.18883162433
+inside On Zoom
+1.17699992048
+inside On Zoom
+1.16735461771
+inside On Zoom
+1.15800406268
+inside On Zoom
+1.1436879293
+inside On Zoom
+1.13433989735
+inside On Zoom
+1.12250794966
+inside On Zoom
+1.11784287692
+inside On Zoom
+1.10818837825
+inside On Zoom
+1.09884433879
+inside On Zoom
+1.09168116755
+inside On Zoom
+1.08701268179
+inside On Zoom
+1.07518112811
+inside On Zoom
+1.06334968119
+inside On Zoom
+1.05151834464
+inside On Zoom
+1.03968712222
+inside On Zoom
+1.03502776194
+inside On Zoom
+1.02785601788
+inside On Zoom
+1.0182013591
+inside On Zoom
+1.00419418013
+inside On Zoom
+-0.994535209533
+inside On Zoom
+-0.985193985919
+inside On Zoom
+-0.978029258863
+inside On Zoom
+-0.970869379394
+inside On Zoom
+-0.961531370338
+inside On Zoom
+-0.954365158365
+inside On Zoom
+-0.949700251048
+inside On Zoom
+-0.945041966188
+inside On Zoom
+-0.937869263767
+inside On Zoom
+-0.933211972859
+inside On Zoom
+-0.928561498411
+inside On Zoom
+-0.926038413554
+inside On Zoom
+-0.923538775634
+inside On Zoom
+-0.918869838345
+inside On Zoom
+-0.91420770573
+inside On Zoom
+-0.909552482427
+inside On Zoom
+-0.90703830387
+inside On Zoom
+-0.902377145896
+inside On Zoom
+-0.897722998402
+inside On Zoom
+-0.89307597099
+inside On Zoom
+-0.885893697806
+inside On Zoom
+-0.883375622011
+inside On Zoom
+-0.878716494107
+inside On Zoom
+-0.874064588085
+inside On Zoom
+-0.869420019869
+inside On Zoom
+-0.862235677096
+inside On Zoom
+-0.857592390949
+inside On Zoom
+-0.850406973131
+inside On Zoom
+-0.84576500605
+inside On Zoom
+-0.838578484952
+inside On Zoom
+-0.833937875555
+inside On Zoom
+-0.831397248456
+inside On Zoom
+-0.824221434694
+inside On Zoom
+-0.81239107905
+inside On Zoom
+-0.807738775153
+inside On Zoom
+-0.80309441047
+inside On Zoom
+-0.798458123539
+inside On Zoom
+-0.791266883626
+inside On Zoom
+-0.786632127105
+inside On Zoom
+-0.779439624666
+inside On Zoom
+-0.770181778167
+inside On Zoom
+-0.767612645972
+inside On Zoom
+-0.762981097557
+inside On Zoom
+-0.758358210795
+inside On Zoom
+-0.751156094776
+inside On Zoom
+-0.746535048555
+inside On Zoom
+-0.741922986839
+inside On Zoom
+-0.734712311006
+inside On Zoom
+-0.730102320894
+inside On Zoom
+-0.732726495213
+inside On Zoom
+-0.737320078226
+inside On Zoom
+-0.744543132323
+inside On Zoom
+-0.751771330508
+inside On Zoom
+-0.760958588259
+inside On Zoom
+-0.772778628237
+inside On Zoom
+-0.78921035213
+inside On Zoom
+-0.801033264751
+inside On Zoom
+-0.817479747383
+inside On Zoom
+-0.829305085492
+inside On Zoom
+-0.836504283017
+inside On Zoom
+-0.841130733385
+inside On Zoom
+-0.855531536193
+inside On Zoom
+-0.864782907688
+inside On Zoom
+-0.879178737413
+inside On Zoom
+-0.888436175387
+inside On Zoom
+-0.900263192328
+inside On Zoom
+-0.9146520128
+inside On Zoom
+-0.919281412543
+inside On Zoom
+-0.929059261289
+inside On Zoom
+-0.938302366629
+inside On Zoom
+-0.945501418738
+inside On Zoom
+-0.957325891631
+inside On Zoom
+-0.9691506545
+inside On Zoom
+-0.978945606674
+inside On Zoom
+-0.992801008723
+inside On Zoom
+1.00720317535
+inside On Zoom
+1.01645240334
+inside On Zoom
+1.02572749732
+inside On Zoom
+1.04938441718
+inside On Zoom
+1.06586318707
+inside On Zoom
+1.08741215064
+inside On Zoom
+1.10852966461
+inside On Zoom
+1.12753896236
+inside On Zoom
+1.14867496428
+inside On Zoom
+1.16516831101
+inside On Zoom
+1.17699992048
+inside On Zoom
+1.19350094542
+inside On Zoom
+1.20066341978
+inside On Zoom
+1.21000851129
+inside On Zoom
+1.22432727484
+inside On Zoom
+1.22899853119
+inside On Zoom
+1.23866148396
+inside On Zoom
+1.24799146542
+inside On Zoom
+1.25982368062
+inside On Zoom
+1.26698718289
+inside On Zoom
+1.27632963778
+inside On Zoom
+1.28348833978
+inside On Zoom
+1.29284159087
+inside On Zoom
+1.29532077957
+inside On Zoom
+1.30467510953
+inside On Zoom
+1.31182864477
+inside On Zoom
+1.31650867909
+inside On Zoom
+1.32366176683
+inside On Zoom
+1.32834229822
+inside On Zoom
+1.33081851624
+inside On Zoom
+1.32366176683
+inside On Zoom
+1.31650867909
+inside On Zoom
+1.29999558148
+inside On Zoom
+1.27385748054
+inside On Zoom
+1.24550805439
+inside On Zoom
+1.21937389913
+inside On Zoom
+1.18856054736
+inside On Zoom
+1.1577499698
+inside On Zoom
+1.13164423651
+inside On Zoom
+1.10797344031
+inside On Zoom
+1.08430272728
+inside On Zoom
+1.06533728932
+inside On Zoom
+1.03696157346
+inside On Zoom
+1.01799494601
+inside On Zoom
+1.01086867281
+inside On Zoom
+-0.994323883566
+inside On Zoom
+-0.97536123632
+inside On Zoom
+-0.968239506176
+inside On Zoom
+-0.956403478136
+inside On Zoom
+-0.951689678928
+inside On Zoom
+-0.944567458173
+inside On Zoom
+-0.93985392183
+inside On Zoom
+-0.925614708133
+inside On Zoom
+-0.916182453622
+inside On Zoom
+-0.904346743715
+inside On Zoom
+-0.887805183706
+inside On Zoom
+-0.883105968905
+inside On Zoom
+-0.871271170374
+inside On Zoom
+-0.857004080996
+inside On Zoom
+-0.842911047095
+inside On Zoom
+-0.823932422085
+inside On Zoom
+-0.814561087282
+inside On Zoom
+-0.809886651824
+inside On Zoom
+-0.798054458524
+inside On Zoom
+-0.790894976924
+inside On Zoom
+-0.786222390369
+inside On Zoom
+-0.776901107822
+inside On Zoom
+-0.769726883686
+inside On Zoom
+-0.762558652797
+inside On Zoom
+-0.757896219762
+inside On Zoom
+-0.753242126132
+inside On Zoom
+-0.748596527448
+inside On Zoom
+-0.738895489439
+inside On Zoom
+-0.729584034466
+inside On Zoom
+-0.713114325115
+inside On Zoom
+-0.703859898332
+inside On Zoom
+-0.692036900657
+inside On Zoom
+-0.687426045938
+inside On Zoom
+-0.677634935557
+inside On Zoom
+-0.663786074924
+inside On Zoom
+-0.651966980105
+inside On Zoom
+-0.614601852169
+inside On Zoom
+-0.600978961699
+inside On Zoom
+-0.584672578588
+inside On Zoom
+-0.572884249238
+inside On Zoom
+-0.561097941787
+inside On Zoom
+-0.549313786383
+inside On Zoom
+-0.540365369237
+inside On Zoom
+-0.53305644881
+inside On Zoom
+-0.528596088699
+inside On Zoom
+-0.524151230118
+inside On Zoom
+-0.521283405993
+inside On Zoom
+-0.516829871511
+inside On Zoom
+-0.512392313062
+inside On Zoom
+-0.505066931767
+inside On Zoom
+-0.500637045489
+inside On Zoom
+-0.488885690654
+inside On Zoom
+-0.484481354962
+inside On Zoom
+-0.475727056086
+inside On Zoom
+-0.464009089933
+inside On Zoom
+-0.451056586303
+inside On Zoom
+-0.436278305491
+inside On Zoom
+-0.42459349734
+inside On Zoom
+-0.416060764125
+inside On Zoom
+-0.409818141672
+inside On Zoom
+-0.405522415519
+inside On Zoom
+-0.401250531973
+inside On Zoom
+-0.393850001167
+inside On Zoom
+-0.38959397158
+inside On Zoom
+-0.393850001167
+inside On Zoom
+-0.422841089024
+inside On Zoom
+-0.430198826462
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+-2
+1
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+inside On Zoom
+1.02179995327
+inside On Zoom
+1.03772950154
+inside On Zoom
+1.07347076262
+inside On Zoom
+1.09536845741
+inside On Zoom
+1.11729141369
+inside On Zoom
+1.13923817311
+inside On Zoom
+1.16120738602
+inside On Zoom
+1.18498719701
+inside On Zoom
+1.20293767639
+inside On Zoom
+1.22089614964
+inside On Zoom
+1.23481243757
+inside On Zoom
+1.24873002195
+inside On Zoom
+1.2626488599
+inside On Zoom
+1.27481615364
+inside On Zoom
+1.29049013431
+inside On Zoom
+1.29630301233
+inside On Zoom
+1.30847077395
+inside On Zoom
+1.32239580576
+inside On Zoom
+1.32820137316
+inside On Zoom
+1.33401095238
+inside On Zoom
+1.34387755169
+inside On Zoom
+1.34793291265
+inside On Zoom
+1.35374436611
+inside On Zoom
+1.35551031625
+inside On Zoom
+1.36361139098
+inside On Zoom
+1.36537888174
+inside On Zoom
+1.36942761013
+inside On Zoom
+1.37347862177
+inside On Zoom
+1.37929570702
+inside On Zoom
+1.38916399227
+inside On Zoom
+1.39726561366
+inside On Zoom
+1.39903246188
+inside On Zoom
+1.40081102226
+inside On Zoom
+1.40485494039
+inside On Zoom
+1.408901112
+inside On Zoom
+1.40713277721
+inside On Zoom
+1.40131976315
+inside On Zoom
+1.39551052208
+inside On Zoom
+1.38564515589
+inside On Zoom
+1.37404012028
+inside On Zoom
+1.36185594574
+inside On Zoom
+1.33458905614
+inside On Zoom
+1.31486519803
+inside On Zoom
+1.29343003524
+inside On Zoom
+1.26963565303
+inside On Zoom
+1.24245103748
+inside On Zoom
+1.21697909557
+inside On Zoom
+1.18332983109
+inside On Zoom
+1.15377564989
+inside On Zoom
+1.12669008948
+inside On Zoom
+1.09878609647
+inside On Zoom
+1.07088443343
+inside On Zoom
+1.04298528736
+inside On Zoom
+1.01099254248
+inside On Zoom
+-0.984779100399
+inside On Zoom
+-0.956900052112
+inside On Zoom
+-0.933104639407
+inside On Zoom
+-0.906943911298
+inside On Zoom
+-0.883151321595
+inside On Zoom
+-0.859359000043
+inside On Zoom
+-0.83730631325
+inside On Zoom
+-0.809462569621
+inside On Zoom
+-0.787450883499
+inside On Zoom
+-0.76366885922
+inside On Zoom
+-0.741693574135
+inside On Zoom
+-0.720146077806
+inside On Zoom
+-0.700001115896
+inside On Zoom
+-0.686109873358
+inside On Zoom
+-0.666357398452
+inside On Zoom
+-0.64846025554
+inside On Zoom
+-0.630581622247
+inside On Zoom
+-0.614823017301
+inside On Zoom
+-0.596951061833
+inside On Zoom
+-0.577192403056
+inside On Zoom
+-0.561274355137
+inside On Zoom
+-0.547430121149
+inside On Zoom
+-0.527667563277
+inside On Zoom
+-0.513829978378
+inside On Zoom
+-0.498023746351
+inside On Zoom
+-0.488142479988
+inside On Zoom
+-0.472344863806
+inside On Zoom
+-0.460538561129
+inside On Zoom
+-0.450658703097
+inside On Zoom
+-0.438891959557
+inside On Zoom
+-0.433023976356
+inside On Zoom
+-0.421019547969
+inside On Zoom
+-0.415134139399
+inside On Zoom
+-0.407154613047
+inside On Zoom
+-0.401260511934
+inside On Zoom
+-0.385372483784
+inside On Zoom
+-0.375491138046
+inside On Zoom
+-0.361662653615
+inside On Zoom
+-0.349888950624
+inside On Zoom
+-0.338225055393
+inside On Zoom
+-0.322350035495
+inside On Zoom
+-0.313006346538
+inside On Zoom
+-0.313006346538
+inside On Zoom
+-0.310783639955
+inside On Zoom
+-0.310783639955
+inside On Zoom
+-0.306958562055
+inside On Zoom
+-0.306958562055
+inside On Zoom
+-0.989714476602
+inside On Zoom
+-0.980693941847
+inside On Zoom
+-0.967409534746
+inside On Zoom
+-0.952852363711
+inside On Zoom
+-0.942571461637
+inside On Zoom
+-0.910939499007
+inside On Zoom
+-0.89514995288
+inside On Zoom
+-0.879379296307
+inside On Zoom
+-0.86181614609
+inside On Zoom
+-0.847277665352
+inside On Zoom
+-0.832740828723
+inside On Zoom
+-0.810938849889
+inside On Zoom
+-0.799439242696
+inside On Zoom
+-0.778843347532
+inside On Zoom
+-0.76551596985
+inside On Zoom
+-0.750982819324
+inside On Zoom
+-0.736451738282
+inside On Zoom
+-0.721922851688
+inside On Zoom
+-0.711623979472
+inside On Zoom
+-0.705559446176
+inside On Zoom
+-0.694060957774
+inside On Zoom
+-0.68257135277
+inside On Zoom
+-0.673464398229
+inside On Zoom
+-0.666199368913
+inside On Zoom
+-0.655901258429
+inside On Zoom
+-0.641371969827
+inside On Zoom
+-0.631073239043
+inside On Zoom
+-0.620774998633
+inside On Zoom
+-0.613510190557
+inside On Zoom
+-0.600180089907
+inside On Zoom
+-0.591099388803
+inside On Zoom
+-0.583829697348
+inside On Zoom
+-0.572320229549
+inside On Zoom
+-0.563243606232
+inside On Zoom
+-0.554191066017
+inside On Zoom
+-0.542660621901
+inside On Zoom
+-0.533617703998
+inside On Zoom
+-0.520326006553
+inside On Zoom
+-0.513048649285
+inside On Zoom
+-0.502765902378
+inside On Zoom
+-0.492484441573
+inside On Zoom
+-0.486486789939
+inside On Zoom
+-0.476211242876
+inside On Zoom
+-0.465937372866
+inside On Zoom
+-0.458655125399
+inside On Zoom
+-0.448382274136
+inside On Zoom
+-0.439807566732
+inside On Zoom
+-0.430827840373
+inside On Zoom
+-0.426535210692
+inside On Zoom
+-0.417575744135
+inside On Zoom
+-0.404336528465
+inside On Zoom
+-0.395721321729
+inside On Zoom
+-0.386790601293
+inside On Zoom
+-0.373570833849
+inside On Zoom
+-0.370612121699
+inside On Zoom
+-0.358829748876
+inside On Zoom
+-0.352971886365
+inside On Zoom
+-0.345679204634
+inside On Zoom
+-0.33546628411
+inside On Zoom
+-0.326744289637
+inside On Zoom
+-0.318084103232
+inside On Zoom
+-0.310794183293
+inside On Zoom
+-0.307923162964
+inside On Zoom
+-0.302204889259
+inside On Zoom
+-0.296519831561
+inside On Zoom
+-0.293690361943
+inside On Zoom
+-0.283593102172
+inside On Zoom
+-0.280784900597
+inside On Zoom
+-0.27798659475
+inside On Zoom
+-0.270717078889
+inside On Zoom
+-0.263448847051
+inside On Zoom
+-0.258969482974
+inside On Zoom
+-0.250641375694
+inside On Zoom
+-0.241653014158
+inside On Zoom
+-0.236131840716
+inside On Zoom
+-0.228880694025
+inside On Zoom
+-0.221632277124
+inside On Zoom
+-0.218903871214
+inside On Zoom
+-0.214386866895
+inside On Zoom
+-0.217123044549
+inside On Zoom
+-0.212618235325
+inside On Zoom
+-0.212618235325
+inside On Zoom
+-0.212618235325
+inside On Zoom
+-0.209874009513
+inside On Zoom
+-0.208118136688
+inside On Zoom
+-0.223424770952
+inside On Zoom
+-0.225250225172
+inside On Zoom
+-0.227107844997
+inside On Zoom
+-0.231652306952
+inside On Zoom
+-0.236199400254
+inside On Zoom
+-0.238863850493
+inside On Zoom
+-0.241542946736
+inside On Zoom
+-0.249663383731
+inside On Zoom
+-0.25514188239
+inside On Zoom
+-0.263448847051
+inside On Zoom
+-0.274676195997
+inside On Zoom
+-0.287633862784
+inside On Zoom
+-0.301976019484
+inside On Zoom
+-0.31358804819
+inside On Zoom
+-0.332600359211
+inside On Zoom
+-0.345786885674
+inside On Zoom
+-0.357642059233
+inside On Zoom
+-0.376859273105
+inside On Zoom
+-0.387134201433
+inside On Zoom
+-0.403414737428
+inside On Zoom
+-0.417970386178
+inside On Zoom
+-0.432528045498
+inside On Zoom
+-0.450087065824
+inside On Zoom
+-0.467646404302
+inside On Zoom
+-0.507042507373
+inside On Zoom
+-0.523332606483
+inside On Zoom
+-0.542160559608
+inside On Zoom
+-0.561001276295
+inside On Zoom
+-0.581557001184
+inside On Zoom
+-0.603397004703
+inside On Zoom
+-0.623953923383
+inside On Zoom
+-0.645793082984
+inside On Zoom
+-0.669353256929
+inside On Zoom
+-0.689918374483
+inside On Zoom
+-0.707478991156
+inside On Zoom
+-0.728048318579
+inside On Zoom
+-0.745609652461
+inside On Zoom
+-0.764939110955
+inside On Zoom
+-0.78127054875
+inside On Zoom
+-0.798833619424
+inside On Zoom
+-0.819420339708
+inside On Zoom
+-0.832740828723
+inside On Zoom
+-0.852128501455
+inside On Zoom
+-0.865461767578
+inside On Zoom
+-0.884877806725
+inside On Zoom
+-0.899399823756
+inside On Zoom
+-0.909700919844
+inside On Zoom
+-0.926086772293
+inside On Zoom
+-0.93943468182
+inside On Zoom
+-0.949738340013
+inside On Zoom
+-0.963089785892
+inside On Zoom
+-0.976443858602
+inside On Zoom
+-0.98980045182
+inside On Zoom
+1.00315946487
+inside On Zoom
+1.01957691485
+inside On Zoom
+1.03407939753
+inside On Zoom
+1.04438631244
+inside On Zoom
+1.05889054625
+inside On Zoom
+1.06729520659
+inside On Zoom
+1.07875949055
+inside On Zoom
+1.08601686527
+inside On Zoom
+1.09140508137
+inside On Zoom
+1.09748911558
+inside On Zoom
+1.10170670862
+inside On Zoom
+1.10779177688
+inside On Zoom
+1.11200855596
+inside On Zoom
+1.11622846381
+inside On Zoom
+1.1204514651
+inside On Zoom
+1.13075185966
+inside On Zoom
+1.13379089566
+inside On Zoom
+1.13801415319
+inside On Zoom
+1.14105249096
+inside On Zoom
+1.14409205707
+inside On Zoom
+1.14713284174
+inside On Zoom
+1.1543934388
+inside On Zoom
+1.1586150433
+inside On Zoom
+1.16587712163
+inside On Zoom
+1.17010274678
+inside On Zoom
+1.17617761667
+inside On Zoom
+1.18040241268
+inside On Zoom
+1.19070231807
+inside On Zoom
+1.19374021015
+inside On Zoom
+1.20219308249
+inside On Zoom
+1.20522848772
+inside On Zoom
+1.21249210665
+inside On Zoom
+1.22095454683
+inside On Zoom
+1.23005505213
+inside On Zoom
+1.23428502444
+inside On Zoom
+1.24154999727
+inside On Zoom
+1.25065372798
+inside On Zoom
+1.25911312187
+inside On Zoom
+1.26637845051
+inside On Zoom
+1.27244508925
+inside On Zoom
+1.27787960721
+inside On Zoom
+1.28514644079
+inside On Zoom
+1.28817629552
+inside On Zoom
+1.2912072785
+inside On Zoom
+1.28514644079
+inside On Zoom
+1.28211772231
+inside On Zoom
+1.27485031177
+inside On Zoom
+1.26214647809
+inside On Zoom
+1.24595011558
+inside On Zoom
+1.22462979063
+inside On Zoom
+1.19854222382
+inside On Zoom
+1.17677433993
+inside On Zoom
+1.14895344969
+inside On Zoom
+1.12632667896
+inside On Zoom
+1.10373718607
+inside On Zoom
+1.08214609702
+inside On Zoom
+1.06249067318
+inside On Zoom
+1.04090240508
+inside On Zoom
+1.01716413194
+inside On Zoom
+-0.995586614711
+inside On Zoom
+-0.975920833688
+inside On Zoom
+-0.95028137238
+inside On Zoom
+-0.923418227117
+inside On Zoom
+-0.899677705533
+inside On Zoom
+-0.874995726265
+inside On Zoom
+-0.854378649941
+inside On Zoom
+-0.829708040161
+inside On Zoom
+-0.80504773663
+inside On Zoom
+-0.778173856517
+inside On Zoom
+-0.754430889087
+inside On Zoom
+-0.730687953572
+inside On Zoom
+-0.71007525306
+inside On Zoom
+-0.687253707299
+inside On Zoom
+-0.66757106989
+inside On Zoom
+-0.640708246813
+inside On Zoom
+-0.616967977002
+inside On Zoom
+-0.594186465573
+inside On Zoom
+-0.573564102734
+inside On Zoom
+-0.553912691383
+inside On Zoom
+-0.536401123722
+inside On Zoom
+-0.520857243485
+inside On Zoom
+-0.507440936172
+inside On Zoom
+-0.497127784758
+inside On Zoom
+-0.484734468028
+inside On Zoom
+-0.477516132271
+inside On Zoom
+-0.470300092423
+inside On Zoom
+-0.462086205833
+inside On Zoom
+-0.455875336517
+inside On Zoom
+-0.445562269276
+inside On Zoom
+-0.435249222511
+inside On Zoom
+-0.424936197714
+inside On Zoom
+-0.415635302174
+inside On Zoom
+-0.405321835414
+inside On Zoom
+-0.392956505192
+inside On Zoom
+-0.376478043717
+inside On Zoom
+-0.364184834447
+inside On Zoom
+-0.34775003111
+inside On Zoom
+-0.331334709362
+inside On Zoom
+-0.313112811646
+inside On Zoom
+-0.301058800484
+inside On Zoom
+-0.290778500592
+inside On Zoom
+-0.281805871216
+inside On Zoom
+-0.271540942638
+inside On Zoom
+-0.265600142098
+inside On Zoom
+-0.262640099641
+inside On Zoom
+-0.253804301053
+inside On Zoom
+-0.250874678485
+inside On Zoom
+-0.24358206012
+inside On Zoom
+-0.237747971035
+inside On Zoom
+-0.233367849816
+inside On Zoom
+-0.233367849816
+inside On Zoom
+-0.233367849816
+inside On Zoom
+-0.230455367309
+inside On Zoom
+-0.230455367309
+inside On Zoom
+-0.226075104509
+inside On Zoom
+-0.226075104509
+inside On Zoom
+-0.223234257363
+inside On Zoom
+-0.218903871214
+inside On Zoom
+-0.220549788157
+inside On Zoom
+-0.216264022749
+inside On Zoom
+-0.215006161232
+inside On Zoom
+-0.215006161232
+inside On Zoom
+-0.21199196523
+inside On Zoom
+-0.213267605346
+inside On Zoom
+-0.21199196523
+inside On Zoom
+-0.207734461311
+inside On Zoom
+-0.204717116231
+inside On Zoom
+-0.203178554221
+inside On Zoom
+-0.202155110372
+inside On Zoom
+-0.198062155191
+inside On Zoom
+-0.198062155191
+inside On Zoom
+-0.191842176811
+inside On Zoom
+-0.191842176811
+inside On Zoom
+-0.189779597477
+inside On Zoom
+-0.186699977223
+inside On Zoom
+-0.181705009438
+inside On Zoom
+-0.175632564701
+inside On Zoom
+-0.175632564701
+inside On Zoom
+-0.172608667013
+inside On Zoom
+-0.172608667013
+inside On Zoom
+-0.169593572184
+inside On Zoom
+-0.172608667013
+inside On Zoom
+-0.178664818284
+inside On Zoom
+-0.187155204908
+inside On Zoom
+-0.196227707256
+inside On Zoom
+-0.208424568466
+inside On Zoom
+-0.223805311608
+inside On Zoom
+-0.237210484354
+inside On Zoom
+-0.251657836948
+inside On Zoom
+-0.265058939027
+inside On Zoom
+-0.279512956777
+inside On Zoom
+-0.295081453777
+inside On Zoom
+-0.321029928631
+inside On Zoom
+-0.34663178703
+inside On Zoom
+-0.379559194955
+inside On Zoom
+-0.40222647347
+inside On Zoom
+-0.435249222511
+inside On Zoom
+-0.45488261361
+inside On Zoom
+-0.481729852481
+inside On Zoom
+-0.501388836241
+inside On Zoom
+-0.517938965947
+inside On Zoom
+-0.534494054953
+inside On Zoom
+-0.551053656289
+inside On Zoom
+-0.567617375027
+inside On Zoom
+-0.585103641469
+inside On Zoom
+-0.602594386004
+inside On Zoom
+-0.624158459327
+inside On Zoom
+-0.641662132761
+inside On Zoom
+-0.662284071094
+inside On Zoom
+-0.679791836722
+inside On Zoom
+-0.700414941195
+inside On Zoom
+-0.717926236098
+inside On Zoom
+-0.735440009153
+inside On Zoom
+-0.752956087433
+inside On Zoom
+-0.767368707243
+inside On Zoom
+-0.778686273783
+inside On Zoom
+-0.799312831783
+inside On Zoom
+-0.81374097853
+inside On Zoom
+-0.830252709835
+inside On Zoom
+-0.844681261025
+inside On Zoom
+-0.86119263243
+inside On Zoom
+-0.879742096516
+inside On Zoom
+-0.897274440817
+inside On Zoom
+-0.91480797103
+inside On Zoom
+-0.930298219675
+inside On Zoom
+-0.946788225308
+inside On Zoom
+-0.958151285635
+inside On Zoom
+-0.972607279299
+inside On Zoom
+-0.986005056536
+inside On Zoom
+-0.999404160185
+inside On Zoom
+1.01385947428
+inside On Zoom
+1.02725766745
+inside On Zoom
+1.03554929041
+inside On Zoom
+1.04788401384
+inside On Zoom
+1.05617484464
+inside On Zoom
+1.06957004813
+inside On Zoom
+1.08296653936
+inside On Zoom
+1.09327957539
+inside On Zoom
+1.10773896556
+inside On Zoom
+1.12220161947
+inside On Zoom
+1.13559542681
+inside On Zoom
+1.15005922941
+inside On Zoom
+1.16560794865
+inside On Zoom
+1.18207280597
+inside On Zoom
+1.19654372683
+inside On Zoom
+1.21101739661
+inside On Zoom
+1.22747974293
+inside On Zoom
+1.23997259786
+inside On Zoom
+1.25642805947
+inside On Zoom
+1.26893768337
+inside On Zoom
+1.28231681793
+inside On Zoom
+1.28955864749
+inside On Zoom
+1.29680104772
+inside On Zoom
+1.3040440091
+inside On Zoom
+1.31128752233
+inside On Zoom
+1.31435423084
+inside On Zoom
+1.31658595334
+inside On Zoom
+1.31964840927
+inside On Zoom
+1.3257761682
+inside On Zoom
+1.32689491779
+inside On Zoom
+1.32995762916
+inside On Zoom
+1.33302128323
+inside On Zoom
+1.33414193019
+inside On Zoom
+1.32802073447
+inside On Zoom
+1.32496157391
+inside On Zoom
+1.31352445529
+inside On Zoom
+1.30209307441
+inside On Zoom
+1.28955864749
+inside On Zoom
+1.26565169335
+inside On Zoom
+1.24287295216
+inside On Zoom
+1.21907132533
+inside On Zoom
+1.19431034625
+inside On Zoom
+1.16749541166
+inside On Zoom
+1.13763554353
+inside On Zoom
+1.11093671256
+inside On Zoom
+1.08622742334
+inside On Zoom
+1.06152415094
+inside On Zoom
+1.03587793189
+inside On Zoom
+1.01213741872
+inside On Zoom
+-0.987454949823
+inside On Zoom
+-0.966837617146
+inside On Zoom
+-0.949346268025
+inside On Zoom
+-0.932787453831
+inside On Zoom
+-0.91310879441
+inside On Zoom
+-0.902799454598
+inside On Zoom
+-0.886247104001
+inside On Zoom
+-0.871872025484
+inside On Zoom
+-0.862507040125
+inside On Zoom
+-0.841887354962
+inside On Zoom
+-0.82845715078
+inside On Zoom
+-0.815027505685
+inside On Zoom
+-0.793462754486
+inside On Zoom
+-0.776908448921
+inside On Zoom
+-0.760357447683
+inside On Zoom
+-0.746928086769
+inside On Zoom
+-0.726307641018
+inside On Zoom
+-0.712878443401
+inside On Zoom
+-0.69849882569
+inside On Zoom
+-0.681947729285
+inside On Zoom
+-0.672595156637
+inside On Zoom
+-0.661327761729
+inside On Zoom
+-0.648857644198
+inside On Zoom
+-0.637587835107
+inside On Zoom
+-0.628235194194
+inside On Zoom
+-0.621040530529
+inside On Zoom
+-0.611695722652
+inside On Zoom
+-0.605473563762
+inside On Zoom
+-0.599257799558
+inside On Zoom
+-0.595161297459
+inside On Zoom
+-0.588945061812
+inside On Zoom
+-0.585839444074
+inside On Zoom
+-0.581739874998
+inside On Zoom
+-0.57453689765
+inside On Zoom
+-0.573564102734
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+inside On Zoom
+-0.998084036295
+inside On Zoom
+-0.99154539577
+inside On Zoom
+-0.983652391511
+inside On Zoom
+-0.970850014592
+inside On Zoom
+-0.958868292156
+inside On Zoom
+-0.944721439053
+inside On Zoom
+-0.929248543013
+inside On Zoom
+-0.915134258203
+inside On Zoom
+-0.881216221092
+inside On Zoom
+-0.864928160455
+inside On Zoom
+-0.845525694002
+inside On Zoom
+-0.829237041794
+inside On Zoom
+-0.808526065668
+inside On Zoom
+-0.789125289263
+inside On Zoom
+-0.767104442757
+inside On Zoom
+-0.748605735689
+inside On Zoom
+-0.731413592102
+inside On Zoom
+-0.716433381093
+inside On Zoom
+-0.701453181937
+inside On Zoom
+-0.687784191557
+inside On Zoom
+-0.671920269786
+inside On Zoom
+-0.658269726157
+inside On Zoom
+-0.641959353457
+inside On Zoom
+-0.629180517152
+inside On Zoom
+-0.612882180232
+inside On Zoom
+-0.600111097159
+inside On Zoom
+-0.587343266865
+inside On Zoom
+-0.574578906193
+inside On Zoom
+-0.564040171857
+inside On Zoom
+-0.546839131019
+inside On Zoom
+-0.532802421029
+inside On Zoom
+-0.517825226866
+inside On Zoom
+-0.499344476398
+inside On Zoom
+-0.486604834076
+inside On Zoom
+-0.473870916067
+inside On Zoom
+-0.462393906907
+inside On Zoom
+-0.453158866898
+inside On Zoom
+-0.444934898376
+inside On Zoom
+-0.436941405101
+inside On Zoom
+-0.429967192248
+inside On Zoom
+-0.427712352915
+inside On Zoom
+-0.421971717096
+inside On Zoom
+-0.420742035692
+inside On Zoom
+-0.413781912892
+inside On Zoom
+-0.407877612033
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+inside On Zoom
+-0.969597028196
+inside On Zoom
+-0.941126713032
+inside On Zoom
+-0.925144600523
+inside On Zoom
+-0.905005308481
+inside On Zoom
+-0.8874145332
+inside On Zoom
+-0.870755382555
+inside On Zoom
+-0.854112519942
+inside On Zoom
+-0.841641643301
+inside On Zoom
+-0.826612240408
+inside On Zoom
+-0.813171398374
+inside On Zoom
+-0.802296339966
+inside On Zoom
+-0.79398925908
+inside On Zoom
+-0.789837547568
+inside On Zoom
+-0.786694914747
+inside On Zoom
+-0.785136281141
+inside On Zoom
+-0.783586170102
+inside On Zoom
+-0.782044632308
+inside On Zoom
+-0.775965231227
+inside On Zoom
+-0.774467323843
+inside On Zoom
+-0.771846365792
+inside On Zoom
+-0.767729128386
+inside On Zoom
+-0.765108894949
+inside On Zoom
+-0.760991109096
+inside On Zoom
+-0.759499643556
+inside On Zoom
+-0.758017258335
+inside On Zoom
+-0.751276994217
+inside On Zoom
+-0.743061407294
+inside On Zoom
+-0.741595287288
+inside On Zoom
+-0.736041942655
+inside On Zoom
+-0.733395427078
+inside On Zoom
+-0.72785459626
+inside On Zoom
+-0.72520331927
+inside On Zoom
+-0.721110255093
+inside On Zoom
+-0.714365985601
+inside On Zoom
+-0.710274581965
+inside On Zoom
+-0.70353000125
+inside On Zoom
+-0.696785489383
+inside On Zoom
+-0.685950605475
+inside On Zoom
+-0.679205847205
+inside On Zoom
+-0.671030797737
+inside On Zoom
+-0.665716536054
+inside On Zoom
+-0.660200885694
+inside On Zoom
+-0.650633710981
+inside On Zoom
+-0.649239431727
+inside On Zoom
+-0.647856209732
+inside On Zoom
+-0.646484115972
+inside On Zoom
+-0.643794817352
+inside On Zoom
+-0.63973611363
+inside On Zoom
+-0.637046921034
+inside On Zoom
+-0.632988114139
+inside On Zoom
+-0.630299029851
+inside On Zoom
+-0.623551143968
+inside On Zoom
+-0.620828519804
+inside On Zoom
+-0.614080383719
+inside On Zoom
+-0.607332247634
+inside On Zoom
+-0.601947355927
+inside On Zoom
+-0.596536756624
+inside On Zoom
+-0.588451396071
+inside On Zoom
+-0.58441351979
+inside On Zoom
+-0.577665674987
+inside On Zoom
+-0.573631260755
+inside On Zoom
+-0.562852803749
+inside On Zoom
+-0.542753218753
+inside On Zoom
+-0.513257747611
+inside On Zoom
+-0.49179978748
+inside On Zoom
+-0.473140112952
+inside On Zoom
+-0.454535933002
+inside On Zoom
+-0.437131317463
+inside On Zoom
+-0.41471125865
+inside On Zoom
+-0.378305107153
+inside On Zoom
+-0.349368412705
+inside On Zoom
+-0.325439313563
+inside On Zoom
+-0.306353487032
+inside On Zoom
+-0.285359199073
+inside On Zoom
+-0.272945212915
+inside On Zoom
+-0.263402149132
+inside On Zoom
+-0.259605978584
+inside On Zoom
+-0.252058916986
+inside On Zoom
+-0.243401068497
+inside On Zoom
+-0.236743233978
+inside On Zoom
+-0.230090660836
+inside On Zoom
+-0.22431843746
+inside On Zoom
+-0.221437594773
+inside On Zoom
+-0.220551552363
+inside On Zoom
+-0.217662695886
+inside On Zoom
+-0.210169503974
+inside On Zoom
+-0.206453265461
+inside On Zoom
+-0.20275875101
+inside On Zoom
+-0.195439815062
+inside On Zoom
+-0.192505292904
+inside On Zoom
+-0.188875495079
+inside On Zoom
+-0.188223407157
+inside On Zoom
+-0.185272899688
+inside On Zoom
+-0.182324596948
+inside On Zoom
+-0.182324596948
+inside On Zoom
+-0.972226066079
+inside On Zoom
+-0.966100358214
+inside On Zoom
+-0.941799467793
+inside On Zoom
+-0.931390838328
+inside On Zoom
+-0.914051631427
+inside On Zoom
+-0.891856697748
+inside On Zoom
+-0.867631899441
+inside On Zoom
+-0.842058253306
+inside On Zoom
+-0.826887473321
+inside On Zoom
+-0.811746990096
+inside On Zoom
+-0.801416931528
+inside On Zoom
+-0.787653650218
+inside On Zoom
+-0.77179214477
+inside On Zoom
+-0.758048348363
+inside On Zoom
+-0.743010343007
+inside On Zoom
+-0.725879118006
+inside On Zoom
+-0.715611910865
+inside On Zoom
+-0.699795596879
+inside On Zoom
+-0.686130986649
+inside On Zoom
+-0.671231279525
+inside On Zoom
+-0.652050679902
+inside On Zoom
+-0.635058472681
+inside On Zoom
+-0.618101746118
+inside On Zoom
+-0.598993636543
+inside On Zoom
+-0.572143209127
+inside On Zoom
+-0.53416035581
+inside On Zoom
+-0.486092262495
+inside On Zoom
+-0.445933573872
+inside On Zoom
+-0.413577090161
+inside On Zoom
+-0.376786083818
+inside On Zoom
+-0.33110983949
+inside On Zoom
+-0.273169846797
+inside On Zoom
+-0.218629681254
+inside On Zoom
+-0.204108291053
+inside On Zoom
+-0.19063474862
+inside On Zoom
+-0.182849068159
+inside On Zoom
+-0.176133529705
+inside On Zoom
+-0.172785761515
+inside On Zoom
+-0.170614545279
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+inside On Zoom
+-0.995707161452
+inside On Zoom
+-0.960312592013
+inside On Zoom
+-0.92516679707
+inside On Zoom
+-0.854991908172
+inside On Zoom
+-0.752482339044
+inside On Zoom
+-0.642848716963
+inside On Zoom
+-0.536742906364
+inside On Zoom
+-0.441804205184
+inside On Zoom
+-0.441804205184
+inside On Zoom
+-0.976663641289
+inside On Zoom
+-0.947882864277
+inside On Zoom
+-0.870975549502
+inside On Zoom
+-0.765383410793
+inside On Zoom
+-0.650803210314
+inside On Zoom
+-0.563420999731
+inside On Zoom
+-0.48141530097
+inside On Zoom
+-0.420887343243
+inside On Zoom
+-0.357087466596
+inside On Zoom
+-0.298212385514
+inside On Zoom
+-0.262043209589
+inside On Zoom
+-0.238044236255
+inside On Zoom
+-0.223155537787
+inside On Zoom
+-0.205655470099
+inside On Zoom
+-0.161544949963
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+3
+-3
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+inside On Zoom
+-0.988355744004
+inside On Zoom
+-0.986063381505
+inside On Zoom
+-0.981483335583
+inside On Zoom
+-0.976909601539
+inside On Zoom
+-0.972129393262
+inside On Zoom
+-0.951343268458
+inside On Zoom
+-0.935958257643
+inside On Zoom
+-0.91249670473
+inside On Zoom
+-0.881087439013
+inside On Zoom
+-0.845997451384
+inside On Zoom
+-0.815663691739
+inside On Zoom
+-0.788850877245
+inside On Zoom
+-0.759733180972
+inside On Zoom
+-0.735226720248
+inside On Zoom
+-0.70962616631
+inside On Zoom
+-0.685120102901
+inside On Zoom
+-0.659519164599
+inside On Zoom
+-0.632706545198
+inside On Zoom
+-0.61293177361
+inside On Zoom
+-0.591941660723
+inside On Zoom
+-0.56634623622
+inside On Zoom
+-0.53723143089
+inside On Zoom
+-0.505822190261
+inside On Zoom
+-0.477955776322
+inside On Zoom
+-0.443299951709
+inside On Zoom
+-0.411020225215
+inside On Zoom
+-0.37885596031
+inside On Zoom
+-0.354827426475
+inside On Zoom
+-0.326564833399
+inside On Zoom
+-0.298581595218
+inside On Zoom
+-0.268915532758
+inside On Zoom
+-0.249218418889
+inside On Zoom
+-0.237793016511
+inside On Zoom
+-0.226570243501
+inside On Zoom
+-0.221159599201
+inside On Zoom
+-0.21938826073
+inside On Zoom
+-0.219573763802
+inside On Zoom
+-0.212474671738
+inside On Zoom
+-0.207481792996
+inside On Zoom
+-0.207481792996
+Pan Gesture detected.
+66
+-76
+0
+1
+inside on Rotate!
+inside On Zoom
+-0.993982680819
+inside On Zoom
+-0.982803431174
+inside On Zoom
+-0.976113516172
+inside On Zoom
+-0.968218635395
+inside On Zoom
+-0.9546582913
+inside On Zoom
+-0.943323334759
+inside On Zoom
+-0.926321280997
+inside On Zoom
+-0.907098970051
+inside On Zoom
+-0.880984893411
+inside On Zoom
+-0.840339422818
+inside On Zoom
+-0.788111547053
+inside On Zoom
+-0.742792851282
+inside On Zoom
+-0.704401684263
+inside On Zoom
+-0.675166853583
+inside On Zoom
+-0.641210182602
+inside On Zoom
+-0.613344109775
+inside On Zoom
+-0.586403632601
+inside On Zoom
+-0.560849245629
+inside On Zoom
+-0.538279107947
+inside On Zoom
+-0.512848233749
+inside On Zoom
+-0.491733815108
+inside On Zoom
+-0.474197011961
+inside On Zoom
+-0.453198277105
+inside On Zoom
+-0.434322357666
+inside On Zoom
+-0.413445790391
+inside On Zoom
+-0.390643083677
+inside On Zoom
+-0.368000871595
+inside On Zoom
+-0.340344988459
+inside On Zoom
+-0.308820058109
+inside On Zoom
+-0.272639626921
+inside On Zoom
+-0.256781389011
+inside On Zoom
+-0.247922199202
+inside On Zoom
+-0.242928514204
+inside On Zoom
+-0.23772177303
+inside On Zoom
+-0.236106031029
+inside On Zoom
+-0.234149676516
+inside On Zoom
+-0.232204545792
+inside On Zoom
+-0.230270923282
+inside On Zoom
+-0.228349101337
+inside On Zoom
+-0.226439380415
+inside On Zoom
+-0.228349101337
+inside On Zoom
+-0.230019337373
+inside On Zoom
+-0.233847246232
+inside On Zoom
+-0.241000848937
+inside On Zoom
+-0.244341246623
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+inside On Zoom
+-0.990042851174
+inside On Zoom
+-0.976390446351
+inside On Zoom
+-0.94931755506
+inside On Zoom
+-0.906261621578
+inside On Zoom
+-0.857198902294
+inside On Zoom
+-0.808585222764
+inside On Zoom
+-0.767995662812
+inside On Zoom
+-0.723069515419
+inside On Zoom
+-0.682531251047
+inside On Zoom
+-0.649587389138
+inside On Zoom
+-0.618323402114
+inside On Zoom
+-0.594410770274
+inside On Zoom
+-0.57112623944
+inside On Zoom
+-0.547843409157
+inside On Zoom
+-0.531307062239
+inside On Zoom
+-0.513701514459
+inside On Zoom
+-0.49719952552
+inside On Zoom
+-0.476219321341
+inside On Zoom
+-0.45693390717
+inside On Zoom
+-0.437650440201
+inside On Zoom
+-0.424037983476
+inside On Zoom
+-0.408729493622
+inside On Zoom
+-0.388886542432
+inside On Zoom
+-0.373582795644
+inside On Zoom
+-0.357728082029
+inside On Zoom
+-0.343601228537
+inside On Zoom
+-0.328310638986
+inside On Zoom
+-0.313022578972
+inside On Zoom
+-0.297737438149
+inside On Zoom
+-0.282455690437
+inside On Zoom
+-0.269405836696
+inside On Zoom
+-0.254639193473
+inside On Zoom
+-0.240576836335
+inside On Zoom
+-0.223586676429
+inside On Zoom
+-0.210535977556
+inside On Zoom
+-0.197485283127
+inside On Zoom
+-0.186160223917
+inside On Zoom
+-0.173600937935
+inside On Zoom
+-0.157631451899
+inside On Zoom
+-0.148010866138
+inside On Zoom
+-0.138916380434
+inside On Zoom
+-0.129828398334
+inside On Zoom
+-0.119679087741
+inside On Zoom
+-0.110448559215
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+inside On Zoom
+1.09519221298
+inside On Zoom
+1.17511124009
+inside On Zoom
+1.25302956968
+inside On Zoom
+1.3632493365
+inside On Zoom
+1.47903165147
+inside On Zoom
+1.61107661737
+inside On Zoom
+1.76492448812
+inside On Zoom
+1.94095672785
+inside On Zoom
+2.11117590738
+inside On Zoom
+2.26627692049
+inside On Zoom
+2.46560831779
+inside On Zoom
+2.68874745577
+inside On Zoom
+2.88874978949
+inside On Zoom
+3.08916433491
+inside On Zoom
+3.26761156176
+inside On Zoom
+3.4238854668
+inside On Zoom
+3.60259217233
+inside On Zoom
+3.76663438975
+inside On Zoom
+3.90840418441
+inside On Zoom
+4.05724276283
+inside On Zoom
+4.19909632806
+inside On Zoom
+4.35572028131
+inside On Zoom
+4.5417423774
+inside On Zoom
+4.72090887536
+inside On Zoom
+4.89224611218
+inside On Zoom
+5.08512032832
+inside On Zoom
+5.23394524479
+inside On Zoom
+5.47191266879
+inside On Zoom
+5.62850383332
+inside On Zoom
+5.79908293447
+inside On Zoom
+5.94089074344
+inside On Zoom
+6.11922179254
+inside On Zoom
+6.28283066928
+inside On Zoom
+6.4688899663
+inside On Zoom
+6.6325187304
+inside On Zoom
+6.80337214741
+inside On Zoom
+6.95223115306
+inside On Zoom
+7.12348540543
+inside On Zoom
+7.25724396915
+inside On Zoom
+7.35404612848
+inside On Zoom
+7.45085467964
+inside On Zoom
+7.56250042925
+inside On Zoom
+7.65177002317
+inside On Zoom
+7.76341658802
+inside On Zoom
+7.85269507523
+inside On Zoom
+7.95684342819
+inside On Zoom
+8.03877376573
+inside On Zoom
+8.12806089798
+inside On Zoom
+8.21735545951
+inside On Zoom
+8.28431752756
+inside On Zoom
+8.3736329351
+inside On Zoom
+8.44806522786
+inside On Zoom
+8.50017109165
+inside On Zoom
+8.559713667
+inside On Zoom
+8.6416180387
+inside On Zoom
+8.70865777383
+inside On Zoom
+8.7309587039
+inside On Zoom
+8.80539056755
+inside On Zoom
+8.82030520637
+inside On Zoom
+8.85752102286
+inside On Zoom
+8.89473684211
+inside On Zoom
+8.91703837646
+inside On Zoom
+8.93195266408
+inside On Zoom
+8.93934624888
+inside On Zoom
+8.96916848875
+inside On Zoom
+8.97656227963
+inside On Zoom
+8.96916848875
+inside On Zoom
+8.9468730513
+inside On Zoom
+8.92458399288
+inside On Zoom
+8.88736848339
+inside On Zoom
+8.85752102286
+inside On Zoom
+8.82030520637
+inside On Zoom
+8.80539056755
+inside On Zoom
+8.76817463481
+inside On Zoom
+8.7309587039
+inside On Zoom
+8.69374277483
+inside On Zoom
+8.67144196874
+inside On Zoom
+8.63422616659
+inside On Zoom
+8.57471642522
+inside On Zoom
+8.55979457128
+inside On Zoom
+8.52257877819
+inside On Zoom
+8.44814720135
+inside On Zoom
+8.41093141769
+inside On Zoom
+8.33649986007
+inside On Zoom
+8.29177077613
+inside On Zoom
+8.20993587621
+inside On Zoom
+8.13550407736
+inside On Zoom
+8.02385639628
+inside On Zoom
+7.91220873659
+inside On Zoom
+7.79318901438
+inside On Zoom
+7.68154243514
+inside On Zoom
+7.56989591076
+inside On Zoom
+7.48812541032
+inside On Zoom
+7.35421563014
+inside On Zoom
+7.26483580924
+inside On Zoom
+7.1831019002
+inside On Zoom
+7.10103187851
+inside On Zoom
+7.00433186107
+inside On Zoom
+6.91495629043
+inside On Zoom
+6.81825803701
+inside On Zoom
+6.70661392657
+inside On Zoom
+6.62489220108
+inside On Zoom
+6.51325092969
+inside On Zoom
+6.41658602197
+inside On Zoom
+6.29771536643
+inside On Zoom
+6.15609510365
+inside On Zoom
+6.01503195488
+inside On Zoom
+5.90340058815
+inside On Zoom
+5.79176987957
+inside On Zoom
+5.68803477593
+inside On Zoom
+5.59857520458
+inside On Zoom
+5.48695254212
+inside On Zoom
+5.39038335251
+inside On Zoom
+5.30890643491
+inside On Zoom
+5.24156095251
+inside On Zoom
+5.18221976204
+inside On Zoom
+5.10781271118
+inside On Zoom
+5.01128919447
+inside On Zoom
+4.91478632839
+inside On Zoom
+4.81830535375
+inside On Zoom
+4.72184761247
+inside On Zoom
+4.58822411768
+inside On Zoom
+4.46981256617
+inside On Zoom
+4.36509067724
+inside On Zoom
+4.24671944432
+inside On Zoom
+4.15039296608
+inside On Zoom
+4.01693092697
+inside On Zoom
+3.89878878841
+inside On Zoom
+3.75894132559
+inside On Zoom
+3.64110116977
+inside On Zoom
+3.51435520697
+inside On Zoom
+3.35956896061
+inside On Zoom
+3.15864026287
+inside On Zoom
+2.97938438305
+inside On Zoom
+2.84039909802
+inside On Zoom
+2.69219658229
+inside On Zoom
+2.54999864212
+inside On Zoom
+2.39603781897
+inside On Zoom
+2.25819529345
+inside On Zoom
+2.11058537783
+inside On Zoom
+1.90035716136
+inside On Zoom
+1.90035716136
+inside On Zoom
+-0.976216613118
+inside On Zoom
+-0.956741165178
+inside On Zoom
+-0.937306076815
+inside On Zoom
+-0.883318686716
+inside On Zoom
+-0.833177495626
+inside On Zoom
+-0.783901454829
+inside On Zoom
+-0.730628361492
+inside On Zoom
+-0.684638991925
+inside On Zoom
+-0.644275815785
+inside On Zoom
+-0.612046737595
+inside On Zoom
+-0.580619435189
+inside On Zoom
+-0.553244268388
+inside On Zoom
+-0.52514068014
+inside On Zoom
+-0.477482467517
+inside On Zoom
+-0.408191745227
+inside On Zoom
+-0.333982281524
+inside On Zoom
+-0.253430345826
+inside On Zoom
+-0.155980502193
+inside On Zoom
+-0.119525782122
+inside On Zoom
+-0.109821118863
+inside On Zoom
+-0.101734104902
+inside On Zoom
+-0.0985449681568
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+2
+0
+0
+1
+inside on Rotate!
+Pan Gesture detected.
+0
+0
+0
+1
+inside on Rotate!

@@ -1,26 +1,36 @@
 Initializing mission control server on port 22500
+Equalizer display system initializing
 Running default_init.py
 Running system/quickCommands.py
 
 >> omegalib 11.2.1
 >> to get a list of quick commands type ':?'
-!!! [v10.1 DEPRECATION WARNING] Renderer::createTexture - use GpuContext::createTexture instead
 Running launcher.py
 Test print, this is in my launcher
 Porthole server thread started
-Porthole GUI client connected: 28:127.0.0.1:localhost
-client connected: 28:127.0.0.1:localhost
-!!! ServerThread::sendFile: failed sending /Applications/omegalib/modules/porthole/res/./js/jquery.mobile-1.4.5.min.map
-!!! ServerThread::sendFile: failed sending /Applications/omegalib/modules/porthole/res/./js/images/ajax-loader.gif
-Preparing to LaunchmodelViewer
-this is Inside my version of the function
-[MissionControlClient::spawn] running app:modelViewer.py
-Mission control client connected: app
-!!! ServerThread::sendFile: failed sending /Applications/omegalib/modules/porthole/res/./data/A_CueR_Exp.jpg
-!!! ServerThread::sendFile: failed sending /Applications/omegalib/modules/porthole/res/./data/testFBX.jpg
-!!! ServerThread::sendFile: failed sending /Applications/omegalib/modules/porthole/res/./data/testFBX2.jpg
-!!! ServerThread::sendFile: failed sending /Applications/omegalib/modules/porthole/res/./data/R_CueR_Exp.jpg
-Porthole GUI client disconnected: 28:127.0.0.1:localhost
-===================== ReferenceType object leaks follow:
-N5omega11LeakPrinterE: 1
-N5omega13DrawInterfaceE: 1
+Porthole GUI client connected: 61:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+client connected: 61:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+!!! ServerThread::sendFile: failed sending /software/omegalib/active/modules/porthole/res/./js/images/ajax-loader.gif
+Porthole GUI client disconnected: 61:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+
+61:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+!!! ServerThread::sendFile: failed sending /software/omegalib/active/modules/porthole/res/./js/images/ajax-loader.gif
+Porthole GUI client connected: 58:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+client connected: 58:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+Porthole GUI client disconnected: 58:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+
+58:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+!!! ServerThread::sendFile: failed sending /software/omegalib/active/modules/porthole/res/./js/images/ajax-loader.gif
+Porthole GUI client connected: 58:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+client connected: 58:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+Porthole GUI client disconnected: 58:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+
+58:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+!!! ServerThread::sendFile: failed sending /software/omegalib/active/modules/porthole/res/./js/images/ajax-loader.gif
+Porthole GUI client connected: 58:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+client connected: 58:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+Porthole GUI client connected: 59:10.105.201.122:dhcp-10-105-201-122.wireless.northwestern.private
+client connected: 59:10.105.201.122:dhcp-10-105-201-122.wireless.northwestern.private
+!!! ServerThread::sendFile: failed sending /software/omegalib/active/modules/porthole/res/./js/images/ajax-loader.gif
+Porthole GUI client disconnected: 58:10.105.136.206:dhcp-10-105-136-206.wireless.northwestern.private
+Porthole GUI client disconnected: 59:10.105.201.122:dhcp-10-105-201-122.wireless.northwestern.private

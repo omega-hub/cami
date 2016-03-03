@@ -80,6 +80,7 @@
         // let the pan gesture support all directions.
         // this will block the vertical scrolling on a touch-device while on the element
         mc.get('pan').set({ swieMaxTouches: 0 });
+        mc.get('pinch').set({ enable: true });
 
         var startMouseX = -1
         var startMouseY = -1
@@ -130,15 +131,15 @@
             console.log(ev.type +" gesture detected.");
         });
 
-        mc.on("pinchin", function(ev){
+        mc.on("pinchout", function(ev){
             ev.preventDefault()
-            delta = ev.scale/4
+            delta = ev.scale/2
             {{mc@app: onZoom(%delta%) }}
             onZoom3JS(delta)
         });
-        mc.on("pinchout", function(ev){
+        mc.on("pinchin", function(ev){
             ev.preventDefault()
-            delta = -(ev.scale)/4
+            delta = -(ev.scale/2)
             {{mc@app: onZoom(%delta%) }}
             onZoom3JS(delta)
         });
