@@ -21,10 +21,11 @@ var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 
 var material = new THREE.MeshPhongMaterial( {color: 0xff0000})
 var cube = new THREE.Mesh( geometry, material );
+cube.position.z = -10
 addLights();
 scene.add( cube );
 
-camera.position.z = 5;
+camera.position.z = 0;
 
 THREEx.WindowResize(renderer, camera);
 
@@ -37,12 +38,13 @@ render();
 
 function addLights() {
     var dirLight = new THREE.DirectionalLight(0xff0000, 1);
-    dirLight.position.set(0, 0, 7);
+    dirLight.position.set(0, 0, 3);
     scene.add(dirLight);
 }
 
 function onZoom3JS(delta) {
-	camera.position.z = camera.position.z - (delta * 0.1)
+
+	camera.position.z = Math.max(Math.min(camera.position.z - (delta * 0.8),15),-12)
 }
 
 
