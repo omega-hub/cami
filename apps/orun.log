@@ -1,0 +1,26 @@
+Initializing mission control server on port 22500
+Running default_init.py
+Running system/quickCommands.py
+
+>> omegalib 11.2.1
+>> to get a list of quick commands type ':?'
+!!! [v10.1 DEPRECATION WARNING] Renderer::createTexture - use GpuContext::createTexture instead
+Running launcher.py
+Test print, this is in my launcher
+Porthole server thread started
+Porthole GUI client connected: 28:127.0.0.1:localhost
+client connected: 28:127.0.0.1:localhost
+!!! ServerThread::sendFile: failed sending /Applications/omegalib/modules/porthole/res/./js/jquery.mobile-1.4.5.min.map
+!!! ServerThread::sendFile: failed sending /Applications/omegalib/modules/porthole/res/./js/images/ajax-loader.gif
+Preparing to LaunchmodelViewer
+this is Inside my version of the function
+[MissionControlClient::spawn] running app:modelViewer.py
+Mission control client connected: app
+!!! ServerThread::sendFile: failed sending /Applications/omegalib/modules/porthole/res/./data/A_CueR_Exp.jpg
+!!! ServerThread::sendFile: failed sending /Applications/omegalib/modules/porthole/res/./data/testFBX.jpg
+!!! ServerThread::sendFile: failed sending /Applications/omegalib/modules/porthole/res/./data/testFBX2.jpg
+!!! ServerThread::sendFile: failed sending /Applications/omegalib/modules/porthole/res/./data/R_CueR_Exp.jpg
+Porthole GUI client disconnected: 28:127.0.0.1:localhost
+===================== ReferenceType object leaks follow:
+N5omega11LeakPrinterE: 1
+N5omega13DrawInterfaceE: 1
