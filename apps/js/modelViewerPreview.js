@@ -6,7 +6,8 @@ var renderer = new THREE.WebGLRenderer();
 // - assume we've got jQuery to hand
 var $container = $('#header');
 renderer.setSize( window.innerWidth, window.innerHeight );
-//renderer.setClearColorHex( 0xffffff, 1 )
+renderer.setClearColor( 0x244040, 1 )
+renderer.clear()
 // attach the render-supplied DOM element
 $container.append(renderer.domElement);
 
@@ -20,9 +21,9 @@ var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 // }
 // var material = new THREE.MeshPhongMaterial( { color: 0xffffff, vertexColors: THREE.FaceColors } );
 
-var material = new THREE.MeshPhongMaterial( {color: 0xff0000})
+var material = new THREE.MeshPhongMaterial( {color: 0xEBBD68})
 var cube = new THREE.Mesh( geometry, material );
-cube.position.z = -5.15
+cube.position.z = -5.2
 ScrollSpeed = 0.1
 addLights();
 scene.add( cube );
@@ -39,7 +40,7 @@ render();
 
 
 function addLights() {
-    var dirLight = new THREE.DirectionalLight(0xff0000, 1);
+    var dirLight = new THREE.DirectionalLight(0xffffff, 1);
     dirLight.position.set(0, 0, 3);
     scene.add(dirLight);
 }

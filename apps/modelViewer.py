@@ -147,7 +147,7 @@ def setZoom(z):
     camera.setPosition(oldX,oldY,z)
 
 def setPan(x,y):
-    print "inside on Pan!!!!!!!!!!!!!!!"
+    #print "inside on Pan!!!!!!!!!!!!!!!"
     oldZ = camera.getPosition().z
     camera.setPosition(x,y ,oldZ)
 
@@ -160,7 +160,7 @@ def onRotate(dx,dy,dz):
         currentModel.rotate(Vector3(0, 0, 1), math.radians(dz), Space.World)
 
 def onZoom(delta):
-    print "inside On Zoom"
+    #print "inside On Zoom"
     #print delta
     camera.translate(0,0,delta,Space.World)
     if (camera.getPosition().z < -10):

@@ -96,6 +96,7 @@
         camX3JS = 0;
         camY3JS = 0;
         camZ3JS = 0;
+        shiftDown = false;
 
         mc.on("panstart", function(ev) {
             ev.preventDefault()
@@ -112,8 +113,7 @@
             startMouseY = ev.center.y
             numTouch = ev.pointers.length
             {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
-            console.log(numTouch)
-            if (numTouch >= 2 && !isZooming) {
+            if ((numTouch >= 2 && !isZooming) || shiftDown) {
                 console.log("panning camera")
                 var limit = (5 + (camZ/3))
                 var limit3JS = (5 + (camZ))
@@ -122,8 +122,8 @@
                 camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
                 camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
                 {{mc@app: setPan(%camX%, %camY%) }}
-                camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
-            	camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
+                camX3JS = Math.min(Math.max(camX3JS - movSpeedX/8,-limit3JS),limit3JS)
+            	camY3JS = Math.min(Math.max(camY3JS + movSpeedY/8,-limit3JS),limit3JS)
                 setPan3JS(camX,camY)
             } else {
                 console.log("rotating camera")
@@ -133,8 +133,7 @@
             //console.log(ev.type +" gesture detected.");
         });
 
-<<<<<<< HEAD
-=======
+        /*
         mc.add(new Hammer.Pan(
         event: 'triplepan',
         pointers: 3,
@@ -146,37 +145,19 @@
             {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
             console.log(ev.type +" triplepanned");
         });
-        /*
-        mc.on("panright", function(ev) {
-        console.log(ev.type +" gesture detected.");
-        });
-        mc.on("panup", function(ev) {
-       console.log(ev.type +" gesture detected.");
-        });
-        mc.on("pandown", function(ev) {
-        console.log(ev.type +" gesture detected.");
-       // console.log("number of touches" + ev.pandown.touches.length);
-        });
-        */
->>>>>>> e64e5e10a8acde4854248929d8e8c769727f866b
+    
         mc.on("tap", function(ev) {
             console.log(ev.type +" gesture detected.");
         });
+        */
 
-<<<<<<< HEAD
         lastScale = 0
         mc.on("pinchstart", function(ev){
+            ev.preventDefault()
             if (lastScale != 0) {
                 delta = ev.scale - lastScale
             }
             lastScale = ev.scale
-=======
-        /*mc.on("pinchout", function(ev){
-            ev.preventDefault()
-            delta = ev.scale/2
-            {{mc@app: onZoom(%delta%) }}
-            onZoom3JS(delta)
->>>>>>> e64e5e10a8acde4854248929d8e8c769727f866b
         });
         mc.on("pinchmove", function(ev){
             ev.preventDefault()
@@ -184,11 +165,11 @@
             delta = ev.scale - lastScale
             lastScale = ev.scale
             camZ = Math.min(Math.max(camZ - delta,-11),2)
-            camZ3JS = Math.min(Math.max(camZ - (delta/2),-5.1),2)
+            camZ3JS = Math.min(Math.max(camZ - (delta/2),-5.0),2)
             {{mc@app: setZoom(%camZ%)}}
-            setZoom3JS(Math.max(-10,camZ3JS+2))
+            setZoom3JS(camZ3JS)
             var limit = (5 + (camZ/3))
-            var limit3JS = (5 + (camZ))
+            var limit3JS = (5 + (camZ3JS))
             camX = Math.min(Math.max(camX,-limit),limit)
             camY = Math.min(Math.max(camY,-limit),limit)
             {{mc@app: setPan(%camX%, %camY%) }}
@@ -196,12 +177,11 @@
             camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
             setPan3JS(camX3JS,camY3JS)
         });
-<<<<<<< HEAD
         mc.on("pinchend", function(ev){
             isZooming = false
-=======
-*/
-        /* //getting pinch and rotate to work
+        });
+
+        //getting pinch and rotate to work
         var pinch = new Hammer.Pinch();
         var rotate = new Hammer.Rotate();
 
@@ -214,18 +194,17 @@
 
         mc.on("pinch rotate", function(ev) {
         console.log(ev.type +" ");
->>>>>>> e64e5e10a8acde4854248929d8e8c769727f866b
         });
         porthole.connected = function(event) {
             {{py startApplication(%client_id%, 'modelViewer') }}
-            document.addEventListener("mousemove", onMouseMove);
-            document.addEventListener("mouseup", onMouseUp);
-            document.addEventListener("mousedown", onMouseDown);
-            document.addEventListener("keypress", porthole.sendKeyDown);
-            document.addEventListener("keyup", porthole.sendKeyUp);       }
+            // document.addEventListener("mousemove", onMouseMove);
+            // document.addEventListener("mouseup", onMouseUp);
+            // document.addEventListener("mousedown", onMouseDown);
+            document.addEventListener("keydown", onKeyDown);
+            document.addEventListener("keyup", onKeyUp);       }
         
         //window.blockMenuHeaderScroll = true;
-        document.ontouchmove = function(e){ 
+        document.ontouchmove = function(e) { 
             e.preventDefault(); 
         }
 
@@ -234,29 +213,65 @@
         function onMouseWheel(e) {
             console.log("Scrolling the wheel!")
             var e = window.event || e; // old IE support
-            delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-            {{mc@app: onZoom(%delta%) }}
-            onZoom3JS(delta)
+            delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
+
+            camZ = Math.min(Math.max(camZ - delta,-11),2)
+            camZ3JS = Math.min(Math.max(camZ - (delta/2),-5.0),2)
+            {{mc@app: setZoom(%camZ%)}}
+            setZoom3JS(camZ3JS)
+            var limit = (5 + (camZ/3))
+            var limit3JS = (5 + (camZ3JS))
+            camX = Math.min(Math.max(camX,-limit),limit)
+            camY = Math.min(Math.max(camY,-limit),limit)
+            {{mc@app: setPan(%camX%, %camY%) }}
+            camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+            camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+            setPan3JS(camX3JS,camY3JS)
         }
-        var isMouseDown = false
-        function onMouseDown(e) {
-            dx = 0
-            dy = 0
-            isMouseDown = true
-        }
-        function onMouseUp(e) {
-            isMouseDown = false
-        }
-        function onMouseMove(e) {
-            if (isMouseDown) {
-                dx = (e.clientX - startMouseX)
-                dy = (e.clientY - startMouseY)
-                //startMouseX = e.clientX
-                //startMouseY = e.clientY
-                //{{mc@app: onRotate(%dx%, %dy%,0) }}
-                //onRotate3JS(dx,dy,0)
+
+        function onKeyDown(e) {
+            var keycode;
+            if (window.event)
+                keycode = window.event.keyCode;
+            else if (e)
+                keycode = e.which;
+            console.log(keycode)
+            if (keycode == 16) {
+                shiftDown = true
+                console.log("Shift Down")
             }
         }
+        function onKeyUp(e) {
+            var keycode;
+            if (window.event)
+                keycode = window.event.keyCode;
+            else if (e)
+                keycode = e.which;
+            if (keycode == 16) {
+                console.log("shift up")
+                shiftDown = false
+            }
+        }
+
+        isMouseDown = false
+        // function onMouseDown(e) {
+        //     dx = 0
+        //     dy = 0
+        //     isMouseDown = true
+        // }
+        // function onMouseUp(e) {
+        //     isMouseDown = false
+        // }
+        // function onMouseMove(e) {
+        //     if (isMouseDown) {
+        //         dx = (e.clientX - startMouseX)
+        //         dy = (e.clientY - startMouseY)
+        //         //startMouseX = e.clientX
+        //         //startMouseY = e.clientY
+        //         //{{mc@app: onRotate(%dx%, %dy%,0) }}
+        //         //onRotate3JS(dx,dy,0)
+        //     }
+        // }
 
         
         modelList=null
