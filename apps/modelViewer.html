@@ -79,6 +79,7 @@
         var mc = new Hammer(myElement);
         // let the pan gesture support all directions.
         // this will block the vertical scrolling on a touch-device while on the element
+
         mc.get('pan').set({ pointers: 0 });
         mc.get('pinch').set({ enable: true });
         mc.get('pinch').set({ threshold: 0.15 });
@@ -132,16 +133,50 @@
             //console.log(ev.type +" gesture detected.");
         });
 
+<<<<<<< HEAD
+=======
+        mc.add(new Hammer.Pan(
+        event: 'triplepan',
+        pointers: 3,
+        direction: Hammer.DIRECTION_HORIZONTAL,
+        threshold: 0
+        ));
+
+        mc.on("triplepan", function(ev) {
+            {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
+            console.log(ev.type +" triplepanned");
+        });
+        /*
+        mc.on("panright", function(ev) {
+        console.log(ev.type +" gesture detected.");
+        });
+        mc.on("panup", function(ev) {
+       console.log(ev.type +" gesture detected.");
+        });
+        mc.on("pandown", function(ev) {
+        console.log(ev.type +" gesture detected.");
+       // console.log("number of touches" + ev.pandown.touches.length);
+        });
+        */
+>>>>>>> e64e5e10a8acde4854248929d8e8c769727f866b
         mc.on("tap", function(ev) {
             console.log(ev.type +" gesture detected.");
         });
 
+<<<<<<< HEAD
         lastScale = 0
         mc.on("pinchstart", function(ev){
             if (lastScale != 0) {
                 delta = ev.scale - lastScale
             }
             lastScale = ev.scale
+=======
+        /*mc.on("pinchout", function(ev){
+            ev.preventDefault()
+            delta = ev.scale/2
+            {{mc@app: onZoom(%delta%) }}
+            onZoom3JS(delta)
+>>>>>>> e64e5e10a8acde4854248929d8e8c769727f866b
         });
         mc.on("pinchmove", function(ev){
             ev.preventDefault()
@@ -161,8 +196,25 @@
             camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
             setPan3JS(camX3JS,camY3JS)
         });
+<<<<<<< HEAD
         mc.on("pinchend", function(ev){
             isZooming = false
+=======
+*/
+        /* //getting pinch and rotate to work
+        var pinch = new Hammer.Pinch();
+        var rotate = new Hammer.Rotate();
+
+        // we want to detect both the same time
+        pinch.recognizeWith(rotate);
+
+        // add to the Manager
+        mc.add([pinch, rotate]);
+
+
+        mc.on("pinch rotate", function(ev) {
+        console.log(ev.type +" ");
+>>>>>>> e64e5e10a8acde4854248929d8e8c769727f866b
         });
         porthole.connected = function(event) {
             {{py startApplication(%client_id%, 'modelViewer') }}
