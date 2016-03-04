@@ -79,7 +79,6 @@
         var mc = new Hammer(myElement);
         // let the pan gesture support all directions.
         // this will block the vertical scrolling on a touch-device while on the element
-
         mc.get('pan').set({ pointers: 0 });
         mc.get('pinch').set({ enable: true });
         mc.get('pinch').set({ threshold: 0.15 });
@@ -113,6 +112,7 @@
             startMouseY = ev.center.y
             numTouch = ev.pointers.length
             {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
+            console.log(numTouch)
             if ((numTouch >= 2 && !isZooming) || shiftDown) {
                 console.log("panning camera")
                 var limit = (5 + (camZ/3))
@@ -122,8 +122,8 @@
                 camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
                 camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
                 {{mc@app: setPan(%camX%, %camY%) }}
-                camX3JS = Math.min(Math.max(camX3JS - movSpeedX/8,-limit3JS),limit3JS)
-            	camY3JS = Math.min(Math.max(camY3JS + movSpeedY/8,-limit3JS),limit3JS)
+                camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
+                camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
                 setPan3JS(camX,camY)
             } else {
                 console.log("rotating camera")
@@ -132,7 +132,6 @@
             }
             //console.log(ev.type +" gesture detected.");
         });
-
         /*
         mc.add(new Hammer.Pan(
         event: 'triplepan',
@@ -150,10 +149,12 @@
             console.log(ev.type +" gesture detected.");
         });
         */
+        mc.on("tap", function(ev) {
+            console.log(ev.type +" gesture detected.");
+        });
 
         lastScale = 0
         mc.on("pinchstart", function(ev){
-            ev.preventDefault()
             if (lastScale != 0) {
                 delta = ev.scale - lastScale
             }
@@ -169,7 +170,7 @@
             {{mc@app: setZoom(%camZ%)}}
             setZoom3JS(camZ3JS)
             var limit = (5 + (camZ/3))
-            var limit3JS = (5 + (camZ3JS))
+            var limit3JS = (5 + (camZ))
             camX = Math.min(Math.max(camX,-limit),limit)
             camY = Math.min(Math.max(camY,-limit),limit)
             {{mc@app: setPan(%camX%, %camY%) }}
@@ -180,31 +181,16 @@
         mc.on("pinchend", function(ev){
             isZooming = false
         });
-
-        //getting pinch and rotate to work
-        var pinch = new Hammer.Pinch();
-        var rotate = new Hammer.Rotate();
-
-        // we want to detect both the same time
-        pinch.recognizeWith(rotate);
-
-        // add to the Manager
-        mc.add([pinch, rotate]);
-
-
-        mc.on("pinch rotate", function(ev) {
-        console.log(ev.type +" ");
-        });
         porthole.connected = function(event) {
             {{py startApplication(%client_id%, 'modelViewer') }}
-            // document.addEventListener("mousemove", onMouseMove);
-            // document.addEventListener("mouseup", onMouseUp);
-            // document.addEventListener("mousedown", onMouseDown);
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+            document.addEventListener("mousedown", onMouseDown);
             document.addEventListener("keydown", onKeyDown);
             document.addEventListener("keyup", onKeyUp);       }
         
         //window.blockMenuHeaderScroll = true;
-        document.ontouchmove = function(e) { 
+        document.ontouchmove = function(e){ 
             e.preventDefault(); 
         }
 
@@ -228,7 +214,6 @@
             camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
             setPan3JS(camX3JS,camY3JS)
         }
-
         function onKeyDown(e) {
             var keycode;
             if (window.event)
@@ -252,26 +237,25 @@
                 shiftDown = false
             }
         }
-
-        isMouseDown = false
-        // function onMouseDown(e) {
-        //     dx = 0
-        //     dy = 0
-        //     isMouseDown = true
-        // }
-        // function onMouseUp(e) {
-        //     isMouseDown = false
-        // }
-        // function onMouseMove(e) {
-        //     if (isMouseDown) {
-        //         dx = (e.clientX - startMouseX)
-        //         dy = (e.clientY - startMouseY)
-        //         //startMouseX = e.clientX
-        //         //startMouseY = e.clientY
-        //         //{{mc@app: onRotate(%dx%, %dy%,0) }}
-        //         //onRotate3JS(dx,dy,0)
-        //     }
-        // }
+        var isMouseDown = false
+        function onMouseDown(e) {
+            dx = 0
+            dy = 0
+            isMouseDown = true
+        }
+        function onMouseUp(e) {
+            isMouseDown = false
+        }
+        function onMouseMove(e) {
+            if (isMouseDown) {
+                dx = (e.clientX - startMouseX)
+                dy = (e.clientY - startMouseY)
+                //startMouseX = e.clientX
+                //startMouseY = e.clientY
+                //{{mc@app: onRotate(%dx%, %dy%,0) }}
+                //onRotate3JS(dx,dy,0)
+            }
+        }
 
         
         modelList=null
