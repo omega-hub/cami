@@ -141,26 +141,32 @@ InitializeModelList()
 print("initialized Model List")
 
 #Model Manipulation Functions:
-def onZoom(delta):
-    print "inside On Zoom"
-    print delta
-    camera.translate(0,0,delta,Space.World)
-    if (camera.getPosition().z < -10):
-        camera.translate(0,0,delta ,Space.World)
-    elif (camera.getPosition().z > 15 ):
-        camera.translate(0,0,-delta ,Space.World)
+def setZoom(z):
+    oldX = camera.getPosition().x
+    oldY = camera.getPosition().y
+    camera.setPosition(oldX,oldY,z)
+
+def setPan(x,y):
+    print "inside on Pan!!!!!!!!!!!!!!!"
+    oldZ = camera.getPosition().z
+    camera.setPosition(x,y ,oldZ)
 
 def onRotate(dx,dy,dz):
-    print "inside on Rotate!"
+    #print "inside on Rotate!"
     if currentModelName != "noModel":
         currentModel = ModelDict[currentModelName]
         currentModel.rotate(Vector3(0, 1, 0), math.radians(dx), Space.World)
         currentModel.rotate(Vector3(1, 0, 0), math.radians(dy), Space.World)
         currentModel.rotate(Vector3(0, 0, 1), math.radians(dz), Space.World)
 
-def onPan(dx,dy,dz):
-    print "inside on Pan"
-    camera.translate(dx,dy,dz, Space.World)
+def onZoom(delta):
+    print "inside On Zoom"
+    #print delta
+    camera.translate(0,0,delta,Space.World)
+    if (camera.getPosition().z < -10):
+        camera.translate(0,0,delta ,Space.World)
+    elif (camera.getPosition().z > 15 ):
+        camera.translate(0,0,-delta ,Space.World)
 
 def logPan(dx,dy,dz,numTouch):
     print "Pan Gesture detected."

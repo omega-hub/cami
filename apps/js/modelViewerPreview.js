@@ -6,6 +6,7 @@ var renderer = new THREE.WebGLRenderer();
 // - assume we've got jQuery to hand
 var $container = $('#header');
 renderer.setSize( window.innerWidth, window.innerHeight );
+//renderer.setClearColorHex( 0xffffff, 1 )
 // attach the render-supplied DOM element
 $container.append(renderer.domElement);
 
@@ -21,7 +22,8 @@ var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 
 var material = new THREE.MeshPhongMaterial( {color: 0xff0000})
 var cube = new THREE.Mesh( geometry, material );
-cube.position.z = -10
+cube.position.z = -5.15
+ScrollSpeed = 0.1
 addLights();
 scene.add( cube );
 
@@ -43,10 +45,17 @@ function addLights() {
 }
 
 function onZoom3JS(delta) {
-
 	camera.position.z = Math.max(Math.min(camera.position.z + (delta ),15),-10)
 }
 
+function setZoom3JS(z) {
+    camera.position.z = z
+}
+
+function setPan3JS(x,y) {
+    camera.position.x = x
+    camera.position.y = y
+}
 
 function onRotate3JS(dx,dy,dz) {
 	var radX = dx * (Math.PI/180)
@@ -65,17 +74,7 @@ var rotObjectMatrix;
 function rotateAroundObjectAxis(object, axis, radians) {
     rotObjectMatrix = new THREE.Matrix4();
     rotObjectMatrix.makeRotationAxis(axis.normalize(), radians);
-
-    // old code for Three.JS pre r54:
-    // object.matrix.multiplySelf(rotObjectMatrix);      // post-multiply
-    // new code for Three.JS r55+:
     object.matrix.multiply(rotObjectMatrix);
-
-    // old code for Three.js pre r49:
-    // object.rotation.getRotationFromMatrix(object.matrix, object.scale);
-    // old code for Three.js r50-r58:
-    // object.rotation.setEulerFromRotationMatrix(object.matrix);
-    // new code for Three.js r59+:
     object.rotation.setFromRotationMatrix(object.matrix);
 }
 
@@ -84,24 +83,8 @@ var rotWorldMatrix;
 function rotateAroundWorldAxis(object, axis, radians) {
     rotWorldMatrix = new THREE.Matrix4();
     rotWorldMatrix.makeRotationAxis(axis.normalize(), radians);
-
-    // old code for Three.JS pre r54:
-    //  rotWorldMatrix.multiply(object.matrix);
-    // new code for Three.JS r55+:
     rotWorldMatrix.multiply(object.matrix);                // pre-multiply
 
     object.matrix = rotWorldMatrix;
-
-    // old code for Three.js pre r49:
-    // object.rotation.getRotationFromMatrix(object.matrix, object.scale);
-    // old code for Three.js pre r59:
-    // object.rotation.setEulerFromRotationMatrix(object.matrix);
-    // code for r59+:
     object.rotation.setFromRotationMatrix(object.matrix);
-}
-
-function onPan3JS(dx,dy,dz) {
-    camera.position.x += dx
-    camera.position.y += dy
-    camera.position.z += dz
 }
