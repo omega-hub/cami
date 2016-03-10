@@ -31,7 +31,7 @@ l2.setShadow(sm2)
 
 ScrollSpeed = 0.1
 obj = None
-localDebug = False
+localDebug = True
 
 # Utility function to send data to the web client
 def calljs(methodname, data):
