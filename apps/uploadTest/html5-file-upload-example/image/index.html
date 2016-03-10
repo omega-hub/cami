@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Preview images</title>
+    <style>
+        #gallery .thumbnail{
+            width:150px;
+            height: 150px;
+            float:left;
+            margin:2px;
+        }
+        #gallery .thumbnail img{
+            width:150px;
+            height: 150px;
+        }
+
+    </style>
+</head>
+<body>
+<h2>Upload images ...</h2>
+
+<input type="file" id="fileinput" multiple="multiple" accept="image/*" />
+
+<div id="gallery"></div>
+<script src="gallery.js"></script>
+</body>
+</html>
