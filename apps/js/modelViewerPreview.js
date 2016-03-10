@@ -6,7 +6,7 @@ var renderer = new THREE.WebGLRenderer();
 // - assume we've got jQuery to hand
 var $container = $('#header');
 renderer.setSize( window.innerWidth, window.innerHeight );
-renderer.setClearColor( 0x244040, 1 )
+renderer.setClearColor( 0Xf1f1f1, 1 )
 renderer.clear()
 // attach the render-supplied DOM element
 $container.append(renderer.domElement);
@@ -21,7 +21,7 @@ var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 // }
 // var material = new THREE.MeshPhongMaterial( { color: 0xffffff, vertexColors: THREE.FaceColors } );
 
-var material = new THREE.MeshPhongMaterial( {color: 0xEBBD68})
+var material = new THREE.MeshPhongMaterial( {color: 0X3b5a5f})
 var cube = new THREE.Mesh( geometry, material );
 cube.position.z = -5.2
 ScrollSpeed = 0.1
