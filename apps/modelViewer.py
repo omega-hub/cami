@@ -31,7 +31,7 @@ l2.setShadow(sm2)
 
 ScrollSpeed = 0.1
 obj = None
-localDebug = True
+localDebug = False
 
 # Utility function to send data to the web client
 def calljs(methodname, data):
@@ -169,7 +169,7 @@ def onZoom(delta):
         camera.translate(0,0,-delta ,Space.World)
 
 def logPan(dx,dy,dz,numTouch):
-    print "Pan Gesture detected."
+    #print "Pan Gesture detected."
     #print dx
     #print dy
     #print dz

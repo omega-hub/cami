@@ -123,7 +123,7 @@
             numTouch = ev.pointers.length
             {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
             console.log(numTouch)
-            if ((numTouch >= 2 && !isZooming && rotateDist <= 0.2) || shiftDown) {
+            if ((numTouch >= 2 && !isZooming && rotateDist <= 0.25) || shiftDown) {
                 console.log("panning camera")
                 var limit = (5 + (camZ/3))
                 var limit3JS = (5 + (camZ))
@@ -137,8 +137,8 @@
                 setPan3JS(camX,camY)
             } else {
                 console.log("rotating camera")
-                rotateDist += dx
-                rotateDist += dy
+                rotateDist += Math.abs(dx)
+                rotateDist += Math.abs(dy)
                 {{mc@app: onRotate(%dx%, %dy%,0) }}
                 onRotate3JS(dx,dy,0)
             }
@@ -186,9 +186,11 @@
             camX = Math.min(Math.max(camX,-limit),limit)
             camY = Math.min(Math.max(camY,-limit),limit)
             {{mc@app: setPan(%camX%, %camY%) }}
-            camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
-            camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
-            setPan3JS(camX3JS,camY3JS)
+            if (camZ > -5.0) {
+                camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+                camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+                setPan3JS(camX3JS,camY3JS)
+            }
         });
         mc.on("pinchend", function(ev){
             isZooming = false
