@@ -23,7 +23,7 @@ var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 
 var material = new THREE.MeshPhongMaterial( {color: 0xEBBD68})
 var cube = new THREE.Mesh( geometry, material );
-cube.position.z = -5.2
+cube.position.z = -6
 ScrollSpeed = 0.1
 addLights();
 scene.add( cube );

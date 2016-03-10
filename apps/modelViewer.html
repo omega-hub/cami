@@ -96,11 +96,13 @@
         camY3JS = 0;
         camZ3JS = 0;
         shiftDown = false;
+        rotateDist = 0;
 
         mc.on("panstart", function(ev) {
             ev.preventDefault()
             startMouseX = ev.center.x 
             startMouseY = ev.center.y
+            rotateDist = 0;
         });
         // listen to events...
         numTouch = 0
@@ -113,7 +115,7 @@
             numTouch = ev.pointers.length
             {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
             console.log(numTouch)
-            if ((numTouch >= 2 && !isZooming) || shiftDown) {
+            if ((numTouch >= 2 && !isZooming && rotateDist <= 0.2) || shiftDown) {
                 console.log("panning camera")
                 var limit = (5 + (camZ/3))
                 var limit3JS = (5 + (camZ))
@@ -122,11 +124,13 @@
                 camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
                 camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
                 {{mc@app: setPan(%camX%, %camY%) }}
-                camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
-                camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
+                camX3JS = Math.min(Math.max(camX3JS - movSpeedX/6,-limit3JS),limit3JS)
+                camY3JS = Math.min(Math.max(camY3JS + movSpeedY/6,-limit3JS),limit3JS)
                 setPan3JS(camX,camY)
             } else {
                 console.log("rotating camera")
+                rotateDist += dx
+                rotateDist += dy
                 {{mc@app: onRotate(%dx%, %dy%,0) }}
                 onRotate3JS(dx,dy,0)
             }
@@ -210,9 +214,11 @@
             camX = Math.min(Math.max(camX,-limit),limit)
             camY = Math.min(Math.max(camY,-limit),limit)
             {{mc@app: setPan(%camX%, %camY%) }}
-            camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
-            camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
-            setPan3JS(camX3JS,camY3JS)
+            if (camZ > -5.0) {
+                camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+                camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+                setPan3JS(camX3JS,camY3JS)
+            }
         }
         function onKeyDown(e) {
             var keycode;

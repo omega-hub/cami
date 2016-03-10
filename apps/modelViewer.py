@@ -170,7 +170,7 @@ def onZoom(delta):
 
 def logPan(dx,dy,dz,numTouch):
     print "Pan Gesture detected."
-    print dx
-    print dy
-    print dz
-    print numTouch
+    #print dx
+    #print dy
+    #print dz
+    #print numTouch
