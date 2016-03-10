@@ -169,6 +169,7 @@ def onZoom(delta):
         camera.translate(0,0,-delta ,Space.World)
 
 def logPan(dx,dy,dz,numTouch):
+    return 0
     #print "Pan Gesture detected."
     #print dx
     #print dy
