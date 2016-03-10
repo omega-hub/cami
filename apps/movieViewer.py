@@ -1,15 +1,15 @@
-# basic omegalib script: just display a textured spinning cube.
-from omega import *
-from cyclops import *
+if(isMaster()):
+    from oav import *
 
-box = BoxShape.create(0.8, 0.8, 0.8)
-box.setPosition(Vector3(0, 2, -3))
+    uim = UiModule.createAndInitialize()
 
-# Apply an emissive textured effect (no lighting)
-box.setEffect("textured -v emissive -d cyclops/test/omega-transparent.png")
+    v = VideoStream()
 
-# Spin the box!
-def onUpdate(frame, t, dt):
-	box.pitch(dt)
-	box.yaw(dt / 3)
-setUpdateFunction(onUpdate)
+    v.open('/opt/data/Videos/4ktest.mp4')
+
+    img = Image.create(uim.getUi())
+    img.setData(v.getPixels())
+    img.setAutosize(False)
+    img.setSize(uim.getUi().getSize())
+    #img.setStereo(True)
+    v.play()
