@@ -105,6 +105,7 @@
         camY3JS = 0;
         camZ3JS = 0;
         shiftDown = false;
+        dummyhtml = 0;
 
         mc.on("panstart", function(ev) {
             ev.preventDefault()
@@ -240,7 +241,6 @@
 
         function resetImage()
         {
-            console.log("in reset Image")
             camX=0;
             camY=0;
             camZ=0;
@@ -254,7 +254,7 @@
             setZoom3JS(camZ3JS)
 
             resetOrientation3JS()
-            {{mc@app: resetOrientation()}}
+            {{mc@app: pyresetOrientation(%dummyhtml%)}}
 
         }
 
@@ -349,16 +349,7 @@
                 //use the '#' to gattret the object the id is referring to.
                 //var newString = "my new String"
                // $('#'+panelID+ ' .panel-body').html(newString);
-                camX = 0
-                camY = 0
-                camZ = 0
-                camX3JS = 0
-                camY3JS = 0
-                camZ3JS = 0
-                {{mc@app: setZoom(%camZ%)}}
-                setZoom3JS(camZ3JS)
-                {{mc@app: setPan(%camX%, %camY%) }}
-                setPan3JS(camX,camY)
+               resetImage();
                
             }
         

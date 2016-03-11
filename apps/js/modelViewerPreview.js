@@ -91,7 +91,7 @@ function rotateAroundWorldAxis(object, axis, radians) {
 }
 
 function resetOrientation3JS() {
-    object.rotation.x = 0
-    object.rotation.y = 0
-    object.rotation.z = 0
+    cube.rotation.x = 0
+    cube.rotation.y = 0
+    cube.rotation.z = 0
 }
