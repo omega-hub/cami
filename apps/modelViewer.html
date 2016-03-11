@@ -319,10 +319,21 @@
                 console.log(event.target.value)
                 console.log(event.target.id)
                 {{mc@app: onModelSelect("%event.target.path%" + "%event.target.value%") }}
+
                 //$('#'+panelID).toggle(); //you can concatenate strings with +.
                 //use the '#' to gattret the object the id is referring to.
                 //var newString = "my new String"
                // $('#'+panelID+ ' .panel-body').html(newString);
+                camX = 0
+                camY = 0
+                camZ = 0
+                camX3JS = 0
+                camY3JS = 0
+                camZ3JS = 0
+                {{mc@app: setZoom(%camZ%)}}
+                setZoom3JS(camZ3JS)
+                {{mc@app: setPan(%camX%, %camY%) }}
+                setPan3JS(camX,camY)
                
             }
         
