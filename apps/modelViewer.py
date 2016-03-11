@@ -167,7 +167,9 @@ def onZoom(delta):
         camera.translate(0,0,delta ,Space.World)
     elif (camera.getPosition().z > 15 ):
         camera.translate(0,0,-delta ,Space.World)
-
+def resetOrientation():
+    currentModel.resetOrientation()
+    
 def logPan(dx,dy,dz,numTouch):
     print "Pan Gesture detected."
     print dx
