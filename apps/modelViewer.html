@@ -58,6 +58,7 @@
         <h1>Model Viewer</h1>
         <script src="js/three.min.js"></script>
         <script src="js/modelViewerPreview.js"></script>
+        <button onclick="resetImage()" type="button">Recenter Image</button>
     </div>
 
     <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
@@ -222,6 +223,7 @@
             camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
             setPan3JS(camX3JS,camY3JS)
         }
+
         function onKeyDown(e) {
             var keycode;
             if (window.event)
@@ -233,7 +235,29 @@
                 shiftDown = true
                 console.log("Shift Down")
             }
+
         }
+
+        function resetImage()
+        {
+            console.log("in reset Image")
+            camX=0;
+            camY=0;
+            camZ=0;
+
+            camX3JS=0;
+            camY3JS=0;
+            camZ3JS=0;
+            {{mc@app: setPan(%camX%, %camY%) }}
+            setPan3JS(camX,camY)
+            {{mc@app: setZoom(%camZ%)}}
+            setZoom3JS(camZ3JS)
+
+            resetOrientation3JS()
+            {{mc@app: resetOrientation()}}
+
+        }
+
         function onKeyUp(e) {
             var keycode;
             if (window.event)
@@ -267,6 +291,7 @@
 
         
         modelList=null
+
         function createModelButtons(ml) {
             // save the argument to the global modelList variable
             // so we can access it from other parts of the interface
