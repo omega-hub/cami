@@ -10,12 +10,6 @@
     <script src="https://hammerjs.github.io/dist/hammer.js"></script>
     <script src='js/THREEx.WindowResize.js'></script>
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
-    <!--
-    Some Resources for Hammer .js
-    http://hammerjs.github.io/api/
-    https://www.youtube.com/watch?v=UHSbJmKvGJo
-    http://hammerjs.github.io/examples/
-    -->
 
     <style>
     .button{
@@ -66,8 +60,9 @@
     </style> 
 </head>
 
-<body style="overflow:hidden;">
-    <div data-role="header" id="header" data-position="fixed">
+<body>
+<!--<body style="overflow:hidden;">-->
+    <div data-role="header" id="header" data-position ="fixed">
         <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
         <h1>Model Viewer</h1>
         <script src="js/three.min.js"></script>
@@ -81,7 +76,7 @@
     
     </div>
 
-    <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
+    <div data-role="panel" data-display="push" data-theme="b" id="nav-panel"> 
         <ul data-role="listview" class="panel">
 
         
@@ -91,7 +86,7 @@
             
         </div>
 
-<!--  Previous JQuery loader buttons       
+<!--  Previous JQuery loader buttons       data-position-fixed="true"
 <div data-role="page" id="page1">
   <div role="main" class="ui-content">
     <div data-role="controlgroup">
@@ -173,7 +168,7 @@ $(document).on( "click", ".button", function() {
         // listen to events...
         numTouch = 0
         mc.on("pan", function(ev) {
-            //ev.preventDefault()
+            ev.preventDefault()
             dx = (ev.center.x - startMouseX)
             dy = (ev.center.y - startMouseY)
             startMouseX = ev.center.x 
