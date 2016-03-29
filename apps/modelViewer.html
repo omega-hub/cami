@@ -67,7 +67,7 @@
 </head>
 
 <body style="overflow:hidden;">
-    <div data-role="header" id="header">
+    <div data-role="header" id="header" data-position="fixed">
         <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
         <h1>Model Viewer</h1>
         <script src="js/three.min.js"></script>
@@ -173,7 +173,7 @@ $(document).on( "click", ".button", function() {
         // listen to events...
         numTouch = 0
         mc.on("pan", function(ev) {
-            ev.preventDefault()
+            //ev.preventDefault()
             dx = (ev.center.x - startMouseX)
             dy = (ev.center.y - startMouseY)
             startMouseX = ev.center.x 
@@ -234,11 +234,11 @@ $(document).on( "click", ".button", function() {
             delta = ev.scale - lastScale
             lastScale = ev.scale
             camZ = Math.min(Math.max(camZ - delta,-11),2)
-            camZ3JS = Math.min(Math.max(camZ - (delta/2),-5.0),2)
+            camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
             {{mc@app: setZoom(%camZ%)}}
             setZoom3JS(camZ3JS)
             var limit = (5 + (camZ/3))
-            var limit3JS = (5 + (camZ))
+            var limit3JS = (5 + (camZ3JS))
             camX = Math.min(Math.max(camX,-limit),limit)
             camY = Math.min(Math.max(camY,-limit),limit)
             {{mc@app: setPan(%camX%, %camY%) }}
@@ -268,9 +268,11 @@ $(document).on( "click", ".button", function() {
             console.log("Scrolling the wheel!")
             var e = window.event || e; // old IE support
             delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
+            
+
 
             camZ = Math.min(Math.max(camZ - delta,-11),2)
-            camZ3JS = Math.min(Math.max(camZ - (delta/2),-5.0),2)
+            camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
             {{mc@app: setZoom(%camZ%)}}
             setZoom3JS(camZ3JS)
             var limit = (5 + (camZ/3))
@@ -356,7 +358,7 @@ $(document).on( "click", ".button", function() {
             // and we can pass it back to the server app using {{mc@app}}
            modelList=ml;
             //use this $('id of object') to get the object's id and do stuff with it.
-            $('nav-panel').hide(300).show(1000).hide(200).show(1000);
+            //$('nav-panel').hide(300).show(1000).hide(200).show(1000);
             //other events, fadeIn/fadeOut, fadeToggle, slideUp, slideDown
             // you can use the .html operator to rewrite HTML code!!!
             // example $('nav-panel').html('codecodecodecode<tag>')
