@@ -31,7 +31,7 @@ l2.setShadow(sm2)
 
 ScrollSpeed = 0.1
 obj = None
-localDebug = True
+localDebug = False
 
 # Utility function to send data to the web client
 def calljs(methodname, data):
@@ -180,8 +180,9 @@ def pyresetOrientation(dummy):
     print("in .py resetOrientation")
     
 def logPan(dx,dy,dz,numTouch):
-    print "Pan Gesture detected."
-    print dx
-    print dy
-    print dz
-    print numTouch
+    return 0
+    #print "Pan Gesture detected."
+    #print dx
+    #print dy
+    #print dz
+    #print numTouch

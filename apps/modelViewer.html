@@ -144,7 +144,7 @@ $(document).on( "click", ".button", function() {
         mc.get('pan').set({ pointers: 0 });
         mc.get('pan').set({ threshold: 15 });
         mc.get('pinch').set({ enable: true });
-        mc.get('pinch').set({ threshold: 0.15 });
+        mc.get('pinch').set({ threshold: 0.08 });
 
         var startMouseX = -1
         var startMouseY = -1
@@ -159,6 +159,7 @@ $(document).on( "click", ".button", function() {
         camY3JS = 0;
         camZ3JS = 0;
         shiftDown = false;
+        rotateDist = 0;
         dummyhtml = 0;
         navOpen = false;
 
@@ -166,6 +167,7 @@ $(document).on( "click", ".button", function() {
             ev.preventDefault()
             startMouseX = ev.center.x 
             startMouseY = ev.center.y
+            rotateDist = 0;
         });
         // listen to events...
         numTouch = 0
@@ -247,9 +249,11 @@ $(document).on( "click", ".button", function() {
             camX = Math.min(Math.max(camX,-limit),limit)
             camY = Math.min(Math.max(camY,-limit),limit)
             {{mc@app: setPan(%camX%, %camY%) }}
-            camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
-            camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
-            setPan3JS(camX3JS,camY3JS)
+            if (camZ > -5.0) {
+                camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+                camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+                setPan3JS(camX3JS,camY3JS)
+            }
         });
         mc.on("pinchend", function(ev){
             isZooming = false
@@ -273,11 +277,8 @@ $(document).on( "click", ".button", function() {
             if (!navOpen ) {
                 var e = window.event || e; // old IE support
                 delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
-                
-
-
-                camZ = Math.min(Math.max(camZ - delta,-11),2)
-                camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
+                camZ = Math.min(Math.max(camZ - delta,-12),2)
+                camZ3JS = Math.min(Math.max(camZ3JS - (delta/3),-4.3),2)
                 {{mc@app: setZoom(%camZ%)}}
                 setZoom3JS(camZ3JS)
                 var limit = (5 + (camZ/3))
@@ -285,9 +286,11 @@ $(document).on( "click", ".button", function() {
                 camX = Math.min(Math.max(camX,-limit),limit)
                 camY = Math.min(Math.max(camY,-limit),limit)
                 {{mc@app: setPan(%camX%, %camY%) }}
-                camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
-                camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
-                setPan3JS(camX3JS,camY3JS)
+                if (camZ > -5.0) {
+                    camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+                    camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+                    setPan3JS(camX3JS,camY3JS)
+                }
             }
         }
 
