@@ -172,13 +172,20 @@ $(document).on( "click", ".button", function() {
         // listen to events...
         numTouch = 0
         $( "#nav-panel" ).panel({
-          beforeclose: function( event, ui ) {navOpen = false}
+          beforeclose: function( event, ui ) {
+            navOpen = false
+            window.scrollTo(0,0);
+        }
         });
         $( "#nav-panel" ).panel({
-          beforeopen: function( event, ui ) {navOpen = true}
+          beforeopen: function( event, ui ) {
+            navOpen = true
+            window.scrollTo(0,0);
+        }
         });
         mc.on("pan", function(ev) {
             if (!navOpen) {
+                //window.scrollTo(0,0);
                 ev.preventDefault()
                 dx = (ev.center.x - startMouseX)
                 dy = (ev.center.y - startMouseY)
@@ -196,9 +203,11 @@ $(document).on( "click", ".button", function() {
                     camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
                     camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
                     {{mc@app: setPan(%camX%, %camY%) }}
-                    camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
-                    camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
-                    setPan3JS(camX,camY)
+                    // camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
+                    // camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
+                    camX3JS = camX3JS - movSpeedX/4
+                    camY3JS = camY3JS + movSpeedY/4
+                    setPan3JS(camX3JS,camY3JS)
                 } else {
                     console.log("rotating camera")
                     {{mc@app: onRotate(%dx%, %dy%,0) }}
@@ -246,13 +255,13 @@ $(document).on( "click", ".button", function() {
             setZoom3JS(camZ3JS)
             var limit = (5 + (camZ/3))
             var limit3JS = (5 + (camZ3JS))
-            camX = Math.min(Math.max(camX,-limit),limit)
-            camY = Math.min(Math.max(camY,-limit),limit)
-            {{mc@app: setPan(%camX%, %camY%) }}
+            // camX = Math.min(Math.max(camX,-limit),limit)
+            // camY = Math.min(Math.max(camY,-limit),limit)
+            // {{mc@app: setPan(%camX%, %camY%) }}
             if (camZ > -5.0) {
-                camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
-                camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
-                setPan3JS(camX3JS,camY3JS)
+                // camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+                // camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+                // setPan3JS(camX3JS,camY3JS)
             }
         });
         mc.on("pinchend", function(ev){
@@ -275,6 +284,8 @@ $(document).on( "click", ".button", function() {
 
         function onMouseWheel(e) {
             if (!navOpen ) {
+                //window.scrollTo(0,0);
+                e.preventDefault();
                 var e = window.event || e; // old IE support
                 delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
                 camZ = Math.min(Math.max(camZ - delta,-12),2)
@@ -283,13 +294,13 @@ $(document).on( "click", ".button", function() {
                 setZoom3JS(camZ3JS)
                 var limit = (5 + (camZ/3))
                 var limit3JS = (5 + (camZ3JS))
-                camX = Math.min(Math.max(camX,-limit),limit)
-                camY = Math.min(Math.max(camY,-limit),limit)
-                {{mc@app: setPan(%camX%, %camY%) }}
+                // camX = Math.min(Math.max(camX,-limit),limit)
+                // camY = Math.min(Math.max(camY,-limit),limit)
+                //{{mc@app: setPan(%camX%, %camY%) }}
                 if (camZ > -5.0) {
-                    camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
-                    camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
-                    setPan3JS(camX3JS,camY3JS)
+                    // camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+                    // camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+                    // setPan3JS(camX3JS,camY3JS)
                 }
             }
         }
