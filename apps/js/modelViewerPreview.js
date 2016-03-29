@@ -89,3 +89,9 @@ function rotateAroundWorldAxis(object, axis, radians) {
     object.matrix = rotWorldMatrix;
     object.rotation.setFromRotationMatrix(object.matrix);
 }
+
+function resetOrientation3JS() {
+    cube.rotation.x = 0
+    cube.rotation.y = 0
+    cube.rotation.z = 0
+}

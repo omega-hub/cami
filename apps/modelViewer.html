@@ -58,6 +58,7 @@
         <h1>Model Viewer</h1>
         <script src="js/three.min.js"></script>
         <script src="js/modelViewerPreview.js"></script>
+        <button onclick="resetImage()" type="button">Recenter Image</button>
     </div>
 
     <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
@@ -105,6 +106,7 @@
         camZ3JS = 0;
         shiftDown = false;
         rotateDist = 0;
+        dummyhtml = 0;
 
         mc.on("panstart", function(ev) {
             ev.preventDefault()
@@ -127,13 +129,15 @@
                 console.log("panning camera")
                 var limit = (5 + (camZ/3))
                 var limit3JS = (5 + (camZ))
-                var movSpeedX = (dx/(16-(camZ)))
-                var movSpeedY = (dy/(16-(camZ)))
-                camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
-                camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
+                var movSpeedX = (dx/(16-(2.0 * camZ)))
+                var movSpeedY = (dy/(16-(2.0 * camZ)))
+                camX = camX - movSpeedX
+                camY = camY + movSpeedY
+                //camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
+                //camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
                 {{mc@app: setPan(%camX%, %camY%) }}
-                camX3JS = Math.min(Math.max(camX3JS - movSpeedX/6,-limit3JS),limit3JS)
-                camY3JS = Math.min(Math.max(camY3JS + movSpeedY/6,-limit3JS),limit3JS)
+                camX3JS = Math.min(Math.max(camX3JS - movSpeedX/12,-limit3JS),limit3JS)
+                camY3JS = Math.min(Math.max(camY3JS + movSpeedY/12,-limit3JS),limit3JS)
                 setPan3JS(camX,camY)
             } else {
                 console.log("rotating camera")
@@ -177,8 +181,8 @@
             isZooming = true
             delta = ev.scale - lastScale
             lastScale = ev.scale
-            camZ = Math.min(Math.max(camZ - delta,-11),2)
-            camZ3JS = Math.min(Math.max(camZ - (delta/2),-5.0),2)
+            camZ = Math.min(Math.max(camZ - delta,-12),2)
+            camZ3JS = Math.min(Math.max(camZ3JS - delta,-4.3),2)
             {{mc@app: setZoom(%camZ%)}}
             setZoom3JS(camZ3JS)
             var limit = (5 + (camZ/3))
@@ -215,8 +219,8 @@
             var e = window.event || e; // old IE support
             delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
 
-            camZ = Math.min(Math.max(camZ - delta,-11),2)
-            camZ3JS = Math.min(Math.max(camZ - (delta/2),-5.0),2)
+            camZ = Math.min(Math.max(camZ - delta,-12),2)
+            camZ3JS = Math.min(Math.max(camZ3JS - (delta/3),-4.3),2)
             {{mc@app: setZoom(%camZ%)}}
             setZoom3JS(camZ3JS)
             var limit = (5 + (camZ/3))
@@ -230,6 +234,7 @@
                 setPan3JS(camX3JS,camY3JS)
             }
         }
+
         function onKeyDown(e) {
             var keycode;
             if (window.event)
@@ -241,7 +246,28 @@
                 shiftDown = true
                 console.log("Shift Down")
             }
+
         }
+
+        function resetImage()
+        {
+            camX=0;
+            camY=0;
+            camZ=0;
+
+            camX3JS=0;
+            camY3JS=0;
+            camZ3JS=0;
+            {{mc@app: setPan(%camX%, %camY%) }}
+            setPan3JS(camX,camY)
+            {{mc@app: setZoom(%camZ%)}}
+            setZoom3JS(camZ3JS)
+
+            resetOrientation3JS()
+            {{mc@app: pyresetOrientation(%dummyhtml%)}}
+
+        }
+
         function onKeyUp(e) {
             var keycode;
             if (window.event)
@@ -275,6 +301,7 @@
 
         
         modelList=null
+
         function createModelButtons(ml) {
             // save the argument to the global modelList variable
             // so we can access it from other parts of the interface
@@ -327,10 +354,12 @@
                 console.log(event.target.value)
                 console.log(event.target.id)
                 {{mc@app: onModelSelect("%event.target.path%" + "%event.target.value%") }}
+
                 //$('#'+panelID).toggle(); //you can concatenate strings with +.
                 //use the '#' to gattret the object the id is referring to.
                 //var newString = "my new String"
                // $('#'+panelID+ ' .panel-body').html(newString);
+               resetImage();
                
             }
         
