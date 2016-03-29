@@ -142,6 +142,7 @@ $(document).on( "click", ".button", function() {
         // let the pan gesture support all directions.
         // this will block the vertical scrolling on a touch-device while on the element
         mc.get('pan').set({ pointers: 0 });
+        mc.get('pan').set({ threshold: 15 });
         mc.get('pinch').set({ enable: true });
         mc.get('pinch').set({ threshold: 0.15 });
 
@@ -159,6 +160,7 @@ $(document).on( "click", ".button", function() {
         camZ3JS = 0;
         shiftDown = false;
         dummyhtml = 0;
+        navOpen = false;
 
         mc.on("panstart", function(ev) {
             ev.preventDefault()
@@ -167,31 +169,39 @@ $(document).on( "click", ".button", function() {
         });
         // listen to events...
         numTouch = 0
+        $( "#nav-panel" ).panel({
+          beforeclose: function( event, ui ) {navOpen = false}
+        });
+        $( "#nav-panel" ).panel({
+          beforeopen: function( event, ui ) {navOpen = true}
+        });
         mc.on("pan", function(ev) {
-            ev.preventDefault()
-            dx = (ev.center.x - startMouseX)
-            dy = (ev.center.y - startMouseY)
-            startMouseX = ev.center.x 
-            startMouseY = ev.center.y
-            numTouch = ev.pointers.length
-            {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
-            console.log(numTouch)
-            if ((numTouch >= 2 && !isZooming) || shiftDown) {
-                console.log("panning camera")
-                var limit = (5 + (camZ/3))
-                var limit3JS = (5 + (camZ))
-                var movSpeedX = (dx/(16-(camZ)))
-                var movSpeedY = (dy/(16-(camZ)))
-                camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
-                camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
-                {{mc@app: setPan(%camX%, %camY%) }}
-                camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
-                camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
-                setPan3JS(camX,camY)
-            } else {
-                console.log("rotating camera")
-                {{mc@app: onRotate(%dx%, %dy%,0) }}
-                onRotate3JS(dx,dy,0)
+            if (!navOpen) {
+                ev.preventDefault()
+                dx = (ev.center.x - startMouseX)
+                dy = (ev.center.y - startMouseY)
+                startMouseX = ev.center.x 
+                startMouseY = ev.center.y
+                numTouch = ev.pointers.length
+                {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
+                console.log(numTouch)
+                if ((numTouch >= 2 && !isZooming) || shiftDown) {
+                    console.log("panning camera")
+                    var limit = (5 + (camZ/3))
+                    var limit3JS = (5 + (camZ))
+                    var movSpeedX = (dx/(16-(camZ)))
+                    var movSpeedY = (dy/(16-(camZ)))
+                    camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
+                    camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
+                    {{mc@app: setPan(%camX%, %camY%) }}
+                    camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
+                    camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
+                    setPan3JS(camX,camY)
+                } else {
+                    console.log("rotating camera")
+                    {{mc@app: onRotate(%dx%, %dy%,0) }}
+                    onRotate3JS(dx,dy,0)
+                }
             }
             //console.log(ev.type +" gesture detected.");
         });
@@ -260,24 +270,25 @@ $(document).on( "click", ".button", function() {
         document.addEventListener("mousewheel",onMouseWheel);
 
         function onMouseWheel(e) {
-            console.log("Scrolling the wheel!")
-            var e = window.event || e; // old IE support
-            delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
-            
+            if (!navOpen ) {
+                var e = window.event || e; // old IE support
+                delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
+                
 
 
-            camZ = Math.min(Math.max(camZ - delta,-11),2)
-            camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
-            {{mc@app: setZoom(%camZ%)}}
-            setZoom3JS(camZ3JS)
-            var limit = (5 + (camZ/3))
-            var limit3JS = (5 + (camZ3JS))
-            camX = Math.min(Math.max(camX,-limit),limit)
-            camY = Math.min(Math.max(camY,-limit),limit)
-            {{mc@app: setPan(%camX%, %camY%) }}
-            camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
-            camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
-            setPan3JS(camX3JS,camY3JS)
+                camZ = Math.min(Math.max(camZ - delta,-11),2)
+                camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
+                {{mc@app: setZoom(%camZ%)}}
+                setZoom3JS(camZ3JS)
+                var limit = (5 + (camZ/3))
+                var limit3JS = (5 + (camZ3JS))
+                camX = Math.min(Math.max(camX,-limit),limit)
+                camY = Math.min(Math.max(camY,-limit),limit)
+                {{mc@app: setPan(%camX%, %camY%) }}
+                camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+                camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+                setPan3JS(camX3JS,camY3JS)
+            }
         }
 
         function onKeyDown(e) {
