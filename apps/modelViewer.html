@@ -18,7 +18,6 @@
     -->
 
     <style>
-     -webkit-appearance: none;
     .button{
     background-color: #e8e9f0; 
     border: 1px black;
@@ -36,6 +35,11 @@
 
     
     }
+
+    div.hide { display:none; }
+
+    div.show {  }
+
     .image{
          border: 10px black;
     }
@@ -52,6 +56,11 @@
     #set3{
         outline:none;
     }
+
+    .content{
+        float: center;
+        float: top;
+    }
     body { margin: 0; }
     canvas { width: 100%; height: 100% }
     </style> 
@@ -63,20 +72,42 @@
         <h1>Model Viewer</h1>
         <script src="js/three.min.js"></script>
         <script src="js/modelViewerPreview.js"></script>
-        <button onclick="resetImage()" type="button">Reset Image</button>
-       <img src="images.jpeg" alt="Computer Man" style="width:48px;height:48px;"></img>
+
+         <button onclick="resetImage()" type="button">Reset Image</button> 
+
     </div>
 
+    <div data-role="content" id="content">
     
+    </div>
 
     <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
         <ul data-role="listview" class="panel">
 
-
+        
             <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
           
         <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
-            <!--REMOVED data-content-theme="c"
+            
+        </div>
+
+<!--  Previous JQuery loader buttons       
+<div data-role="page" id="page1">
+  <div role="main" class="ui-content">
+    <div data-role="controlgroup">
+
+      <button class="show-page-loading-msg" data-theme="b" data-textonly="false" data-textvisible="true" data-msgtext="Loading..." data-icon="arrow-r" data-iconpos="right">Theme a</button>
+   
+      <button class="hide-page-loading-msg" data-icon="delete" data-iconpos="right">Hide</button>
+
+    </div>
+  </div>
+</div>
+ -->
+           <!-- 
+            
+
+            REMOVED data-content-theme="c"
                 <li data-role="collapsible">
                 <h4>Stars Demo</h4>
                 <div id="pageButtons">
@@ -90,6 +121,25 @@
     <script>
 
         var myElement = document.getElementById('header');
+         
+
+$(document).on( "click", ".button", function() {
+        var $this = $( this ),
+        html = $this.jqmData( "html" ) || "";
+    
+    $.mobile.loading( 'show', {
+        text: "Loading Model",
+        textVisible: true,
+        theme: "b",
+        textonly: false,
+        icon:"ajax-loader.gif",
+        //html: html
+    });
+})
+
+.on( "click", ".hide-page-loading-msg", function() {
+  $.mobile.loading( "hide" );
+});
 
         // create a simple instance
         // by default, it only adds horizontal recognizers
@@ -328,7 +378,7 @@
                     lastFolder = ml[i][0]
                 }
                 var pageButtons = $('#pageButtons' + j);
-                pageButtons.append('<input type="button" class="button" id="button'+i+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick="modelButtonClicked(event)"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
+                pageButtons.append('<input type="button" class="button" id="button'+i+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick= "addloading()"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
                 i = i + 1;
             }
             /* some links of helpful guides 
@@ -342,6 +392,14 @@
                 */
 
         }
+        function addloading(){
+        modelButtonClicked(event);
+        }
+
+        function noloading(dummy){
+        $.mobile.loading( "hide" );
+        }
+
         //creating a jquery function for always occuring events.
        function modelButtonClicked(event) {
 
