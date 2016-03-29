@@ -1,5 +1,6 @@
 <html lang="en">
 <head>
+
     <title>Model Viewer Test</title>
     <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css">
     <script src="js/jquery-1.12.0.min.js"></script>
@@ -9,12 +10,6 @@
     <script src="https://hammerjs.github.io/dist/hammer.js"></script>
     <script src='js/THREEx.WindowResize.js'></script>
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
-    <!--
-    Some Resources for Hammer .js
-    http://hammerjs.github.io/api/
-    https://www.youtube.com/watch?v=UHSbJmKvGJo
-    http://hammerjs.github.io/examples/
-    -->
 
     <style>
     .button{
@@ -35,6 +30,14 @@
     
     }
 
+    div.hide { display:none; }
+
+    div.show {  }
+
+    .image{
+         border: 10px black;
+    }
+
 .button:active{
   box-shadow: inset .5px 1px 5px 0px black;
 }
@@ -47,28 +50,59 @@
     #set3{
         outline:none;
     }
+
+    .content{
+        float: center;
+        float: top;
+    }
     body { margin: 0; }
     canvas { width: 100%; height: 100% }
     </style> 
 </head>
 
-<body style="overflow:hidden;">
-    <div data-role="header" id="header">
+<body>
+<!--<body style="overflow:hidden;">-->
+    <div data-role="header" id="header" data-position ="fixed">
         <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
         <h1>Model Viewer</h1>
         <script src="js/three.min.js"></script>
         <script src="js/modelViewerPreview.js"></script>
-        <button onclick="resetImage()" type="button">Recenter Image</button>
+
+         <button onclick="resetImage()" type="button">Reset Image</button> 
+
     </div>
 
-    <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
+    <div data-role="content" id="content">
+    
+    </div>
+
+    <div data-role="panel" data-display="push" data-theme="b" id="nav-panel"> 
         <ul data-role="listview" class="panel">
 
-
+        
             <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
           
         <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
-            <!--REMOVED data-content-theme="c"
+            
+        </div>
+
+<!--  Previous JQuery loader buttons       data-position-fixed="true"
+<div data-role="page" id="page1">
+  <div role="main" class="ui-content">
+    <div data-role="controlgroup">
+
+      <button class="show-page-loading-msg" data-theme="b" data-textonly="false" data-textvisible="true" data-msgtext="Loading..." data-icon="arrow-r" data-iconpos="right">Theme a</button>
+   
+      <button class="hide-page-loading-msg" data-icon="delete" data-iconpos="right">Hide</button>
+
+    </div>
+  </div>
+</div>
+ -->
+           <!-- 
+            
+
+            REMOVED data-content-theme="c"
                 <li data-role="collapsible">
                 <h4>Stars Demo</h4>
                 <div id="pageButtons">
@@ -82,6 +116,25 @@
     <script>
 
         var myElement = document.getElementById('header');
+         
+
+$(document).on( "click", ".button", function() {
+        var $this = $( this ),
+        html = $this.jqmData( "html" ) || "";
+    
+    $.mobile.loading( 'show', {
+        text: "Loading Model",
+        textVisible: true,
+        theme: "b",
+        textonly: false,
+        icon:"ajax-loader.gif",
+        //html: html
+    });
+})
+
+.on( "click", ".hide-page-loading-msg", function() {
+  $.mobile.loading( "hide" );
+});
 
         // create a simple instance
         // by default, it only adds horizontal recognizers
@@ -181,12 +234,12 @@
             isZooming = true
             delta = ev.scale - lastScale
             lastScale = ev.scale
-            camZ = Math.min(Math.max(camZ - delta,-12),2)
-            camZ3JS = Math.min(Math.max(camZ3JS - delta,-4.3),2)
+            camZ = Math.min(Math.max(camZ - delta,-11),2)
+            camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
             {{mc@app: setZoom(%camZ%)}}
             setZoom3JS(camZ3JS)
             var limit = (5 + (camZ/3))
-            var limit3JS = (5 + (camZ))
+            var limit3JS = (5 + (camZ3JS))
             camX = Math.min(Math.max(camX,-limit),limit)
             camY = Math.min(Math.max(camY,-limit),limit)
             {{mc@app: setPan(%camX%, %camY%) }}
@@ -218,6 +271,7 @@
             console.log("Scrolling the wheel!")
             var e = window.event || e; // old IE support
             delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
+            
 
             camZ = Math.min(Math.max(camZ - delta,-12),2)
             camZ3JS = Math.min(Math.max(camZ3JS - (delta/3),-4.3),2)
@@ -308,7 +362,7 @@
             // and we can pass it back to the server app using {{mc@app}}
            modelList=ml;
             //use this $('id of object') to get the object's id and do stuff with it.
-            $('nav-panel').hide(300).show(1000).hide(200).show(1000);
+            //$('nav-panel').hide(300).show(1000).hide(200).show(1000);
             //other events, fadeIn/fadeOut, fadeToggle, slideUp, slideDown
             // you can use the .html operator to rewrite HTML code!!!
             // example $('nav-panel').html('codecodecodecode<tag>')
@@ -330,7 +384,7 @@
                     lastFolder = ml[i][0]
                 }
                 var pageButtons = $('#pageButtons' + j);
-                pageButtons.append('<input type="button" class="button" id="button'+i+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick="modelButtonClicked(event)"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
+                pageButtons.append('<input type="button" class="button" id="button'+i+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick= "addloading()"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
                 i = i + 1;
             }
             /* some links of helpful guides 
@@ -344,6 +398,14 @@
                 */
 
         }
+        function addloading(){
+        modelButtonClicked(event);
+        }
+
+        function noloading(dummy){
+        $.mobile.loading( "hide" );
+        }
+
         //creating a jquery function for always occuring events.
        function modelButtonClicked(event) {
 

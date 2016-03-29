@@ -1,7 +1,7 @@
 from omega import *
 from cyclops import *
 import Manipulator
-import os, glob,math
+import os, glob,math, time
 getDefaultCamera().setBackgroundColor(Color('black'))
 camera = getDefaultCamera()
 getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/dof.xml')
@@ -85,18 +85,21 @@ def onModelSelect(modelName):
     
     if modelName == currentModelName:
         print "Current model is same as selected model"
+        calljs('noloading', ScrollSpeed)
     elif modelName in ModelDict.keys(): 
         print "Model has already been loaded"
         #TODO: Make new model reappear
         toggleModelVisible(currentModelName,False)
         toggleModelVisible(modelName, True)
         currentModelName = modelName
+        calljs('noloading', ScrollSpeed)
     else:
         #TODO: Hide current Model
         if currentModelName != "noModel":
             toggleModelVisible(currentModelName,False)
         currentModelName = modelName
         LoadModel(modelName)
+        
     
 def LoadModel(modelName):
     if (localDebug):
@@ -112,6 +115,7 @@ def LoadModel(modelName):
     model.optimize = True
     model.size = 10
     getSceneManager().loadModelAsync(model, 'onModelLoaded()')
+    
     
 def toggleModelVisible(modelName, visible):
     parent = getScene()
@@ -135,7 +139,8 @@ def onModelLoaded():
     Manipulator.root = obj
     l1.lookAt(obj.getPosition(), Vector3(0, 1, 0))
     ModelDict[currentModelName] = obj
-
+    time.sleep(5)
+    calljs('noloading', ScrollSpeed)
     
 InitializeModelList()
 print("initialized Model List")
