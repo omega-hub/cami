@@ -25,6 +25,7 @@
     float: center;
     outline:none;
     box-shadow: inset -.5px -1px 5px 0px black;
+    display:inline !important;
 
     
     }
@@ -49,12 +50,24 @@
     #set3{
         outline:none;
     }
-    #slider {
-		margin: 20px;
+    .jquerymobileslider .ui-slider {
+    height: 50px;
+    width: 250px
+    }
+
+    .jquerymobileslider .ui-slider .ui-slider-handle {
+        height: 50px;
+        width: 50px;
+    }
+    /*#slider {
+		margin: 15px;
+    width: 200px;
+    height: 20px;
 	}
 	#volSlider {
 		margin: 20px;
-	}
+    width: 200px;
+	}*/
 
     .content{
         float: center;
@@ -72,143 +85,59 @@
         <h1>Movie Viewer</h1>
 	</div>
 
-    <div data-role="content" id="content">
+    <!-- <div data-role="content" id="content">
     
-    </div>
+    </div> -->
 	<div data-role="panel" data-display="push" data-theme="b" id="nav-panel"> 
-        <ul data-role="listview" class="panel">
+      <ul data-role="listview" class="panel">
 
+      
+          <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
         
-            <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
+      <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
           
-        <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
-            
-        </div>
+      </div>
+  </div>
+  <div id="video-controls"data-role="content" data-display="inline">
+    <div class="ui-field-contain">
+      <input type="range" id="seek-bar" min="0" max="10">
+      <button type="button" id="play-pause"data-inline="true">Play/Pause</button>
+      <button type="button" id="restart"data-inline="true" >Restart</button>
+      Time : <span id="cMinutes">0</span>:<span id="cSeconds">00</span> / <span id="aMinutes">0</span>:<span id="aSecond">00</span> 
     </div>
-
-    <div data-role="footer" id="header" data-position ="fixed">
-    	<div id="slider"></div> <br>
-    	<button onclick="play()" type="button">Play</button> 
-        <button onclick="stop()" type="button">Stop</button> 
-        <button onclick="pause()" type="button">Pause</button>
-        Current time : <span id="val">0</span>
-        Seek To : <input id="seekTo" type="text" value="10" /> 
-        <input id="update" type="button" value="Update" />
-		<div id="volSlider"></div>
-    </div>
-    
+    <!-- <input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1"> -->
+  </div>
+  <!-- Video -->
     <script>
         porthole.connected = function() {
             porthole.call("startApplication(%client_id%, 'hello')")
         }
-        $(document).ready(function () {
-			$("#slider").slider(
-			{
-				min: 0,
-				max: 100,
-				step: 1,
-				change: showValue
-			});
-			$("#update").click(function () {
-			  $("#slider").slider("option", "value", $("#seekTo").val());
-
-			});
-			function showValue(event, ui) {
-			  $("#val").html(ui.value);
-			}
-
-			$("#volSlider").slider(
-			{
-				min: 40,
-				max: 80,
-				step: 1,
-				//change: showValue
-			});
-      	});
-
+        $(document).ready(function () {}
+        var playButton = document.getElementById("play-pause");
+        var restart = document.getElementById("restart");
+        //$(playButton).css({ width: '300px', 'padding-top': '10px', 'padding-bottom': '10px' });
         //creating a jquery function for always occuring events.
        function play(event) {
 
                console.log("play Button")
-               //  var path = $(event.target).data('path');
-               //  console.log(path);
-               //  event.target.path = path
-               //  console.log(event.target.value)
-               //  console.log(event.target.id)
-               //  {{mc@app: onModelSelect("%event.target.path%" + "%event.target.value%") }}
-
-               //  //$('#'+panelID).toggle(); //you can concatenate strings with +.
-               //  //use the '#' to gattret the object the id is referring to.
-               //  //var newString = "my new String"
-               // // $('#'+panelID+ ' .panel-body').html(newString);
-               // resetImage();
         }
         function pause(event) {
 
                console.log("Pause Button")
-               //  var path = $(event.target).data('path');
-               //  console.log(path);
-               //  event.target.path = path
-               //  console.log(event.target.value)
-               //  console.log(event.target.id)
-               //  {{mc@app: onModelSelect("%event.target.path%" + "%event.target.value%") }}
-
-               //  //$('#'+panelID).toggle(); //you can concatenate strings with +.
-               //  //use the '#' to gattret the object the id is referring to.
-               //  //var newString = "my new String"
-               // // $('#'+panelID+ ' .panel-body').html(newString);
-               // resetImage();
         }
 
         function seek(event) {
 
                console.log("Pause Button")
-               //  var path = $(event.target).data('path');
-               //  console.log(path);
-               //  event.target.path = path
-               //  console.log(event.target.value)
-               //  console.log(event.target.id)
-               //  {{mc@app: onModelSelect("%event.target.path%" + "%event.target.value%") }}
-
-               //  //$('#'+panelID).toggle(); //you can concatenate strings with +.
-               //  //use the '#' to gattret the object the id is referring to.
-               //  //var newString = "my new String"
-               // // $('#'+panelID+ ' .panel-body').html(newString);
-               // resetImage();
         }
 
         function reset(event) {
 
                 console.log("Reset Button")
-               //  var path = $(event.target).data('path');
-               //  console.log(path);
-               //  event.target.path = path
-               //  console.log(event.target.value)
-               //  console.log(event.target.id)
-               //  {{mc@app: onModelSelect("%event.target.path%" + "%event.target.value%") }}
-
-               //  //$('#'+panelID).toggle(); //you can concatenate strings with +.
-               //  //use the '#' to gattret the object the id is referring to.
-               //  //var newString = "my new String"
-               // // $('#'+panelID+ ' .panel-body').html(newString);
-               // resetImage();
         }
 
         function select(event) {
-
                 console.log("Select Video")
-               //  var path = $(event.target).data('path');
-               //  console.log(path);
-               //  event.target.path = path
-               //  console.log(event.target.value)
-               //  console.log(event.target.id)
-               //  {{mc@app: onModelSelect("%event.target.path%" + "%event.target.value%") }}
-
-               //  //$('#'+panelID).toggle(); //you can concatenate strings with +.
-               //  //use the '#' to gattret the object the id is referring to.
-               //  //var newString = "my new String"
-               // // $('#'+panelID+ ' .panel-body').html(newString);
-               // resetImage();
         }
         
     </script>
