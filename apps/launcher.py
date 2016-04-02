@@ -49,10 +49,11 @@ appControllerClient = ""
 mc = getMissionControlClient()
 
 # Setup web server
-porthole.initialize()
-ps = porthole.getService()
-ps.setConnectedCommand('onClientConnected("%id%")')
-ps.setDisconnectedCommand('onClientDisconnected("%id%")')
+if(isMaster()):
+    porthole.initialize(4080, 'index.html')
+    ps = porthole.getService()
+    ps.setConnectedCommand('onClientConnected("%id%")')
+    ps.setDisconnectedCommand('onClientDisconnected("%id%")')
 
 
 # This quick command is used to easily forward js commands to clients from
@@ -83,7 +84,7 @@ def onClientDisconnected(clientId):
         showLauncher()
     # Always force a refresh of the html/js files, so we can quickly test
     # code changes by refreshing an app web page.
-    ps.clearCache()    
+    #ps.clearCache()    
         
         
 def hideLauncher():
@@ -100,3 +101,7 @@ def onEvent():
     if(appConnection != None):
         mcs.sendEventTo(e, appConnection)
 setEventFunction(onEvent)
+
+
+# Start the cluster CPU/GPU monitor service (comment this when testing on laptop)
+import monitor
