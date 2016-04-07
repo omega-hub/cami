@@ -13,7 +13,7 @@ l1.setPosition(-0.1, 3, 0)
 l1.setColor(Color(1, 1, 0.8, 1))
 l1.setAmbient(Color(0,0,0.1,1))
 sm = ShadowMap()
-sm.setTextureSize(4096,4096)
+sm.setTextureSize(1024,1024)
 sm.setSoft(True)
 #sm.setSoftShadowParameters(0.005, 5)
 l1.setShadow(sm)
@@ -24,14 +24,14 @@ l2 = Light.create()
 l2.setPosition(2.5, 3, 0)
 l2.setColor(Color(0.8, 0.8, 1, 1))
 sm2 = ShadowMap()
-sm2.setTextureSize(4096,4096)
+sm2.setTextureSize(1024,1024)
 sm2.setSoft(True)
 #sm2.setSoftShadowParameters(0.005, 5)
 l2.setShadow(sm2)
 
 ScrollSpeed = 0.1
 obj = None
-localDebug = True
+localDebug = False
 
 # Utility function to send data to the web client
 def calljs(methodname, data):
@@ -111,8 +111,8 @@ def LoadModel(modelName):
     model = ModelInfo()
     model.name = "model"
     model.path = path
-    model.generateNormals = True
-    model.optimize = True
+    model.generateNormals = False
+    model.optimize = False
     model.size = 10
     getSceneManager().loadModelAsync(model, 'onModelLoaded()')
     
