@@ -95,3 +95,12 @@ function resetOrientation3JS() {
     cube.rotation.y = 0
     cube.rotation.z = 0
 }
+
+function setCubeColor(hexColor) {
+    cube.material.color.setHex(hexColor)
+}
+
+function setBackgroundColor(hexColor) {
+    renderer.setClearColor( hexColor, 1 )
+    renderer.clear()
+}

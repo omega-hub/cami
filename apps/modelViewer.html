@@ -147,7 +147,8 @@ $(document).on( "click", ".button", function() {
             startMouseX = ev.center.x 
             startMouseY = ev.center.y
             rotateDist = 0;
-
+            // setCubeColor(0X00ff00)
+            // setBackgroundColor(0Xff0000)
         });
         mc.on("panend", function(ev) {
             ev.preventDefault()
@@ -159,12 +160,16 @@ $(document).on( "click", ".button", function() {
           beforeclose: function( event, ui ) {
             navOpen = false
             window.scrollTo(0,0);
+            setCubeColor(0X3b5a5f)
+            setBackgroundColor(0Xf1f1f1)
         }
         });
         $( "#nav-panel" ).panel({
           beforeopen: function( event, ui ) {
             navOpen = true
             window.scrollTo(0,0);
+            setCubeColor(0x0B1011)
+            setBackgroundColor(0X707070)
         }
         });
         mc.on("pan", function(ev) {
