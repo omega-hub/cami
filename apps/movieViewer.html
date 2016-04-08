@@ -1,15 +1,204 @@
 <html lang="en">
 <head>
-    <title>Porthole</title>
+    <title>Movie Viewer</title>
+    <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css">
     <script src="porthole/res/porthole.js"></script>
+    <script src="js/jquery-1.12.0.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/hammer.js"></script>
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <script src='js/THREEx.WindowResize.js'></script>
+
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <style>
+    .button{
+    background-color: #e8e9f0; 
+    border: 1px black;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    width:235px;
+    height: 30px;
+    font-size: 15px;
+    margin: 4px 2px;
+    border-radius: 1px;
+    float: center;
+    outline:none;
+    box-shadow: inset -.5px -1px 5px 0px black;
+    display:inline !important;
+
+    
+    }
+
+    div.hide { display:none; }
+
+    div.show {  }
+
+    .image{
+         border: 10px black;
+    }
+
+    .button:active{
+      box-shadow: inset .5px 1px 5px 0px black;
+    }
+
+
+    .collapsable{
+        outline:none;
+    }
+
+    #set3{
+        outline:none;
+    }
+    .jquerymobileslider .ui-slider {
+    height: 50px;
+    width: 250px
+    }
+
+    .jquerymobileslider .ui-slider .ui-slider-handle {
+        height: 50px;
+        width: 50px;
+    }
+    /*#slider {
+		margin: 15px;
+    width: 200px;
+    height: 20px;
+	}
+	#volSlider {
+		margin: 20px;
+    width: 200px;
+	}*/
+
+    .content{
+        float: center;
+        float: top;
+    }
+    .ui-slider-handle{
+        color: black;
+    }
+    body { margin: 0; }
+    canvas { width: 100%; height: 100% }
+    </style> 
+
 </head>
 
 <body>
+    <div data-role="page" id="movie-page">
+    	<div data-role="header" id="header" data-position ="fixed">
+            <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+            <h1>Movie Viewer</h1>
+    	</div>
+
+        <!-- <div data-role="content" id="content">
+        
+        </div> -->
+    	<div data-role="panel" data-display="push" data-theme="b" id="nav-panel"> 
+          <ul data-role="listview" class="panel">
+            <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
+            <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
+            </div>
+        </div>
+
+        <input type="range" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/>
+        <button type="button" id="play-pause"data-inline="true"onClick='togglePlay()'>Play/Pause</button>
+        <button type="button" id="restart"data-inline="true" onClick='restart()'>Restart</button>
+        Time : <span id="cMinutes">0</span>:<span id="cSeconds">00</span> / <span id="fMinutes">0</span>:<span id="fSeconds">00</span> 
+    </div>
+    <!-- <input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1"> -->
+  <!-- Video -->
     <script>
         porthole.connected = function() {
             porthole.call("startApplication(%client_id%, 'hello')")
         }
+        //$(document).ready(function () {}
+        var playButton = document.getElementById("play-pause");
+        var restart = document.getElementById("restart");
+        //$(playButton).css({ width: '300px', 'padding-top': '10px', 'padding-bottom': '10px' });
+        //creating a jquery function for always occuring events.
+        var videoPlaying = false
+        var seeking = false
+        var videoLength = 0
+        var currentTime = 0
+        $(document).on("pageinit","#movie-page",function(){
+            // PLACE ALL YOU EVENTS CODE HERE e.g.
+            console.log("page init")
+            $( "#slider" ).on( "slidestart", function( event, ui ) {seekStart(event,ui)} );
+            $( "#slider" ).on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
+        })
         
+        onVideoLoad(135)
+        function play(event) {
+            console.log("play Button")
+            videoPlaying = !videoPlaying
+            //{{mc@app: setPlay(videoPlaying) }}
+        }
+        // function pause(event) {
+        //     console.log("Pause Button")
+        // }
+
+        function seekStart(event) {
+            console.log("Seek Start")
+            //{{mc@app: setPlay(false) }}
+            seeking = true
+        }
+
+        function seekEnd(event) {
+            console.log("Seek End")
+            //{{mc@app: setPlay(videoPlaying) }}
+            currentSeek = $('#slider').val()
+            //console.log(currentSeek)
+            //{{mc@app: setTime(currentSeek) }}
+            seeking = false
+        }
+
+        function restart(event) {
+            console.log("Reset Button")
+            //{{mc@app: setTime(0) }}
+            //{{mc@app: setPlay(false) }}
+            videoPlaying = false;
+        }
+
+        function select(event) {
+            console.log("Select Video")
+        }
+
+        function onUpdate(event,ui) {
+            requestAnimationFrame(onUpdate); 
+            if (seeking == true) {
+                currentSeek = $('#slider').val()//$("#video-controls").slider( "option", "value" );
+                console.log(currentSeek)
+                // currentSeek = $('#slider').slider("option","value")
+                // console.log(currentSeek)
+            }
+            $("#cMinutes").html(Math.floor(currentTime/60));
+            var seconds 
+            seconds = currentTime % 60
+            if (seconds < 10) {
+                $("#cSeconds").html("0" + seconds)
+            } else {
+                $("#cSeconds").html(seconds)
+            }
+            $('#slider').val(40)
+        }
+
+        function onVideoLoad(vidLength) {
+            videoLength = vidLength
+            console.log("On Video Load")
+            console.log(videoLength)
+            var minutes = Math.floor(videoLength/60)
+            console.log(minutes)
+            $("#fMinutes").text(minutes);
+            var seconds 
+            seconds = videoLength % 60
+            console.log(seconds)
+            if (seconds < 10) {
+                $("#fSeconds").text("0" + seconds)
+            } else {
+                $("#fSeconds").text(seconds)
+            }
+            //$("#fSeconds").text("seconds")
+        }
+        onUpdate()
     </script>
 </body>
 </html>

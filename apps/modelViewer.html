@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
 
-    <title>Model Viewer Test</title>
+    <title>Model Viewer</title>
     <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css">
     <script src="js/jquery-1.12.0.min.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
@@ -36,9 +36,9 @@
          border: 10px black;
     }
 
-.button:active{
-  box-shadow: inset .5px 1px 5px 0px black;
-}
+    .button:active{
+      box-shadow: inset .5px 1px 5px 0px black;
+    }
 
 h4 {
     color: #333333;
@@ -92,6 +92,7 @@ p{
     body { margin: 0; }
     canvas { width: 100%; height: 100% }
     </style> 
+
 </head>
 
 <body>
@@ -103,23 +104,24 @@ p{
         <script src="js/three.min.js"></script>
         <script src="js/modelViewerPreview.js"></script>
 
+
        <!--  <button onclick="resetImage()" type="button">Reset Image</button> -->
 
-    </div>
+        
 
-    <div data-role="content" id="content">
-    
+
     </div>
 
     <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
         <ul data-role="listview" class="panel">
-
         
         <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
           
         <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
             
         </div>
+    </div>
+
 
         </ul>
     </div><!-- /panel -->
@@ -174,6 +176,7 @@ $(document).on( "click", ".button", function() {
         var startMouseY = -1
         var dx = 0
         var dy = 0
+        var isRotating = false
         delta = 0;
         isZooming = false;
         camX = 0;
@@ -186,12 +189,18 @@ $(document).on( "click", ".button", function() {
         rotateDist = 0;
         dummyhtml = 0;
         navOpen = false;
-
+        sensitivity = 0.8
         mc.on("panstart", function(ev) {
             ev.preventDefault()
             startMouseX = ev.center.x 
             startMouseY = ev.center.y
             rotateDist = 0;
+            // setCubeColor(0X00ff00)
+            // setBackgroundColor(0Xff0000)
+        });
+        mc.on("panend", function(ev) {
+            ev.preventDefault()
+            isRotating = false
         });
         // listen to events...
         numTouch = 0
@@ -199,30 +208,34 @@ $(document).on( "click", ".button", function() {
           beforeclose: function( event, ui ) {
             navOpen = false
             window.scrollTo(0,0);
+            setCubeColor(0X3b5a5f)
+            setBackgroundColor(0Xf1f1f1)
         }
         });
         $( "#nav-panel" ).panel({
           beforeopen: function( event, ui ) {
             navOpen = true
             window.scrollTo(0,0);
+            setCubeColor(0x0B1011)
+            setBackgroundColor(0X707070)
         }
         });
         mc.on("pan", function(ev) {
             if (!navOpen) {
                 //window.scrollTo(0,0);
                 ev.preventDefault()
-                dx = (ev.center.x - startMouseX)
-                dy = (ev.center.y - startMouseY)
+                dx = (ev.center.x - startMouseX) * sensitivity
+                dy = (ev.center.y - startMouseY) * sensitivity
                 startMouseX = ev.center.x 
                 startMouseY = ev.center.y
                 numTouch = ev.pointers.length
                 {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
                 console.log(numTouch)
-                if ((numTouch >= 2 && !isZooming) || shiftDown) {
+                if ((numTouch >= 2 && !isZooming && !isRotating) || shiftDown) {
                     console.log("panning camera")
                     var limit = (5 + (camZ/3))
                     var limit3JS = (5 + (camZ))
-                    var movSpeedX = (dx/(16-(camZ)))
+                    var movSpeedX = (dx/(16-(camZ))) 
                     var movSpeedY = (dy/(16-(camZ)))
                     camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
                     camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
@@ -233,7 +246,7 @@ $(document).on( "click", ".button", function() {
                     camY3JS = camY3JS + movSpeedY/4
                     setPan3JS(camX3JS,camY3JS)
                 } else {
-                    console.log("rotating camera")
+                    isRotating = true
                     {{mc@app: onRotate(%dx%, %dy%,0) }}
                     onRotate3JS(dx,dy,0)
                 }
@@ -444,6 +457,10 @@ $(document).on( "click", ".button", function() {
 
         function noloading(dummy){
         $.mobile.loading( "hide" );
+        }
+
+        function setSensitivity(s) {
+            sensitivity = s
         }
 
         //creating a jquery function for always occuring events.
