@@ -181,6 +181,8 @@ $(document).on( "click", ".button", function() {
         var startMouseY = -1
         var dx = 0
         var dy = 0
+        var rotX = 0
+        var rotY = 0
         var isRotating = false
         var isPanning = false
         delta = 0;
@@ -195,7 +197,7 @@ $(document).on( "click", ".button", function() {
         rotateDist = 0;
         dummyhtml = 0;
         navOpen = false;
-        setSensitivity(0.6)
+        setSensitivity(0.8)
         mc.on("panstart", function(ev) {
             ev.preventDefault()
             if (isPanning == false) {
@@ -255,7 +257,6 @@ $(document).on( "click", ".button", function() {
                 startMouseY = ev.center.y
                 numTouch = ev.pointers.length
                 {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
-                console.log(numTouch)
                 if ((numTouch >= 2 && !isZooming && !isRotating) || shiftDown) {
                     console.log("panning camera")
                     var limit = (5 + (camZ/3))
@@ -272,8 +273,22 @@ $(document).on( "click", ".button", function() {
                     setPan3JS(camX3JS,camY3JS)
                 } else {
                     isRotating = true
-                    {{mc@app: onRotate(%dx%, %dy%,0) }}
-                    onRotate3JS(dx,dy,0)
+                    var Z = camZ - 3
+                    var propZ = -2/Z
+                    rotX = dx * propZ
+                    if (rotX < 0) {
+                        rotX = Math.max(-40,rotX)
+                    }else {
+                        rotX = Math.min(40,rotX)
+                    }
+                    rotY = dy * propZ
+                    if (rotY < 0) {
+                        rotY = Math.max(-40,rotY)
+                    }else {
+                        rotY = Math.min(40,rotY)
+                    }
+                    {{mc@app: onRotate(%rotX%, %rotY%,0) }}
+                    onRotate3JS(rotX,rotY,0)
                 }
             }
             //console.log(ev.type +" gesture detected.");
@@ -309,8 +324,11 @@ $(document).on( "click", ".button", function() {
         mc.on("pinchmove", function(ev){
             ev.preventDefault()
             isZooming = true
-            delta = ev.scale - lastScale
+            delta = (ev.scale - lastScale) * sensitivity
             lastScale = ev.scale
+            if (delta < 0) {
+                delta = delta * 1.4
+            }
             camZ = Math.min(Math.max(camZ - delta,-11),2)
             camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
             {{mc@app: setZoom(%camZ%)}}
