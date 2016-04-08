@@ -131,7 +131,7 @@ def toggleModelVisible(modelName, visible):
 def onModelLoaded():
     global obj
     obj = StaticObject.create("model")
-    obj.setPosition(0, 2, -10)
+    obj.setPosition(0, 2, -8)
     mat = obj.getMaterial()
     mat.setProgram("colored")
     mat.setShininess(50)

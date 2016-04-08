@@ -97,48 +97,57 @@ p{
 
 <body>
 <!--<body style="overflow:hidden;">-->
-    <div data-role="header" id="header" data-position ="fixed">
-        <a href="#nav-panel" data-icon="bars"  data-iconpos="notext">Menu</a>
-        <a href="#help-panel" data-icon="info"   data-iconpos="notext">Add</a>
-        <h1>Model Viewer</h1>
-        <script src="js/three.min.js"></script>
-        <script src="js/modelViewerPreview.js"></script>        
-        <!-- <button onclick="resetImage()"  type="button">Reset Orientation</button> -->
+    <div data-role="page" id="model-page">
+        <div data-role="header" id="header" data-position ="fixed">
+            <a href="#nav-panel" data-icon="bars"  data-iconpos="notext">Menu</a>
+            <a href="#help-panel" data-icon="info"   data-iconpos="notext">Add</a>
+            <h1>Model Viewer</h1>
+            <script src="js/three.min.js"></script>
+            <script src="js/modelViewerPreview.js"></script>        
 
-    </div>
-
-    <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
-        <ul data-role="listview" class="panel">
-        
-        <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
-          
-        <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
-            
         </div>
-    </div>
 
-
-        </ul>
-    </div><!-- /panel -->
-    
-    <div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
-        <form class="userform">
-            <h2>Instructions for Use</h2>
-            <hr class="instructions">
-                <h4>To rotate:</h4> <p> Use one finger and swipe anywhere on the screen</p> 
-                <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
-                <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
-                <h4>To close the sidebars:</h4> <p> Tap on the main screen</p>
-
+        <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
+            <ul data-role="listview" class="panel">
+            
+            <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
               
-            </form>
-        </div><!-- /panel -->
+            <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
+                
+            </div>
+        </div>
 
+
+            </ul>
+        </div><!-- /panel -->
+        
+        <div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
+            <form class="userform">
+                <h2>Instructions for Use</h2>
+                <hr class="instructions">
+                    <h4>To rotate:</h4> <p> Use one finger and swipe anywhere on the screen</p> 
+                    <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
+                    <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
+                    <h4>To close the sidebars:</h4> <p> Tap on the main screen</p>
+                    <h4>Sensitivity:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> <BR>
+                    <button onclick="resetImage()"  type="button">Reset Orientation</button> 
+                </form>
+        </div><!-- /panel -->
+    </div>
 </body>
     <script>
 
         var myElement = document.getElementById('header');
-         
+        
+        $(document).on("pageinit","#model-page",function(){
+            // PLACE ALL YOU EVENTS CODE HERE e.g.
+            console.log("page init")
+            // $( "#slider" ).on( "slidestart", function( event, ui ) {seekStart(event,ui)} );
+            $('#slider').on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
+
+            $( "#slider").slider() ;
+        })
 
 $(document).on( "click", ".button", function() {
         var $this = $( this ),
@@ -173,6 +182,7 @@ $(document).on( "click", ".button", function() {
         var dx = 0
         var dy = 0
         var isRotating = false
+        var isPanning = false
         delta = 0;
         isZooming = false;
         camX = 0;
@@ -185,18 +195,22 @@ $(document).on( "click", ".button", function() {
         rotateDist = 0;
         dummyhtml = 0;
         navOpen = false;
-        sensitivity = 0.8
+        setSensitivity(0.6)
         mc.on("panstart", function(ev) {
             ev.preventDefault()
-            startMouseX = ev.center.x 
-            startMouseY = ev.center.y
-            rotateDist = 0;
+            if (isPanning == false) {
+                startMouseX = ev.center.x 
+                startMouseY = ev.center.y
+                rotateDist = 0;
+                isPanning = true
+            }
             // setCubeColor(0X00ff00)
             // setBackgroundColor(0Xff0000)
         });
         mc.on("panend", function(ev) {
             ev.preventDefault()
             isRotating = false
+            isPanning = false
         });
         // listen to events...
         numTouch = 0
@@ -336,8 +350,8 @@ $(document).on( "click", ".button", function() {
                 e.preventDefault();
                 var e = window.event || e; // old IE support
                 delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
-                camZ = Math.min(Math.max(camZ - delta,-12),2)
-                camZ3JS = Math.min(Math.max(camZ3JS - (delta/3),-4.3),2)
+                camZ = Math.min(Math.max(camZ - delta,-10),0)
+                camZ3JS = Math.min(Math.max(camZ3JS - (delta/3),-3.5),1)
                 {{mc@app: setZoom(%camZ%)}}
                 setZoom3JS(camZ3JS)
                 var limit = (5 + (camZ/3))
@@ -492,7 +506,11 @@ $(document).on( "click", ".button", function() {
                resetImage();
                
             }
-        
+        function seekEnd(event) {
+            currentSeek = $('#slider').val()
+            setSensitivity(currentSeek/100)
+            console.log("seek end")
+        }
     </script>
     
     
