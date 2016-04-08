@@ -26,8 +26,6 @@
     float: center;
     outline:none;
     box-shadow: inset -.5px -1px 5px 0px black;
-
-    
     }
 
     div.hide { display:none; }
@@ -42,6 +40,42 @@
       box-shadow: inset .5px 1px 5px 0px black;
     }
 
+h4 {
+    color: #333333;
+    margin-bottom: 0em;
+}
+
+h2{
+ 
+    margin-bottom: .2em;
+}
+
+
+hr.old{
+    display: block;
+    color: red;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 3px;
+
+}
+hr{
+    border: 0;
+    width: 100%;
+    color: #ccccce;
+    margin-top: 0em;
+    margin-bottom: .2em;
+    background-color: #ccccce;
+    height: 1px;
+}
+
+p{
+    margin-top: 0em;
+    margin-bottom: 0.5em;
+}
 
     .collapsable{
         outline:none;
@@ -65,32 +99,46 @@
 <!--<body style="overflow:hidden;">-->
     <div data-role="header" id="header" data-position ="fixed">
         <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+        <a href="#add-form" data-icon="info" data-iconpos="notext">Add</a>
         <h1>Model Viewer</h1>
         <script src="js/three.min.js"></script>
         <script src="js/modelViewerPreview.js"></script>
 
-         <button onclick="resetImage()" type="button">Reset Orientation</button> 
 
-    </div>
-
-    <div data-role="content" id="content">
-    
-    </div>
-
-    <div data-role="panel" data-display="push" data-theme="b" id="nav-panel"> 
-        <ul data-role="listview" class="panel">
+       <!--  <button onclick="resetImage()" type="button">Reset Image</button> -->
 
         
-            <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
+
+
+    </div>
+
+    <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
+        <ul data-role="listview" class="panel">
+        
+        <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
           
         <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
             
         </div>
     </div>
 
+
         </ul>
     </div><!-- /panel -->
     
+    <div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="a" id="add-form">
+        <form class="userform">
+            <h2>Instructions for Use</h2>
+            <hr class="instructions">
+                <h4>To rotate:</h4> <p> Use one finger and swipe anywhere on the screen</p> 
+                <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
+                <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
+                <h4>To close the sidebars:</h4> <p> Tap the main screen</p>
+              
+            </form>
+        </div><!-- /panel -->
+
+</body>
     <script>
 
         var myElement = document.getElementById('header');
