@@ -99,7 +99,8 @@
             </div>
         </div>
 
-        <input type="range" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/>
+        <!-- <input type="range" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> -->
+        <input  input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/>
         <button type="button" id="play-pause"data-inline="true"onClick='togglePlay()'>Play/Pause</button>
         <button type="button" id="restart"data-inline="true" onClick='restart()'>Restart</button>
         Time : <span id="cMinutes">0</span>:<span id="cSeconds">00</span> / <span id="fMinutes">0</span>:<span id="fSeconds">00</span> 
@@ -124,6 +125,7 @@
             console.log("page init")
             $( "#slider" ).on( "slidestart", function( event, ui ) {seekStart(event,ui)} );
             $( "#slider" ).on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
+            $( "#slider").slider() ;
         })
         
         onVideoLoad(135)
@@ -169,6 +171,8 @@
                 console.log(currentSeek)
                 // currentSeek = $('#slider').slider("option","value")
                 // console.log(currentSeek)
+            } else {
+                updateSlider()
             }
             $("#cMinutes").html(Math.floor(currentTime/60));
             var seconds 
@@ -178,24 +182,31 @@
             } else {
                 $("#cSeconds").html(seconds)
             }
-            $('#slider').val(40)
+            //$('#slider').parent().page();
+            // $('#slider').slider("refresh")
         }
-
+        function updateSlider() {
+            //{{mc@app: setPlay(false) }}
+        }
+        function setSliderTime(time) {
+            $('#slider').val(time).slider("refresh");
+        }
         function onVideoLoad(vidLength) {
             videoLength = vidLength
             console.log("On Video Load")
             console.log(videoLength)
             var minutes = Math.floor(videoLength/60)
             console.log(minutes)
-            $("#fMinutes").text(minutes);
+            $("#fMinutes").html(minutes);
             var seconds 
             seconds = videoLength % 60
             console.log(seconds)
             if (seconds < 10) {
-                $("#fSeconds").text("0" + seconds)
+                $("#fSeconds").html("0" + seconds)
             } else {
-                $("#fSeconds").text(seconds)
+                $("#fSeconds").html(seconds)
             }
+
             //$("#fSeconds").text("seconds")
         }
         onUpdate()

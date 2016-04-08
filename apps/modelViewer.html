@@ -98,17 +98,12 @@ p{
 <body>
 <!--<body style="overflow:hidden;">-->
     <div data-role="header" id="header" data-position ="fixed">
-        <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
-        <a href="#add-form" data-icon="info" data-iconpos="notext">Add</a>
+        <a href="#nav-panel" data-icon="bars"  data-iconpos="notext">Menu</a>
+        <a href="#help-panel" data-icon="info"   data-iconpos="notext">Add</a>
         <h1>Model Viewer</h1>
         <script src="js/three.min.js"></script>
-        <script src="js/modelViewerPreview.js"></script>
-
-
-       <!--  <button onclick="resetImage()" type="button">Reset Image</button> -->
-
-        
-
+        <script src="js/modelViewerPreview.js"></script>        
+        <!-- <button onclick="resetImage()"  type="button">Reset Orientation</button> -->
 
     </div>
 
@@ -126,14 +121,15 @@ p{
         </ul>
     </div><!-- /panel -->
     
-    <div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="a" id="add-form">
+    <div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
         <form class="userform">
             <h2>Instructions for Use</h2>
             <hr class="instructions">
                 <h4>To rotate:</h4> <p> Use one finger and swipe anywhere on the screen</p> 
                 <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
                 <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
-                <h4>To close the sidebars:</h4> <p> Tap the main screen</p>
+                <h4>To close the sidebars:</h4> <p> Tap on the main screen</p>
+
               
             </form>
         </div><!-- /panel -->
@@ -213,6 +209,21 @@ $(document).on( "click", ".button", function() {
         }
         });
         $( "#nav-panel" ).panel({
+          beforeopen: function( event, ui ) {
+            navOpen = true
+            window.scrollTo(0,0);
+            setCubeColor(0x0B1011)
+            setBackgroundColor(0X707070)
+        }});
+        $( "#help-panel" ).panel({
+          beforeclose: function( event, ui ) {
+            navOpen = false
+            window.scrollTo(0,0);
+            setCubeColor(0X3b5a5f)
+            setBackgroundColor(0Xf1f1f1)
+        }
+        });
+        $( "#help-panel" ).panel({
           beforeopen: function( event, ui ) {
             navOpen = true
             window.scrollTo(0,0);
