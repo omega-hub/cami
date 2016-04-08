@@ -277,15 +277,15 @@ $(document).on( "click", ".button", function() {
                     var propZ = -2/Z
                     rotX = dx * propZ
                     if (rotX < 0) {
-                        rotX = Math.max(-40,rotX)
+                        rotX = Math.max(-15,rotX)
                     }else {
-                        rotX = Math.min(40,rotX)
+                        rotX = Math.min(15,rotX)
                     }
                     rotY = dy * propZ
                     if (rotY < 0) {
-                        rotY = Math.max(-40,rotY)
+                        rotY = Math.max(-15,rotY)
                     }else {
-                        rotY = Math.min(40,rotY)
+                        rotY = Math.min(15,rotY)
                     }
                     {{mc@app: onRotate(%rotX%, %rotY%,0) }}
                     onRotate3JS(rotX,rotY,0)
@@ -326,8 +326,8 @@ $(document).on( "click", ".button", function() {
             isZooming = true
             delta = (ev.scale - lastScale) * sensitivity
             lastScale = ev.scale
-            if (delta < 0) {
-                delta = delta * 1.4
+            if (delta > 0) {
+                delta = delta * 1.5
             }
             camZ = Math.min(Math.max(camZ - delta,-11),2)
             camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
