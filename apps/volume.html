@@ -106,7 +106,12 @@
             <button type="button" id="play-pause"data-inline="true"onClick='setAY()'>Y-Axis</button>
             <button type="button" id="play-pause"data-inline="true"onClick='setAZ()'>Z-Axis</button>
             Current Axis : <span id="cAxis">X=Axis</span> <BR>
-            <input data-role="slider" range ="true" name="slider" id="cutSlider" value="0" min="0" max="100" data-theme="c"/> <BR> 
+            <div data-role="rangeslider">
+              <label for="range-10a">Rangeslider:</label>
+              <input name="range-10a" id="range-10a" min="0" max="10" step=".1" value="0" type="range" />
+              <label for="range-10b">Rangeslider:</label>
+              <input name="range-10b" id="range-10b" min="0" max="10" step=".1" value="10" type="range" />
+            </div> <BR> 
         </div>
         <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
             <ul data-role="listview" class="panel">
