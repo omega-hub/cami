@@ -106,11 +106,11 @@
             <button type="button" id="play-pause"data-inline="true"onClick='setAY()'>Y-Axis</button>
             <button type="button" id="play-pause"data-inline="true"onClick='setAZ()'>Z-Axis</button>
             Current Axis : <span id="cAxis">X=Axis</span> <BR>
-            <div data-role="rangeslider">
-              <label for="range-10a">Rangeslider:</label>
-              <input name="range-10a" id="range-10a" min="0" max="10" step=".1" value="0" type="range" />
-              <label for="range-10b">Rangeslider:</label>
-              <input name="range-10b" id="range-10b" min="0" max="10" step=".1" value="10" type="range" />
+            <div data-role="rangeslider" name = "cutSlider" id = "cutSlider">
+              <label for="range-1a">Rangeslider:</label>
+              <input name="range-1a" id="range-1a" min="0" max="100" value="0" type="range" />
+              <label for="range-1b">Rangeslider:</label>
+              <input name="range-1b" id="range-1b" min="0" max="100" value="100" type="range" />
             </div> <BR> 
         </div>
         <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
@@ -146,13 +146,18 @@
 
         var myElement = document.getElementById('header');
         
-        $(document).on("pageinit","#model-page",function(){
+        $(document).on("pageinit","#volume-page",function(){
             // PLACE ALL YOU EVENTS CODE HERE e.g.
             console.log("page init")
             // $( "#slider" ).on( "slidestart", function( event, ui ) {seekStart(event,ui)} );
             $('#slider').on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
-
             $( "#slider").slider() ;
+            //$("#cutSlider").rangeslider();
+            $('#range-1a').hide();
+            $('#range-1b').hide();
+            //$( "#cutSlider" ).rangeslider();
+            $("#cutSlider").on( "slidestart", function( event, ui ) {cutSeekStart(event,ui)} );
+            $("#cutSlider").on( "slidestop", function( event, ui ) {cutSeekEnd(event,ui)} );
             //$("#cutSlider").slider( {range: true})
         })
 
@@ -206,6 +211,8 @@
         setSensitivity(0.8)
         setAX()
         var currentAxis = "x"
+
+        seeking = false
         mc.on("panstart", function(ev) {
             ev.preventDefault()
             if (isPanning == false) {
@@ -484,6 +491,29 @@
             currentSeek = $('#slider').val()
             setSensitivity(currentSeek/100)
             console.log("seek end")
+        }
+        var seekMinX = 0
+        var seekMaxX = 100
+        var seekMinY = 0
+        var seekMaxY = 100
+        var seekMinZ = 0
+        var seekMaxZ = 100
+        function onUpdate(event,ui) {
+            requestAnimationFrame(onUpdate); 
+            if (seeking == true) {
+                var min = $("#range-1a").val()
+                var max = $("#range-1b").val()
+                console.log(min)
+                console.log(max)
+            } else {
+            }
+        }
+        onUpdate()
+        function cutSeekStart(event) {
+            seeking = true
+        }
+        function cutSeekEnd(event) {
+            seeking = false
         }
         function setAX() {
             $("#cAxis").html("X-Axis");
