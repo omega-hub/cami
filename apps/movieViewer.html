@@ -101,13 +101,29 @@
 
         <!-- <input type="range" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> -->
         <input  input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/>
-        <button type="button" id="play-pause"data-inline="true"onClick='togglePlay()'>Play/Pause</button>
+        
+        <button type="button" id="play-pause"data-inline="true"onClick='togglePlay()'>
+            <div id="div1">Play</div>
+            <div id="div2"/> Pause </div>
+        </button>
+
         <button type="button" id="restart"data-inline="true" onClick='restart()'>Restart</button>
         Time : <span id="cMinutes">0</span>:<span id="cSeconds">00</span> / <span id="fMinutes">0</span>:<span id="fSeconds">00</span> 
     </div>
     <!-- <input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1"> -->
   <!-- Video -->
     <script>
+   $("#div2").hide();
+
+    $("#div1").on('click', function() {
+    $("#div1").hide();
+    $("#div2").show();
+    });
+
+    $("#div2").on('click', function() {
+    $("#div2").hide();
+    $("#div1").show();
+    });
         porthole.connected = function() {
             porthole.call("startApplication(%client_id%, 'hello')")
         }
