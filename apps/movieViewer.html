@@ -86,19 +86,13 @@
     <div data-role="page" id="movie-page">
     	<div data-role="header" id="header" data-position ="fixed">
             <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+            <a href="#help-panel" data-icon="info"   data-iconpos="notext">Add</a>
             <h1>Movie Viewer</h1>
+            <script src="js/three.min.js"></script>
+            <script src="js/modelViewerPreview.js"></script> 
     	</div>
 
-        <!-- <div data-role="content" id="content">
-        
-        </div> -->
-    	<div data-role="panel" data-display="push" data-theme="b" id="nav-panel"> 
-          <ul data-role="listview" class="panel">
-            <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
-            <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
-            </div>
-        </div>
-
+        <div data-role="footer" id="footer" data-position="fixed">
         <!-- <input type="range" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> -->
         <input  input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/>
         
@@ -110,6 +104,30 @@
         <button type="button" id="restart"data-inline="true" onClick='restart()'>Restart</button>
         Time : <span id="cMinutes">0</span>:<span id="cSeconds">00</span> / <span id="fMinutes">0</span>:<span id="fSeconds">00</span> 
     </div>
+
+    	<div data-role="panel" data-display="push" data-theme="b" id="nav-panel"> 
+          <ul data-role="listview" class="panel">
+            <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
+            <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
+            </div>
+        </div>
+
+</div>
+
+<div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
+    <form class="userform">
+        <h2>Instructions for Use</h2>
+        <hr class="instructions">
+            <h4>To rotate:</h4> <p> Use one finger and swipe anywhere on the screen</p> 
+            <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
+            <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
+            <h4>To close the sidebars:</h4> <p> Tap on the main screen</p>
+            <h4>Sensitivity:</h4> <BR>
+            <input input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> <BR>
+            <button onclick="resetImage()"  type="button">Reset Orientation</button> 
+        </form>
+</div><!-- /panel -->
+
     <!-- <input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1"> -->
   <!-- Video -->
     <script>
