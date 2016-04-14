@@ -104,6 +104,7 @@
         </button>
 
         <button type="button" id="restart"data-inline="true" onClick='restart()'>Restart</button>
+        <button type="button" id="loop"data-inline="true" onClick='loop()'>Loop</button>
         Time : <span id="cMinutes">0</span>:<span id="cSeconds">00</span> / <span id="fMinutes">0</span>:<span id="fSeconds">00</span> 
     </div>
 
@@ -158,6 +159,7 @@
         var seeking = false
         var videoLength = 0
         var currentTime = 0
+        var looping = false
         $(document).on("pageinit","#movie-page",function(){
             // PLACE ALL YOU EVENTS CODE HERE e.g.
             console.log("page init")
@@ -170,7 +172,7 @@
         function play(event) {
             console.log("play Button")
             videoPlaying = !videoPlaying
-            //{{mc@app: setPlay(videoPlaying) }}
+            //{{mc@app: setPlaying(videoPlaying) }}
         }
         // function pause(event) {
         //     console.log("Pause Button")
@@ -178,26 +180,30 @@
 
         function seekStart(event) {
             console.log("Seek Start")
-            //{{mc@app: setPlay(false) }}
+            //{{mc@app: setPlaying(false) }}
             seeking = true
         }
 
         function seekEnd(event) {
             console.log("Seek End")
-            //{{mc@app: setPlay(videoPlaying) }}
+            //{{mc@app: setPlaying(videoPlaying) }}
             currentSeek = $('#slider').val()
             //console.log(currentSeek)
-            //{{mc@app: setTime(currentSeek) }}
+            //{{mc@app: seekToTime(currentSeek) }}
             seeking = false
         }
 
         function restart(event) {
             console.log("Reset Button")
-            //{{mc@app: setTime(0) }}
-            //{{mc@app: setPlay(false) }}
+            //{{mc@app: seekToTime(0) }}
+            //{{mc@app: setPlaying(false) }}
             videoPlaying = false;
         }
-
+        function loop(event) {
+            console.log("Loop Button")
+            looping = !looping
+            //{{mc@app: setLooping(looping) }}
+        }
         function select(event) {
             console.log("Select Video")
         }
@@ -224,7 +230,7 @@
             // $('#slider').slider("refresh")
         }
         function updateSlider() {
-            //{{mc@app: setPlay(false) }}
+            //{{mc@app: setPlaying(false) }}
         }
         function setSliderTime(time) {
             $('#slider').val(time).slider("refresh");
