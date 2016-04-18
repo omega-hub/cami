@@ -1,0 +1,18 @@
+Grid size 1 1 pool 100 numTimes 1
+Mission control client: connecting to 127.0.0.1:22500
+Running default_init.py
+Running system/quickCommands.py
+
+>> omegalib 11.2.1
+>> to get a list of quick commands type ':?'
+!!! [v10.1 DEPRECATION WARNING] Renderer::createTexture - use GpuContext::createTexture instead
+Running /Users/gracealexander/Documents/InterfacesLab/cami/apps/volume.py
+['other/', 'A_CueR_Exp.fbx', '../data/A_CueR_Exp.jpg']
+['other/', 'testFBX.fbx', '../data/testFBX.jpg']
+['other/', 'testFBX2.fbx', '../data/testFBX2.jpg']
+['testdir/', 'R_CueR_Exp.fbx', '../data/R_CueR_Exp.jpg']
+['testdir/', 'testFBXInTestDir.fbx', '../data/testFBXInTestDir.jpg']
+['testdir2/', 'inTestDir2.fbx', '../data/inTestDir2.jpg']
+[['other/', 'A_CueR_Exp.fbx', '../data/A_CueR_Exp.jpg'], ['other/', 'testFBX.fbx', '../data/testFBX.jpg'], ['other/', 'testFBX2.fbx', '../data/testFBX2.jpg'], ['testdir/', 'R_CueR_Exp.fbx', '../data/R_CueR_Exp.jpg'], ['testdir/', 'testFBXInTestDir.fbx', '../data/testFBXInTestDir.jpg'], ['testdir2/', 'inTestDir2.fbx', '../data/inTestDir2.jpg']]
+4
+initialized Model List

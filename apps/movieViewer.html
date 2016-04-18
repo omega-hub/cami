@@ -96,10 +96,10 @@
         <!-- <input type="range" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> -->
         <input  input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/>
         
-        <button type="button" id="play-pause1"data-inline="true"onClick='togglePlay()'>
-            <div id="div1">Play</div>
+        <button type="button" id="play"data-inline="true"onClick='togglePlay()'>
+            <div id="div1"> Play </div>
         </button>
-        <button type="button" id="play-pause2"data-inline="true"onClick='togglePlay()'>
+        <button type="button" id="pause"data-inline="true"onClick='togglePlay()'>
             <div id="div2"/> Pause </div>
         </button>
 
@@ -124,27 +124,28 @@
             <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
             <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
             <h4>To close the sidebars:</h4> <p> Tap on the main screen</p>
-            <h4>Sensitivity:</h4> <BR>
 
-            <input input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> <BR>
-
-            <button onclick="resetImage()"  type="button">Reset Orientation</button> 
         </form>
 </div><!-- /panel -->
 
     <!-- <input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1"> -->
   <!-- Video -->
     <script>
-   $("#play-pause2").hide();
+   $("#play").hide();
 
-    $("#play-pause1").on('click', function() {
-    $("#play-pause1").hide();
-    $("#play-pause2").show();
+    $("#play").on('click', function() {
+    $("#play").hide();
+    $("#pause").show();
     });
 
-    $("#play-pause2").on('click', function() {
-    $("#play-pause2").hide();
-    $("#play-pause1").show();
+    $("#pause").on('click', function() {
+    $("#pause").hide();
+    $("#play").show();
+    });
+
+    $("#restart").on('click', function() {
+    $("#play").hide();
+    $("#pause").show();
     });
         porthole.connected = function() {
             porthole.call("startApplication(%client_id%, 'hello')")
