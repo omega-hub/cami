@@ -13,3 +13,17 @@ if(isMaster()):
     img.setSize(uim.getUi().getSize())
     #img.setStereo(True)
     v.play()
+
+    def setLooping(loop):
+        v.setLooping(loop)
+
+    def setPlaying(loop):
+        v.setPlaying(loop)
+
+    def seekToTime(time):
+        place = v.getVideoLength()
+        place = place - place*(100-time)/100
+        v.seekToTime(place)
+
+    def restart():
+        v.seekToTime(0)
