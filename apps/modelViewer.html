@@ -260,10 +260,12 @@ $(document).on( "click", ".button", function() {
         $(window).blur(function(){
           //your code here
           console.log("Blurred")
+          {{mc@app: print "Blurred" }}
         });
         $(window).focus(function(){
           //your code
           console.log("Focused")
+          {{mc@app: print "Focused" }}
         });
         mc.on("pan", function(ev) {
             if (!navOpen) {
