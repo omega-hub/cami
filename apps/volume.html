@@ -12,19 +12,20 @@
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 
         <style>
-    .button{
+    button{
     background-color: #e8e9f0; 
     border: 1px black;
     color: black;
+    text-shadow: none !important;
     text-align: center;
     vertical-align: middle;
     width:235px;
-    height: 45px;
+    height: 40px;
     font-size: 15px;
     margin: 4px 2px;
     border-radius: 1px;
     float: center;
-    outline:none;
+    outline: none;
     box-shadow: inset -.5px -1px 5px 0px black;
     }
 
@@ -50,6 +51,8 @@
     }
 
 
+
+
     hr.old{
         display: block;
         color: red;
@@ -61,6 +64,10 @@
         border-width: 3px;
 
     }
+    .cAxis{
+        background-color: red !important;
+    }
+
     hr{
         border: 0;
         width: 100%;
@@ -77,10 +84,6 @@
     }
 
     .collapsable{
-        outline:none;
-    }
-
-    #set3{
         outline:none;
     }
 
@@ -102,9 +105,11 @@
             <script src="js/modelViewerPreview.js"></script> 
         </div>
         <div data-role="footer" id="footer" data-position="fixed">
-            <button type="button" id="play-pause"data-inline="true"onClick='setAX()'>X-Axis</button>
-            <button type="button" id="play-pause"data-inline="true"onClick='setAY()'>Y-Axis</button>
-            <button type="button" id="play-pause"data-inline="true"onClick='setAZ()'>Z-Axis</button>
+
+            <button type="Axis" id="X-Axis" data-inline="true"onClick='setAX()'>X-Axis</button>
+            <button type="Axis" id="Y-Axis" data-inline="true"onClick='setAY()'>Y-Axis</button>
+            <button type="Axis" id="Z-Axis" data-inline="true"onClick='setAZ()'>Z-Axis</button>
+
             Current Axis : <span id="cAxis">X=Axis</span> <BR>
             <div data-role="rangeslider" name = "cutSlider" id = "cutSlider">
               <label for="range-1a">Rangeslider:</label>
@@ -131,13 +136,15 @@
             <form class="userform">
                 <h2>Instructions for Use</h2>
                 <hr class="instructions">
+                    <h4>To choose an axis:</h4> <p> Tap the axis button.</p> 
+                    <h4>To cut away volume:</h4> <p> Use the slide bar to cut away volume from both sides of the model on the selected axis</p> 
                     <h4>To rotate:</h4> <p> Use one finger and swipe anywhere on the screen</p> 
                     <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
                     <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
                     <h4>To close the sidebars:</h4> <p> Tap on the main screen</p>
                     <h4>Sensitivity:</h4> <BR>
                     <input input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> <BR>
-                    <button onclick="resetImage()"  type="button">Reset Orientation</button> 
+                    <button onclick="resetImage()" id="reset"  type="button">Reset Orientation</button> 
                 </form>
         </div><!-- /panel -->
     </div>
@@ -515,18 +522,38 @@
         function cutSeekEnd(event) {
             seeking = false
         }
+
         function setAX() {
             $("#cAxis").html("X-Axis");
             currentAxis = "x"
+           var $elem = $('#X-Axis');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #2e7bb8 !important; color:white !important;');
+            var $elem = $('#Y-Axis');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
+            var $elem = $('#Z-Axis');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
         }
         function setAY() {
             $("#cAxis").html("Y-Axis");
             currentAxis = "y"
+           var $elem = $('#Y-Axis');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #2e7bb8 !important; color:white !important;');
+            var $elem = $('#X-Axis');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
+            var $elem = $('#Z-Axis');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
         } 
         function setAZ() {
             $("#cAxis").html("Z-Axis");
             currentAxis = "z"
-        }         
+           var $elem = $('#Z-Axis');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color:#2e7bb8 !important; color:white !important;');
+            var $elem = $('#Y-Axis');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
+            var $elem = $('#X-Axis');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
+        }     
+  
     </script>
 </body>
 </html>

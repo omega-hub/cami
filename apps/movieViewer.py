@@ -21,7 +21,9 @@ if(isMaster()):
         v.setPlaying(loop)
 
     def seekToTime(time):
-        v.seekToTime(time)
+        place = v.getVideoLength()
+        place = place - place*(100-time)/100
+        v.seekToTime(place)
 
     def restart():
         v.seekToTime(0)
