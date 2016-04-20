@@ -111,11 +111,11 @@
             <button type="Axis" id="Z-Axis" data-inline="true"onClick='setAZ()'>Z-Axis</button>
 
             Current Axis : <span id="cAxis">X=Axis</span> <BR>
-            <div data-role="rangeslider" name = "cutSlider" id = "cutSlider">
+            <div data-role="rangeslider" name = "cutSlider" id = "cutSlider" data-inline = "true">
               <label for="range-1a">Rangeslider:</label>
-              <input name="range-1a" id="range-1a" min="0" max="100" value="0" type="range" />
+              <input name="range-1a" id="range-1a" min="0" max="100" value="0" type="range" data-inline = "true"/>
               <label for="range-1b">Rangeslider:</label>
-              <input name="range-1b" id="range-1b" min="0" max="100" value="100" type="range" />
+              <input name="range-1b" id="range-1b" min="0" max="100" value="100" type="range" data-inline = "true"/>
             </div> <BR> 
         </div>
         <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
@@ -157,8 +157,10 @@
             // PLACE ALL YOU EVENTS CODE HERE e.g.
             console.log("page init")
             // $( "#slider" ).on( "slidestart", function( event, ui ) {seekStart(event,ui)} );
+
             $('#slider').on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
             $( "#slider").slider() ;
+            $("#cutSlider").rangeslider();
             //$("#cutSlider").rangeslider();
             $('#range-1a').hide();
             $('#range-1b').hide();
@@ -166,6 +168,7 @@
             $("#cutSlider").on( "slidestart", function( event, ui ) {cutSeekStart(event,ui)} );
             $("#cutSlider").on( "slidestop", function( event, ui ) {cutSeekEnd(event,ui)} );
             //$("#cutSlider").slider( {range: true})
+            setAX()
         })
 
         $(document).on( "click", ".button", function() {
@@ -216,10 +219,16 @@
         dummyhtml = 0;
         navOpen = false;
         setSensitivity(0.8)
-        setAX()
         var currentAxis = "x"
 
         seeking = false
+        var XStart = 0
+        var XEnd = 100
+        var YStart = 0
+        var YEnd = 100
+        var ZStart = 0
+        var ZEnd = 100
+
         mc.on("panstart", function(ev) {
             ev.preventDefault()
             if (isPanning == false) {
@@ -510,8 +519,21 @@
             if (seeking == true) {
                 var min = $("#range-1a").val()
                 var max = $("#range-1b").val()
-                console.log(min)
-                console.log(max)
+                // console.log(min)
+                // console.log(max)
+                if (currentAxis == "x"){
+                    //console.log("setting X")
+                    XStart = min
+                    XEnd = max
+                } else if (currentAxis == "y") {
+                    //console.log("setting Y")
+                    YStart = min
+                    YEnd = max
+                } else if (currentAxis == "z") {
+                    //console.log("setting Z")
+                    ZStart = min
+                    ZEnd = max
+                }
             } else {
             }
         }
@@ -525,6 +547,7 @@
 
         function setAX() {
             $("#cAxis").html("X-Axis");
+
             currentAxis = "x"
            var $elem = $('#X-Axis');
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #2e7bb8 !important; color:white !important;');
@@ -532,6 +555,9 @@
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
             var $elem = $('#Z-Axis');
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
+            $("#range-1a").val(XStart)
+            $("#range-1b").val(XEnd)
+            $('#cutSlider').rangeslider("refresh");
         }
         function setAY() {
             $("#cAxis").html("Y-Axis");
@@ -542,6 +568,10 @@
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
             var $elem = $('#Z-Axis');
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
+            $("#range-1a").val(YStart)
+            $("#range-1b").val(YEnd)
+            $('#cutSlider').rangeslider("refresh");
+
         } 
         function setAZ() {
             $("#cAxis").html("Z-Axis");
@@ -552,6 +582,9 @@
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
             var $elem = $('#X-Axis');
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
+            $("#range-1a").val(ZStart)
+            $("#range-1b").val(ZEnd)
+            $('#cutSlider').rangeslider("refresh");
         }     
   
     </script>

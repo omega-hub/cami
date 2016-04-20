@@ -48,82 +48,76 @@ def calljs(methodname, data):
     if(mc != None):
         mc.postCommand('@server::calljs ' + methodname + ' ' + str(data))
     
-# # example: send ModelDict to console.log to print it on the web client
-# calljs('console.log', ModelDict)
-# # example 2: set a variable on the web client to a list we pass here
-# calljs('x=', [1, 2, 3, 4])
-# # example 3: print a single value on the client
-# calljs('console.log', 10)
 def setLocalDebugging(debugMode):
     global localDebug
     localDebug = debugMode
     
 
 def InitializeModelList():
-    if (localDebug):
-        os.chdir("../data")
-    else:
-        os.chdir("/fastdata/opt/data/fbx")
-    fileList = []
-    cwd = os.getcwd()
-    numfolders = 0
-    for (path, dirs, files) in os.walk(cwd):
-        numfolders = numfolders + 1
-        for file in glob.glob(path + "/*.fbx"):
-            name = file[len(path)+1:]
-            image = "../data/" + name[:len(name)-4] + ".jpg"
+    # if (localDebug):
+    #     os.chdir("../data")
+    # else:
+    #     os.chdir("/fastdata/opt/data/fbx")
+    # fileList = []
+    # cwd = os.getcwd()
+    # numfolders = 0
+    # for (path, dirs, files) in os.walk(cwd):
+    #     numfolders = numfolders + 1
+    #     for file in glob.glob(path + "/*.fbx"):
+    #         name = file[len(path)+1:]
+    #         image = "../data/" + name[:len(name)-4] + ".jpg"
 
-            if len(path[len(cwd)+1:]) > 1:
-                newTuple = [path[len(cwd)+1:] + "/",name,image]
-            else:
-                newTuple = ["",file[len(path)+1:],image]
+    #         if len(path[len(cwd)+1:]) > 1:
+    #             newTuple = [path[len(cwd)+1:] + "/",name,image]
+    #         else:
+    #             newTuple = ["",file[len(path)+1:],image]
 
-            print(newTuple)
-            fileList.append(newTuple)
+    #         print(newTuple)
+    #         fileList.append(newTuple)
 
-    print(fileList)
-    #onModelSelect("ben.fbx=
-    #onModelSelect("A_CueR_Exp.fbx")
-    print(numfolders)
-    calljs('createModelButtons', fileList)
+    # print(fileList)
+    # #onModelSelect("ben.fbx=
+    # #onModelSelect("A_CueR_Exp.fbx")
+    # print(numfolders)
+    # calljs('createModelButtons', fileList)
 
-def onModelSelect(modelName):
-    print("Inside On Model Select")
-    print(modelName)
-    global currentModelName
+ def onModelSelect(modelName):
+#     print("Inside On Model Select")
+#     print(modelName)
+#     global currentModelName
     
-    if modelName == currentModelName:
-        print "Current model is same as selected model"
-        calljs('noloading', ScrollSpeed)
-    elif modelName in ModelDict.keys(): 
-        print "Model has already been loaded"
-        #TODO: Make new model reappear
-        toggleModelVisible(currentModelName,False)
-        toggleModelVisible(modelName, True)
-        currentModelName = modelName
-        calljs('noloading', ScrollSpeed)
-    else:
-        #TODO: Hide current Model
-        if currentModelName != "noModel":
-            toggleModelVisible(currentModelName,False)
-        currentModelName = modelName
-        LoadModel(modelName)
+#     if modelName == currentModelName:
+#         print "Current model is same as selected model"
+#         calljs('noloading', ScrollSpeed)
+#     elif modelName in ModelDict.keys(): 
+#         print "Model has already been loaded"
+#         #TODO: Make new model reappear
+#         toggleModelVisible(currentModelName,False)
+#         toggleModelVisible(modelName, True)
+#         currentModelName = modelName
+#         calljs('noloading', ScrollSpeed)
+#     else:
+#         #TODO: Hide current Model
+#         if currentModelName != "noModel":
+#             toggleModelVisible(currentModelName,False)
+#         currentModelName = modelName
+#         LoadModel(modelName)
         
     
 def LoadModel(modelName):
-    if (localDebug):
-        path = "../data/" + modelName
-    else:
-        path = "/fastdata/opt/data/fbx/" + modelName
-    global currentModelName
-    global ModelDict
-    model = ModelInfo()
-    model.name = "model"
-    model.path = path
-    model.generateNormals = False
-    model.optimize = False
-    model.size = 10
-    getSceneManager().loadModelAsync(model, 'onModelLoaded()')
+    # if (localDebug):
+    #     path = "../data/" + modelName
+    # else:
+    #     path = "/fastdata/opt/data/fbx/" + modelName
+    # global currentModelName
+    # global ModelDict
+    # model = ModelInfo()
+    # model.name = "model"
+    # model.path = path
+    # model.generateNormals = False
+    # model.optimize = False
+    # model.size = 10
+    # getSceneManager().loadModelAsync(model, 'onModelLoaded()')
     
     
 def toggleModelVisible(modelName, visible):
@@ -138,18 +132,18 @@ def toggleModelVisible(modelName, visible):
         print "toggling to invisible"
 
 def onModelLoaded():
-    global obj
-    obj = StaticObject.create("model")
-    obj.setPosition(0, 2, -8)
-    mat = obj.getMaterial()
-    mat.setProgram("colored")
-    mat.setShininess(50)
-    mat.setGloss(0.4)
-    Manipulator.root = obj
-    l1.lookAt(obj.getPosition(), Vector3(0, 1, 0))
-    ModelDict[currentModelName] = obj
-    time.sleep(5)
-    calljs('noloading', ScrollSpeed)
+    # global obj
+    # obj = StaticObject.create("model")
+    # obj.setPosition(0, 2, -8)
+    # mat = obj.getMaterial()
+    # mat.setProgram("colored")
+    # mat.setShininess(50)
+    # mat.setGloss(0.4)
+    # Manipulator.root = obj
+    # l1.lookAt(obj.getPosition(), Vector3(0, 1, 0))
+    # ModelDict[currentModelName] = obj
+    # time.sleep(5)
+    # calljs('noloading', ScrollSpeed)
     
 InitializeModelList()
 print("initialized Model List")
@@ -196,3 +190,10 @@ def logPan(dx,dy,dz,numTouch):
     #print dz
     #print numTouch
 
+def adjustSlice(axis, start,end):
+	if (axis = "x"):
+		#vr.setSlice(start,end)
+	elif (axis = "y"):
+		#vr.setSlice(start,end)
+	elif (axis = "z")
+		#vr.setSlice(start,end)
