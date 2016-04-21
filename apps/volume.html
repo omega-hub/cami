@@ -12,7 +12,7 @@
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 
         <style>
-    button{
+    .button{
     background-color: #e8e9f0; 
     border: 1px black;
     color: black;
@@ -27,6 +27,9 @@
     float: center;
     outline: none;
     box-shadow: inset -.5px -1px 5px 0px black;
+    }
+    button{
+        text-shadow: none !important;
     }
 
     div.hide { display:none; }
@@ -106,11 +109,10 @@
         </div>
         <div data-role="footer" id="footer" data-position="fixed">
 
-            <button type="Axis" id="X-Axis" data-inline="true"onClick='setAX()'>X-Axis</button>
-            <button type="Axis" id="Y-Axis" data-inline="true"onClick='setAY()'>Y-Axis</button>
-            <button type="Axis" id="Z-Axis" data-inline="true"onClick='setAZ()'>Z-Axis</button>
+            <button type="button" id="X-Axis" data-inline="true"onClick='setAX()'>X-Axis</button>
+            <button type="button" id="Y-Axis" data-inline="true"onClick='setAY()'>Y-Axis</button>
+            <button type="button" id="Z-Axis" data-inline="true"onClick='setAZ()'>Z-Axis</button>
 
-            Current Axis : <span id="cAxis">X=Axis</span> <BR>
             <div data-role="rangeslider" name = "cutSlider" id = "cutSlider">
               <label for="range-1a">Rangeslider:</label>
               <input name="range-1a" id="range-1a" min="0" max="100" value="0" type="range" />
@@ -136,7 +138,7 @@
             <form class="userform">
                 <h2>Instructions for Use</h2>
                 <hr class="instructions">
-                    <h4>To choose an axis:</h4> <p> Tap the axis button.</p> 
+                    <h4>To choose an axis:</h4> <p> Tap the button for the corresponding axis.</p> 
                     <h4>To cut away volume:</h4> <p> Use the slide bar to cut away volume from both sides of the model on the selected axis</p> 
                     <h4>To rotate:</h4> <p> Use one finger and swipe anywhere on the screen</p> 
                     <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
