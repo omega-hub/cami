@@ -174,6 +174,7 @@ $(document).on( "click", ".button", function() {
         // this will block the vertical scrolling on a touch-device while on the element
         mc.get('pan').set({ pointers: 0 });
         mc.get('pan').set({ threshold: 15 });
+        mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
         mc.get('pinch').set({ enable: true });
         mc.get('pinch').set({ threshold: 0.08 });
 
@@ -199,20 +200,24 @@ $(document).on( "click", ".button", function() {
         navOpen = false;
         setSensitivity(0.8)
         mc.on("panstart", function(ev) {
-            ev.preventDefault()
-            if (isPanning == false) {
-                startMouseX = ev.center.x 
-                startMouseY = ev.center.y
-                rotateDist = 0;
-                isPanning = true
+            if (!navOpen){
+                ev.preventDefault()
+                if (isPanning == false) {
+                    startMouseX = ev.center.x 
+                    startMouseY = ev.center.y
+                    rotateDist = 0;
+                    isPanning = true
+                }
             }
             // setCubeColor(0X00ff00)
             // setBackgroundColor(0Xff0000)
         });
         mc.on("panend", function(ev) {
-            ev.preventDefault()
-            isRotating = false
-            isPanning = false
+            if (!navOpen){
+                ev.preventDefault()
+                isRotating = false
+                isPanning = false
+            }
         });
         // listen to events...
         numTouch = 0
@@ -246,6 +251,21 @@ $(document).on( "click", ".button", function() {
             setCubeColor(0x0B1011)
             setBackgroundColor(0X707070)
         }
+        });
+        $('body').on('touchmove', function(e) {
+            if (!navOpen){
+                e.preventDefault();
+            }
+        });
+        $(window).blur(function(){
+          //your code here
+          console.log("Blurred")
+          {{mc@app: print "Blurred" }}
+        });
+        $(window).focus(function(){
+          //your code
+          console.log("Focused")
+          {{mc@app: print "Focused" }}
         });
         mc.on("pan", function(ev) {
             if (!navOpen) {
@@ -357,7 +377,9 @@ $(document).on( "click", ".button", function() {
         
         //window.blockMenuHeaderScroll = true;
         document.ontouchmove = function(e){ 
-            e.preventDefault(); 
+            if (!navOpen) {
+                e.preventDefault(); 
+            }
         }
 
         document.addEventListener("mousewheel",onMouseWheel);

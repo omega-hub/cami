@@ -107,17 +107,19 @@
             <script src="js/three.min.js"></script>
             <script src="js/modelViewerPreview.js"></script> 
         </div>
-        <div data-role="footer" id="footer" data-position="fixed">
+        <div data-role="footer" id="footer" data-swipe-close = "false" data-position="fixed">
 
             <button type="button" id="X-Axis" data-inline="true"onClick='setAX()'>X-Axis</button>
             <button type="button" id="Y-Axis" data-inline="true"onClick='setAY()'>Y-Axis</button>
             <button type="button" id="Z-Axis" data-inline="true"onClick='setAZ()'>Z-Axis</button>
 
+
             <div data-role="rangeslider" name = "cutSlider" id = "cutSlider">
+
               <label for="range-1a">Rangeslider:</label>
-              <input name="range-1a" id="range-1a" min="0" max="100" value="0" type="range" />
+              <input name="range-1a" id="range-1a" min="0" max="100" value="0" type="range" data-inline = "true"/>
               <label for="range-1b">Rangeslider:</label>
-              <input name="range-1b" id="range-1b" min="0" max="100" value="100" type="range" />
+              <input name="range-1b" id="range-1b" min="0" max="100" value="100" type="range" data-inline = "true"/>
             </div> <BR> 
         </div>
         <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
@@ -159,15 +161,19 @@
             // PLACE ALL YOU EVENTS CODE HERE e.g.
             console.log("page init")
             // $( "#slider" ).on( "slidestart", function( event, ui ) {seekStart(event,ui)} );
+
             $('#slider').on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
             $( "#slider").slider() ;
+            $("#cutSlider").rangeslider();
             //$("#cutSlider").rangeslider();
             $('#range-1a').hide();
             $('#range-1b').hide();
+            //$('#nav-panel').hide();
             //$( "#cutSlider" ).rangeslider();
             $("#cutSlider").on( "slidestart", function( event, ui ) {cutSeekStart(event,ui)} );
             $("#cutSlider").on( "slidestop", function( event, ui ) {cutSeekEnd(event,ui)} );
             //$("#cutSlider").slider( {range: true})
+            setAX()
         })
 
         $(document).on( "click", ".button", function() {
@@ -194,6 +200,7 @@
         // this will block the vertical scrolling on a touch-device while on the element
         mc.get('pan').set({ pointers: 0 });
         mc.get('pan').set({ threshold: 15 });
+        mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
         mc.get('pinch').set({ enable: true });
         mc.get('pinch').set({ threshold: 0.08 });
 
@@ -218,23 +225,35 @@
         dummyhtml = 0;
         navOpen = false;
         setSensitivity(0.8)
-        setAX()
         var currentAxis = "x"
 
         seeking = false
-        mc.on("panstart", function(ev) {
-            ev.preventDefault()
-            if (isPanning == false) {
-                startMouseX = ev.center.x 
-                startMouseY = ev.center.y
-                rotateDist = 0;
-                isPanning = true
+        var XStart = 0
+        var XEnd = 100
+        var YStart = 0
+        var YEnd = 100
+        var ZStart = 0
+        var ZEnd = 100
+
+         mc.on("panstart", function(ev) {
+            if (!navOpen){
+                ev.preventDefault()
+                if (isPanning == false) {
+                    startMouseX = ev.center.x 
+                    startMouseY = ev.center.y
+                    rotateDist = 0;
+                    isPanning = true
+                }
             }
+            // setCubeColor(0X00ff00)
+            // setBackgroundColor(0Xff0000)
         });
         mc.on("panend", function(ev) {
-            ev.preventDefault()
-            isRotating = false
-            isPanning = false
+            if (!navOpen){
+                ev.preventDefault()
+                isRotating = false
+                isPanning = false
+            }
         });
         // listen to events...
         numTouch = 0
@@ -268,6 +287,21 @@
             setCubeColor(0x0B1011)
             setBackgroundColor(0X707070)
         }
+        });
+        // $("#volume-page").visibilityChanged({
+        //     callback: function(element, visible) {
+        //        console.log(visible)
+        //     },
+        //     runOnLoad: false,
+        //     frequency: 100
+        // });
+        $(window).blur(function(){
+          //your code here
+          console.log("Blurred")
+        });
+        $(window).focus(function(){
+          //your code
+          console.log("Focused")
         });
         mc.on("pan", function(ev) {
             if (!navOpen) {
@@ -360,8 +394,15 @@
             document.addEventListener("keyup", onKeyUp);       }
         
         //window.blockMenuHeaderScroll = true;
+        $('body').on('touchmove', function(e) {
+            if (!navOpen){
+                e.preventDefault();
+            }
+        });
         document.ontouchmove = function(e){ 
-            e.preventDefault(); 
+            if (!navOpen){
+                e.preventDefault();
+            }
         }
 
         document.addEventListener("mousewheel",onMouseWheel);
@@ -512,8 +553,21 @@
             if (seeking == true) {
                 var min = $("#range-1a").val()
                 var max = $("#range-1b").val()
-                console.log(min)
-                console.log(max)
+                // console.log(min)
+                // console.log(max)
+                if (currentAxis == "x"){
+                    //console.log("setting X")
+                    XStart = min
+                    XEnd = max
+                } else if (currentAxis == "y") {
+                    //console.log("setting Y")
+                    YStart = min
+                    YEnd = max
+                } else if (currentAxis == "z") {
+                    //console.log("setting Z")
+                    ZStart = min
+                    ZEnd = max
+                }
             } else {
             }
         }
@@ -527,6 +581,7 @@
 
         function setAX() {
             $("#cAxis").html("X-Axis");
+
             currentAxis = "x"
            var $elem = $('#X-Axis');
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #2e7bb8 !important; color:white !important;');
@@ -534,6 +589,9 @@
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
             var $elem = $('#Z-Axis');
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
+            $("#range-1a").val(XStart)
+            $("#range-1b").val(XEnd)
+            $('#cutSlider').rangeslider("refresh");
         }
         function setAY() {
             $("#cAxis").html("Y-Axis");
@@ -544,6 +602,10 @@
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
             var $elem = $('#Z-Axis');
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
+            $("#range-1a").val(YStart)
+            $("#range-1b").val(YEnd)
+            $('#cutSlider').rangeslider("refresh");
+
         } 
         function setAZ() {
             $("#cAxis").html("Z-Axis");
@@ -554,6 +616,9 @@
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
             var $elem = $('#X-Axis');
             $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
+            $("#range-1a").val(ZStart)
+            $("#range-1b").val(ZEnd)
+            $('#cutSlider').rangeslider("refresh");
         }     
   
     </script>

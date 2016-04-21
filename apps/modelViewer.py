@@ -180,9 +180,15 @@ def pyresetOrientation(dummy):
     print("in .py resetOrientation")
     
 def logPan(dx,dy,dz,numTouch):
+    print "Message from HTML"
     return 0
     #print "Pan Gesture detected."
     #print dx
     #print dy
     #print dz
     #print numTouch
+
+def printMessage():
+    print "Message from HTML:"
+    print message
+    return
