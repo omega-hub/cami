@@ -149,6 +149,7 @@
     $("#pause").show();
     });
         porthole.connected = function() {
+        	{{py startApplication(%client_id%, 'movieViewer') }}
             porthole.call("startApplication(%client_id%, 'hello')")
         }
         //$(document).ready(function () {}
@@ -160,7 +161,8 @@
         var seeking = false
         var videoLength = 0
         var currentTime = 0
-        var looping = false
+        var looping = true
+        var playing = true
         $(document).on("pageinit","#movie-page",function(){
             // PLACE ALL YOU EVENTS CODE HERE e.g.
             console.log("page init")
@@ -170,11 +172,6 @@
         })
         
         onVideoLoad(135)
-        function play(event) {
-            console.log("play Button")
-            videoPlaying = !videoPlaying
-            //{{mc@app: setPlaying(videoPlaying) }}
-        }
         // function pause(event) {
         //     console.log("Pause Button")
         // }
@@ -202,8 +199,25 @@
         }
         function loop(event) {
             console.log("Loop Button")
+            console.log(looping)
             looping = !looping
-            //{{mc@app: setLooping(looping) }}
+            console.log(looping)
+            if (looping) {
+            	{{mc@app: setLooping(True) }}
+            } else {
+            	{{mc@app: setLooping(False) }}
+            }
+        }
+        function togglePlay(event) {
+            console.log("Play Button")
+            console.log(playing)
+            playing = !playing
+            console.log(playing)
+            if (looping) {
+            	{{mc@app: setPlaying(True) }}
+            } else {
+            	{{mc@app: setPlaying(False) }}
+            }
         }
         function select(event) {
             console.log("Select Video")
@@ -253,6 +267,28 @@
             }
 
             //$("#fSeconds").text("seconds")
+        }
+
+        function updateVideoData(isPlaying,isLooping,currenttime) {
+        	if (playing != isPlaying) {
+        		$("#play").hide();
+
+			    $("#play").on('click', function() {
+			    $("#play").hide();
+			    $("#pause").show();
+			    });
+
+			    $("#pause").on('click', function() {
+			    $("#pause").hide();
+			    $("#play").show();
+			    });
+
+			    $("#restart").on('click', function() {
+			    $("#play").hide();
+			    $("#pause").show();
+			    });
+        	}
+        	if (isLooping)
         }
         onUpdate()
     </script>

@@ -167,6 +167,26 @@ $(document).on( "click", ".button", function() {
   $.mobile.loading( "hide" );
 });
 
+		var isMobile = {
+		    Android: function() {
+		        return navigator.userAgent.match(/Android/i);
+		    },
+		    BlackBerry: function() {
+		        return navigator.userAgent.match(/BlackBerry/i);
+		    },
+		    iOS: function() {
+		        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+		    },
+		    Opera: function() {
+		        return navigator.userAgent.match(/Opera Mini/i);
+		    },
+		    Windows: function() {
+		        return navigator.userAgent.match(/IEMobile/i);
+		    },
+		    any: function() {
+		        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+		    }
+		};
         // create a simple instance
         // by default, it only adds horizontal recognizers
         var mc = new Hammer(myElement);
@@ -257,16 +277,25 @@ $(document).on( "click", ".button", function() {
                 e.preventDefault();
             }
         });
-        $(window).blur(function(){
-          //your code here
-          console.log("Blurred")
-          {{mc@app: print "Blurred" }}
-        });
-        $(window).focus(function(){
-          //your code
-          console.log("Focused")
-          {{mc@app: print "Focused" }}
-        });
+	    $(document).on('visibilitychange', function(){
+	    	if (isMobile.any()) {
+	    		{{mc@app: print "visibilityChanged" }}
+	          //porthole.socket.close()
+	          {{py onClientDisconnected(%client_id%) }}
+	        }
+	    	}
+	    )
+   //      $(window).blur(function(){
+   //        //your code here
+   //        console.log("Blurred")
+	  // {{mc@app: print "Blurred" }}
+   //        porthole.socket.close()
+   //      });
+   //      $(window).focus(function(){
+   //        //your code
+   //        console.log("Focused")
+   //        {{mc@app: print "Focused" }}
+   //      });
         mc.on("pan", function(ev) {
             if (!navOpen) {
                 //window.scrollTo(0,0);
