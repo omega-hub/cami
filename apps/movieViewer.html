@@ -11,23 +11,26 @@
 
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
     <style>
+    
     .button{
     background-color: #e8e9f0; 
     border: 1px black;
     color: black;
+    text-shadow: none !important;
     text-align: center;
     vertical-align: middle;
     width:235px;
-    height: 30px;
+    height: 40px;
     font-size: 15px;
     margin: 4px 2px;
     border-radius: 1px;
     float: center;
-    outline:none;
-    box-shadow: inset -.5px -1px 5px 0px black;
-    display:inline !important;
-
+    outline: none;
+    box-shadow: none !important;
+    }
     
+    button{
+        text-shadow: none !important;
     }
 
     div.hide { display:none; }
@@ -58,6 +61,11 @@
     .jquerymobileslider .ui-slider .ui-slider-handle {
         height: 50px;
         width: 50px;
+    }
+
+    #loop{
+       background-color: #2e7bb8 !important; 
+       color: white !important;
     }
     /*#slider {
 		margin: 15px;
@@ -96,15 +104,16 @@
         <!-- <input type="range" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> -->
         <input  input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/>
         
-        <button type="button" id="play"data-inline="true"onClick='togglePlay()'>
+        <button type="button" id="play" data-inline="true"onClick='togglePlay()'>
             <div id="div1"> Play </div>
         </button>
-        <button type="button" id="pause"data-inline="true"onClick='togglePlay()'>
+        <button type="button" id="pause" data-inline="true"onClick='togglePlay()'>
             <div id="div2"/> Pause </div>
         </button>
 
         <button type="button" id="restart"data-inline="true" onClick='restart()'>Restart</button>
-        <button type="button" id="loop"data-inline="true" onClick='loop()'>Loop</button>
+        <button type="button" id="loop" data-inline="true" onClick='loop()'> Loop</button>
+
         Time : <span id="cMinutes">0</span>:<span id="cSeconds">00</span> / <span id="fMinutes">0</span>:<span id="fSeconds">00</span> 
     </div>
 
@@ -143,6 +152,9 @@
     $("#pause").hide();
     $("#play").show();
     });
+
+
+
 
     $("#restart").on('click', function() {
     $("#play").hide();
@@ -198,6 +210,22 @@
             videoPlaying = false;
         }
         function loop(event) {
+
+            if(looping)
+            {
+                var $elem = $('#loop');
+                $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #f6f6f6 !important; color:black !important;');
+            }
+            else
+            {
+                var $elem = $('#loop');
+                $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #2e7bb8 !important; color:white !important;');
+            }
+            /*    
+            var $elem = $('#loop');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #2e7bb8 !important; color:white !important;');
+*/
+
             console.log("Loop Button")
             console.log(looping)
             looping = !looping
