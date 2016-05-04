@@ -161,8 +161,10 @@
         var seeking = false
         var videoLength = 0
         var currentTime = 0
+        var seekTime = 0
         var looping = true
         var playing = true
+        var startedSeeking = false
         $(document).on("pageinit","#movie-page",function(){
             // PLACE ALL YOU EVENTS CODE HERE e.g.
             console.log("page init")
@@ -212,8 +214,8 @@
             console.log("Play Button")
             console.log(playing)
             playing = !playing
-            console.log(playing)
-            if (looping) {
+            
+            if (playing) {
             	{{mc@app: setPlaying(True) }}
             } else {
             	{{mc@app: setPlaying(False) }}
@@ -227,10 +229,21 @@
             requestAnimationFrame(onUpdate); 
             if (seeking == true) {
                 currentSeek = $('#slider').val()//$("#video-controls").slider( "option", "value" );
-                console.log(currentSeek)
+                {{mc@app: setPlaying(False) }}
+                startedSeeking = true
+                seekTime = ((currentSeek /100) * videoLength)
+                {{mc@app: seekToTime(%seekTime%) }}
+                //console.log(currentSeek)
                 // currentSeek = $('#slider').slider("option","value")
-                // console.log(currentSeek)
+                // console.log(currentSeek
+
             } else {
+                if (startedSeeking == true) {
+                    startedSeeking = false
+                    if (playing) {
+                        {{mc@app: setPlaying(True) }}
+                    } 
+                }
                 updateSlider()
             }
             $("#cMinutes").html(Math.floor(currentTime/60));
@@ -246,6 +259,8 @@
         }
         function updateSlider() {
             //{{mc@app: setPlaying(false) }}
+            {{mc@app: requestUpdate() }}
+            {{mc@app: requestDuration() }}
         }
         function setSliderTime(time) {
             $('#slider').val(time).slider("refresh");
@@ -265,7 +280,6 @@
             } else {
                 $("#fSeconds").html(seconds)
             }
-
             //$("#fSeconds").text("seconds")
         }
 
@@ -289,9 +303,17 @@
 			    // });
        //  	}
        //  	if (isLooping) {
-                
+
        //      }
        //  }
+       function updateTime(time) {
+            percent = (time/videoLength) * 100
+            percent = Math.round(percent)
+            setSliderTime(percent)
+       }
+       function updateDuration(time) {
+        videoLength = time
+       }
         onUpdate()
     </script>
 </body>

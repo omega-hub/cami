@@ -47,25 +47,41 @@ looping = False
 v.play()
 
 def setLooping(loop):
-    print "Accepted Command:"
-    print loop
-    print "Before:"
-    print v.isLooping()
+    # print "Accepted Command:"
+    # print loop
+    # print "Before:"
+    # print v.isLooping()
     v.setLooping(loop)
-    print "After:"
-    print v.isLooping()
+    # print "After:"
+    # print v.isLooping()
 
 def setPlaying(loop):
-    print "Accepted Command:"
-    print loop
-    print "Before:"
-    print v.isPlaying()
+    # print "Accepted Command:"
+    # print loop
+    # print "Before:"
+    # print v.isPlaying()
     v.setPlaying(loop)
-    print "After:"
-    print v.isPlaying()
+    # print "After:"
+    # print v.isPlaying()
 
 def seekToTime(time):
+    print "AttemptingSeek to time:"
+    print time
+    timeBef = v.getCurrentTime()
+    print "Time before:"
+    print timeBef
     v.seekToTime(time)
+    timeBef = v.getCurrentTime()
+    print "Time after:"
+    print timeBef
 
 def restart():
     v.seekToTime(0)
+
+def requestUpdate():
+    time = v.getCurrentTime()
+    calljs('updateTime', time)
+
+def requestDuration():
+    duration = v.getDuration()
+    calljs('updateDuration', duration)
