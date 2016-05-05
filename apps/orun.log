@@ -8,6 +8,24 @@ Running system/quickCommands.py
 Running launcher.py
 Test print, this is in my launcher
 Porthole server thread started
-===================== ReferenceType object leaks follow:
-N5omega13DrawInterfaceE: 1
-N5omega11LeakPrinterE: 1
+Porthole GUI client connected: 24:127.0.0.1:localhost
+client connected: 24:127.0.0.1:localhost
+Preparing to LaunchmodelViewer
+this is Inside my version of the function
+[MissionControlClient::spawn] running app:modelViewer.py
+!!! ServerThread::sendFile: failed sending /Users/gracealexander/Documents/InterfacesLab/cami/apps/./favicon.ico
+Mission control client connected: app
+Porthole GUI client connected: 34:127.0.0.1:localhost
+client connected: 34:127.0.0.1:localhost
+Preparing to LaunchmovieViewer
+this is Inside my version of the function
+[MissionControlClient::spawn] running app:movieViewer.py
+Preparing to Launchhello
+this is Inside my version of the function
+[MissionControlClient::spawn] running app:hello.py
+Mission control client connected: app
+Mission control client connected: app
+Porthole GUI client disconnected: 24:127.0.0.1:localhost
+34:127.0.0.1:localhost
+24:127.0.0.1:localhost
+!!! ServerThread::sendFile: failed sending /Users/gracealexander/Documents/InterfacesLab/cami/apps/./favicon.ico
