@@ -43,7 +43,6 @@ v.open('/software/omegalib/release/modules/oav/example/small.mp4')
 #v.open('/opt/data/Videos/4ktest.mp4')
 img = Image.create(uim.getUi())
 img.setData(v.getPixels())
-looping = False
 v.play()
 
 def setLooping(loop):
