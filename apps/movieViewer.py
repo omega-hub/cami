@@ -28,22 +28,25 @@
     # def restart():
     #     v.seekToTime(0)
 from oav import *
+import os, glob,math, time
 
 # Utility function to send data to the web client
 def calljs(methodname, data):
     mc = getMissionControlClient()
     if(mc != None):
         mc.postCommand('@server::calljs ' + methodname + ' ' + str(data))
-
+localDebug = False
+currentMovieName = "noMovie"
 uim = UiModule.createAndInitialize()
-
-v = VideoStream()
-
-v.open('/software/omegalib/release/modules/oav/example/small.mp4')
-#v.open('/opt/data/Videos/4ktest.mp4')
 img = Image.create(uim.getUi())
-img.setData(v.getPixels())
-v.play()
+v = VideoStream()
+#if (not isMaster()):
+    # v.open('/software/omegalib/release/modules/oav/example/small.mp4')
+    # #v.open('/opt/data/Videos/4ktest.mp4')
+    # img.setData(v.getPixels())
+    # img.setAutosize(False) # Inserting these resulted in it not working
+    # img.setSize(uim.getUi().getSize())
+    # v.play()
 
 def setLooping(loop):
     # print "Accepted Command:"
@@ -84,3 +87,98 @@ def requestUpdate():
 def requestDuration():
     duration = v.getDuration()
     calljs('updateDuration', duration)
+
+def InitializeMovieList():
+    print "initializing movie list with localDebug set to: " + str(localDebug)
+    if (localDebug):
+        os.chdir("../data")
+    else:
+        os.chdir("/fastdata/opt/data/Videos/")
+    fileList = []
+    cwd = os.getcwd()
+    numfolders = 0
+    for (path, dirs, files) in os.walk(cwd):
+        numfolders = numfolders + 1
+        for file in glob.glob(path + "/*.mov"):
+            name = file[len(path)+1:]
+            image = "../data/" + name[:len(name)-4] + ".mov"
+
+            if len(path[len(cwd)+1:]) > 1:
+                newTuple = [path[len(cwd)+1:] + "/",name,image]
+            else:
+                newTuple = ["",file[len(path)+1:],image]
+
+            print(newTuple)
+            fileList.append(newTuple)
+        for file in glob.glob(path + "/*.mpg"):
+            name = file[len(path)+1:]
+            image = "../data/" + name[:len(name)-4] + ".mov"
+
+            if len(path[len(cwd)+1:]) > 1:
+                newTuple = [path[len(cwd)+1:] + "/",name,image]
+            else:
+                newTuple = ["",file[len(path)+1:],image]
+
+            print(newTuple)
+            fileList.append(newTuple)
+        for file in glob.glob(path + "/*.mkv"):
+            name = file[len(path)+1:]
+            image = "../data/" + name[:len(name)-4] + ".mov"
+
+            if len(path[len(cwd)+1:]) > 1:
+                newTuple = [path[len(cwd)+1:] + "/",name,image]
+            else:
+                newTuple = ["",file[len(path)+1:],image]
+
+            print(newTuple)
+            fileList.append(newTuple)
+
+        for file in glob.glob(path + "/*.mp4"):
+            name = file[len(path)+1:]
+            image = "../data/" + name[:len(name)-4] + ".mov"
+
+            if len(path[len(cwd)+1:]) > 1:
+                newTuple = [path[len(cwd)+1:] + "/",name,image]
+            else:
+                newTuple = ["",file[len(path)+1:],image]
+
+            print(newTuple)
+            fileList.append(newTuple)
+
+    print(fileList)
+    #onMovieSelect("ben.fbx=
+    #onMovieSelect("A_CueR_Exp.fbx")
+    print(numfolders)
+    calljs('createMovieButtons', fileList)
+print "Preparing to initialize Movie List"
+InitializeMovieList()
+
+def onMovieSelect(MovieName):
+    print("Inside OnMovieSelect")
+    print(MovieName)
+    global currentMovieName
+    
+    if MovieName == currentMovieName:
+        print "Current Movie is same as selected Movie"
+        calljs('noloading', ScrollSpeed)
+    else:
+        #TODO: Hide current Movie
+        #if currentMovieName != "noMovie":
+            #Unload current movie
+        currentMovieName = MovieName
+        LoadMovie(MovieName)
+        
+    
+def LoadMovie(MovieName):
+    if (localDebug):
+        path = "../data/" + MovieName
+    else:
+        path = "/fastdata/opt/data/Videos/" + MovieName
+    if (not isMaster()):
+        v.open(path)
+        #v.open('/opt/data/Videos/4ktest.mp4')
+        #img = Image.create(uim.getUi())
+        img.setData(v.getPixels())
+        img.setAutosize(False) # Inserting these resulted in it not working
+        img.setSize(uim.getUi().getSize())
+        v.play()

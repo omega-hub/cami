@@ -88,11 +88,9 @@
             <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
             <a href="#help-panel" data-icon="info"   data-iconpos="notext">Add</a>
             <h1>Movie Viewer</h1>
-            <script src="js/three.min.js"></script>
-            <script src="js/modelViewerPreview.js"></script> 
     	</div>
 
-        <div data-role="footer" id="footer" data-position="fixed">
+        <div data-role="content" id="main-content" data-position="fixed">
         <!-- <input type="range" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> -->
         <input  input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/>
         
@@ -132,6 +130,9 @@
     <!-- <input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1"> -->
   <!-- Video -->
     <script>
+    $(document).on('pageshow','#movie-page', function(e,data){ 
+        $('#main-content').css('margin-top',($(window).height() - $('[data-role=header]').height() - $('[data-role=footer]').height() - $('#index-content').outerHeight())/2);
+    })
    $("#play").hide();
 
     $("#play").on('click', function() {
@@ -325,6 +326,57 @@
         onVideoLoad(videoLength)
        }
         onUpdate()
+        function createMovieButtons(ml) {
+            console.log("initializing Movie buttons")
+            movieList=ml;
+            i=0;
+            n = ml.length;
+            j = 0
+            lastFolder = "defaultFolder"
+            while (i < n)
+            {
+                console.log("lastfolder:" + lastFolder)
+                console.log("currentFolder:" + ml[i][0])
+                if (ml[i][0] != lastFolder){
+                    j = j + 1
+                    var content = "<div data-role='collapsible' id='set" + j + "'><h4>" + ml[i][0].substring(0,(ml[i][0].length)-1) + "</h4><div id='pageButtons" + j + "'></div></div>";
+                    $("#Allcollapsable").append( content ).collapsibleset('refresh');;
+                    lastFolder = ml[i][0]
+                }
+                var pageButtons = $('#pageButtons' + j);
+                pageButtons.append('<input type="button" class="button" id="button'+i+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick= "addloading()"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
+                i = i + 1;
+            }
+        }
+        function addloading(){
+        movieButtonClicked(event);
+        }
+
+        function noloading(dummy){
+        //$.mobile.loading( "hide" );
+        }
+
+        function setSensitivity(s) {
+            sensitivity = s
+        }
+
+        //creating a jquery function for always occuring events.
+       function movieButtonClicked(event) {
+
+            console.log("Outputting")
+            var path = $(event.target).data('path');
+            console.log(path);
+            event.target.path = path
+            console.log(event.target.value)
+            console.log(event.target.id)
+            {{mc@app: onMovieSelect("%event.target.path%" + "%event.target.value%") }}
+
+            //$('#'+panelID).toggle(); //you can concatenate strings with +.
+            //use the '#' to gattret the object the id is referring to.
+            //var newString = "my new String"
+           // $('#'+panelID+ ' .panel-body').html(newString);
+           //resetImage();
+        }
     </script>
 </body>
 </html>
