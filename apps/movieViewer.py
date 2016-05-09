@@ -39,7 +39,7 @@ localDebug = False
 currentMovieName = "noMovie"
 uim = UiModule.createAndInitialize()
 img = Image.create(uim.getUi())
-v = VideoStream()
+v = False
 #if (not isMaster()):
     # v.open('/software/omegalib/release/modules/oav/example/small.mp4')
     # #v.open('/opt/data/Videos/4ktest.mp4')
@@ -49,44 +49,56 @@ v = VideoStream()
     # v.play()
 
 def setLooping(loop):
-    # print "Accepted Command:"
-    # print loop
-    # print "Before:"
-    # print v.isLooping()
-    v.setLooping(loop)
-    # print "After:"
-    # print v.isLooping()
+    if v:
+        # print "Accepted Command:"
+        # print loop
+        # print "Before:"
+        # print v.isLooping()
+        v.setLooping(loop)
+        # print "After:"
+        # print v.isLooping()
 
-def setPlaying(loop):
-    # print "Accepted Command:"
-    # print loop
-    # print "Before:"
-    # print v.isPlaying()
-    v.setPlaying(loop)
-    # print "After:"
-    # print v.isPlaying()
+def setPlaying(play):
+    if v:
+        print "Accepted Command:"
+        print play
+        print "Before:"
+        print v.isPlaying()
+        v.setPlaying(play)
+        print "After:"
+        print v.isPlaying()
 
 def seekToTime(time):
-    print "AttemptingSeek to time:"
-    print time
-    timeBef = v.getCurrentTime()
-    print "Time before:"
-    print timeBef
-    v.seekToTime(time)
-    timeBef = v.getCurrentTime()
-    print "Time after:"
-    print timeBef
+    if v: 
+        print "AttemptingSeek to time:"
+        print time
+        timeBef = v.getCurrentTime()
+        print "Time before:"
+        print timeBef
+        v.seekToTime(time)
+        timeBef = v.getCurrentTime()
+        print "Time after:"
+        print timeBef
 
 def restart():
-    v.seekToTime(0)
+    if v:
+        v.seekToTime(0)
 
 def requestUpdate():
-    time = v.getCurrentTime()
-    calljs('updateTime', time)
+    if v:
+        time = v.getCurrentTime()
+        print time
+        calljs('updateTime', time)
+    else:
+        return 0
 
 def requestDuration():
-    duration = v.getDuration()
-    calljs('updateDuration', duration)
+    if v:
+        duration = v.getDuration()
+        print duration
+        calljs('updateDuration', duration)
+    else:
+        return 0
 
 def InitializeMovieList():
     print "initializing movie list with localDebug set to: " + str(localDebug)
@@ -175,6 +187,10 @@ def LoadMovie(MovieName):
     else:
         path = "/fastdata/opt/data/Videos/" + MovieName
     if (not isMaster()):
+        print "Loading movie"
+        print v
+        global v, img
+        v = VideoStream()
         v.open(path)
         #v.open('/opt/data/Videos/4ktest.mp4')
         #img = Image.create(uim.getUi())
@@ -182,3 +198,4 @@ def LoadMovie(MovieName):
         img.setAutosize(False) # Inserting these resulted in it not working
         img.setSize(uim.getUi().getSize())
         v.play()
+        print v

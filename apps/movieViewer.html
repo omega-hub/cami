@@ -92,7 +92,7 @@
 
         <div data-role="content" id="main-content" data-position="fixed">
         <!-- <input type="range" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> -->
-        <input  input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/>
+        <input  input type="number" data-role="none" name="slider" id="slider" value="0" min="0" max="100" data-theme="c"/>
         
         <button type="button" id="play"data-inline="true"onClick='togglePlay()'>
             <div id="div1"> Play </div>
@@ -245,7 +245,6 @@
                 {{mc@app: setPlaying(False) }}
                 startedSeeking = true
                 seekTime = ((currentSeek /100) * videoLength)
-                {{mc@app: seekToTime(%seekTime%) }}
                 //console.log(currentSeek)
                 // currentSeek = $('#slider').slider("option","value")
                 // console.log(currentSeek
@@ -253,6 +252,7 @@
             } else {
                 if (startedSeeking == true) {
                     startedSeeking = false
+                	{{mc@app: seekToTime(%seekTime%) }}
                     if (playing) {
                         {{mc@app: setPlaying(True) }}
                     } 
@@ -264,6 +264,7 @@
         }
         function updateSlider() {
             //{{mc@app: setPlaying(false) }}
+            console.log("Requesting Update")
             {{mc@app: requestUpdate() }}
             {{mc@app: requestDuration() }}
         }
