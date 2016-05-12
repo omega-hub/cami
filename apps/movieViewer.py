@@ -49,7 +49,8 @@ v = False
     # v.play()
 
 def setLooping(loop):
-    if v:
+    global v
+    if (v != False):
         # print "Accepted Command:"
         # print loop
         # print "Before:"
@@ -59,7 +60,8 @@ def setLooping(loop):
         # print v.isLooping()
 
 def setPlaying(play):
-    if v:
+    global v
+    if (v != False):
         print "Accepted Command:"
         print play
         print "Before:"
@@ -69,7 +71,9 @@ def setPlaying(play):
         print v.isPlaying()
 
 def seekToTime(time):
-    if v: 
+    global v
+    print v
+    if (v != False):
         print "AttemptingSeek to time:"
         print time
         timeBef = v.getCurrentTime()
@@ -80,27 +84,26 @@ def seekToTime(time):
         print "Time after:"
         print timeBef
 
-def restart():
-    if v:
-        v.seekToTime(0)
-
 def requestUpdate():
-    if v:
+    global v
+    if (v != False):
         time = v.getCurrentTime()
-        print time
+        #print time
         calljs('updateTime', time)
     else:
         return 0
 
 def requestDuration():
-    if v:
+    global v
+    if (v != False):
         duration = v.getDuration()
-        print duration
+        #print duration
         calljs('updateDuration', duration)
     else:
         return 0
 
 def InitializeMovieList():
+
     print "initializing movie list with localDebug set to: " + str(localDebug)
     if (localDebug):
         os.chdir("../data")
@@ -186,9 +189,7 @@ def LoadMovie(MovieName):
         path = "../data/" + MovieName
     else:
         path = "/fastdata/opt/data/Videos/" + MovieName
-    if (not isMaster()):
-        print "Loading movie"
-        print v
+    if (True):
         global v, img
         v = VideoStream()
         v.open(path)
@@ -198,4 +199,7 @@ def LoadMovie(MovieName):
         img.setAutosize(False) # Inserting these resulted in it not working
         img.setSize(uim.getUi().getSize())
         v.play()
-        print v
+        duration = v.getDuration()
+        print "Sending discovered duration: "
+        print duration
+        calljs('updateDuration',duration)

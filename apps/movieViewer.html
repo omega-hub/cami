@@ -101,7 +101,7 @@
             <div id="div2"/> Pause </div>
         </button>
 
-        <button type="button" id="restart"data-inline="true" onClick='restart()'>Restart</button>
+        <button type="button" id="restart"data-inline="true" onClick='doRestart()'>Restart</button>
         <button type="button" id="loop"data-inline="true" onClick='loop()'>Loop</button>
         Time : <span id="cMinutes">0</span>:<span id="cSeconds">00</span> / <span id="fMinutes">0</span>:<span id="fSeconds">00</span> 
     </div>
@@ -133,7 +133,7 @@
     $(document).on('pageshow','#movie-page', function(e,data){ 
         $('#main-content').css('margin-top',($(window).height() - $('[data-role=header]').height() - $('[data-role=footer]').height() - $('#index-content').outerHeight())/2);
     })
-   $("#play").hide();
+    $("#play").hide();
 
     $("#play").on('click', function() {
     $("#play").hide();
@@ -151,7 +151,7 @@
     });
         porthole.connected = function() {
         	{{py startApplication(%client_id%, 'movieViewer') }}
-            porthole.call("startApplication(%client_id%, 'hello')")
+            //porthole.call("startApplication(%client_id%, 'hello')")
         }
         //$(document).ready(function () {}
         var playButton = document.getElementById("play-pause");
@@ -163,18 +163,22 @@
         var videoLength = 0
         var currentTime = 0
         var seekTime = 0
-        var looping = true
+        var looping = false
+        var isLoading = false
+        var lastGoodTime = 0
         var playing = true
         var startedSeeking = false
+        var videoLoaded = false
         $(document).on("pageinit","#movie-page",function(){
             // PLACE ALL YOU EVENTS CODE HERE e.g.
             console.log("page init")
             $( "#slider" ).on( "slidestart", function( event, ui ) {seekStart(event,ui)} );
             $( "#slider" ).on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
+            $( "#slider").hide();
             $( "#slider").slider() ;
         })
         
-        onVideoLoad(135)
+        //onVideoLoad(0)
         // function pause(event) {
         //     console.log("Pause Button")
         // }
@@ -194,10 +198,12 @@
             seeking = false
         }
 
-        function restart(event) {
+        function doRestart(event) {
             console.log("Reset Button")
-            //{{mc@app: seekToTime(0) }}
-            //{{mc@app: setPlaying(false) }}
+            lastGoodTime = currentTime
+            showLoading(true)
+            {{mc@app: seekToTime(0) }}
+            //{{mc@app: setPlaying(False) }}
             videoPlaying = false;
         }
         function loop(event) {
@@ -249,29 +255,35 @@
                 // currentSeek = $('#slider').slider("option","value")
                 // console.log(currentSeek
 
-            } else {
+            } else if (videoLoaded == true){
                 if (startedSeeking == true) {
                     startedSeeking = false
+                    lastGoodTime = currentTime
+                    showLoading(true)
                 	{{mc@app: seekToTime(%seekTime%) }}
                     if (playing) {
                         {{mc@app: setPlaying(True) }}
                     } 
                 }
                 updateSlider()
+                if (isLoading && currentTime != lastGoodTime) {
+                    showLoading(false)
+                }
             }
             //$('#slider').parent().page();
             // $('#slider').slider("refresh")
         }
         function updateSlider() {
             //{{mc@app: setPlaying(false) }}
-            console.log("Requesting Update")
             {{mc@app: requestUpdate() }}
-            {{mc@app: requestDuration() }}
+            //{{mc@app: requestDuration() }}
         }
         function setSliderTime(time) {
             $('#slider').val(time).slider("refresh");
         }
         function onVideoLoad(vidLength) {
+            looping = false
+            loop()
             videoLength = vidLength
             var minutes = Math.floor(videoLength/60)
             $("#fMinutes").html(minutes);
@@ -283,46 +295,28 @@
             } else {
                 $("#fSeconds").html(seconds)
             }
+            videoLoaded = true
             //$("#fSeconds").text("seconds")
         }
 
-       //  function updateVideoData(isPlaying,isLooping,currenttime) {
-       //  	if (playing != isPlaying) {
-       //  		$("#play").hide();
-
-			    // $("#play").on('click', function() {
-			    // $("#play").hide();
-			    // $("#pause").show();
-			    // });
-
-			    // $("#pause").on('click', function() {
-			    // $("#pause").hide();
-			    // $("#play").show();
-			    // });
-
-			    // $("#restart").on('click', function() {
-			    // $("#play").hide();
-			    // $("#pause").show();
-			    // });
-       //  	}
-       //  	if (isLooping) {
-
-       //      }
-       //  }
        function updateTime(time) {
-            percent = (time/videoLength) * 100
-            percent = Math.floor(percent)
-            $("#cMinutes").html(Math.floor(time/60));
-            var seconds 
-            seconds = Math.floor(time % 60)
-            if (seconds < 10) {
-                $("#cSeconds").html("0" + seconds)
-            } else {
-                $("#cSeconds").html(seconds)
+            currentTime = time
+            if (!isLoading) {
+                percent = (time/videoLength) * 100
+                percent = Math.floor(percent)
+                $("#cMinutes").html(Math.floor(time/60));
+                var seconds 
+                seconds = Math.floor(time % 60)
+                if (seconds < 10) {
+                    $("#cSeconds").html("0" + seconds)
+                } else {
+                    $("#cSeconds").html(seconds)
+                }
+                setSliderTime(percent)
             }
-            setSliderTime(percent)
        }
        function updateDuration(time) {
+        //console.log("Updating Duration")
         videoLength = time
         onVideoLoad(videoLength)
        }
@@ -336,8 +330,8 @@
             lastFolder = "defaultFolder"
             while (i < n)
             {
-                console.log("lastfolder:" + lastFolder)
-                console.log("currentFolder:" + ml[i][0])
+               // console.log("lastfolder:" + lastFolder)
+                //console.log("currentFolder:" + ml[i][0])
                 if (ml[i][0] != lastFolder){
                     j = j + 1
                     var content = "<div data-role='collapsible' id='set" + j + "'><h4>" + ml[i][0].substring(0,(ml[i][0].length)-1) + "</h4><div id='pageButtons" + j + "'></div></div>";
@@ -361,6 +355,7 @@
             sensitivity = s
         }
 
+
         //creating a jquery function for always occuring events.
        function movieButtonClicked(event) {
 
@@ -377,6 +372,24 @@
             //var newString = "my new String"
            // $('#'+panelID+ ' .panel-body').html(newString);
            //resetImage();
+        }
+
+        function showLoading(willShow) {
+            if (willShow && !isLoading) {
+                    $.mobile.loading( 'show', {
+                        text: "Seeking Video",
+                        textVisible: true,
+                        theme: "b",
+                        textonly: false,
+                        icon:"ajax-loader.gif",
+                        //html: html
+                    });
+                isLoading = true
+            } else if (!willShow) {
+                console.log("trying to hide")
+                isLoading = false
+                $.mobile.loading( "hide" );
+            }
         }
     </script>
 </body>
