@@ -9,14 +9,23 @@
 
 from omega import *
 from cyclops import *
+import volrend
 import Manipulator
 import os, glob,math, time
+
+vr = volrend.initialize()
+vr.loadTiff('volrend/rabbit.tif')
+
+# move camera back a bit
+getDefaultCamera().translate(Vector3(0, 0, 20), Space.Local)
+getDefaultCamera().getController().setSpeed(10)
 getDefaultCamera().setBackgroundColor(Color('black'))
+
 camera = getDefaultCamera()
 getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/dof.xml')
 
-ModelDict = {}
-currentModelName = "noModel"
+#ModelDict = {}
+#currentModelName = "rabbit"
 l1 = Light.create()
 l1.setPosition(-0.1, 3, 0)
 l1.setColor(Color(1, 1, 0.8, 1))
@@ -40,18 +49,13 @@ l2.setShadow(sm2)
 
 ScrollSpeed = 0.1
 obj = None
-localDebug = True
+#localDebug = True
 
 # Utility function to send data to the web client
 def calljs(methodname, data):
     mc = getMissionControlClient()
     if(mc != None):
-        mc.postCommand('@server::calljs ' + methodname + ' ' + str(data))
-    
-def setLocalDebugging(debugMode):
-    global localDebug
-    localDebug = debugMode
-    
+        mc.postCommand('@server::calljs ' + methodname + ' ' + str(data))    
 
 def InitializeModelList():
     # if (localDebug):
@@ -121,15 +125,15 @@ def LoadModel(modelName):
     
     
 def toggleModelVisible(modelName, visible):
-    parent = getScene()
-    if visible:
-        print "toggling to visible"
-        ModelDict[modelName].setVisible(True)
-        #parent.addChild(ModelDict[modelName])
-    else:
-        ModelDict[modelName].setVisible(False)
-        #parent.removeChildByRef(ModelDict[modelName])
-        print "toggling to invisible"
+    # parent = getScene()
+    # if visible:
+    #     print "toggling to visible"
+    #     ModelDict[modelName].setVisible(True)
+    #     #parent.addChild(ModelDict[modelName])
+    # else:
+    #     ModelDict[modelName].setVisible(False)
+    #     #parent.removeChildByRef(ModelDict[modelName])
+    #     print "toggling to invisible"
 
 def onModelLoaded():
     # global obj
@@ -162,7 +166,7 @@ def setPan(x,y):
 def onRotate(dx,dy,dz):
     #print "inside on Rotate!"
     if currentModelName != "noModel":
-        currentModel = ModelDict[currentModelName]
+        currentModel = vr.node #ModelDict[currentModelName]
         currentModel.rotate(Vector3(0, 1, 0), math.radians(dx), Space.World)
         currentModel.rotate(Vector3(1, 0, 0), math.radians(dy), Space.World)
         currentModel.rotate(Vector3(0, 0, 1), math.radians(dz), Space.World)
@@ -192,8 +196,8 @@ def logPan(dx,dy,dz,numTouch):
 
 def adjustSlice(axis, start,end):
 	if (axis = "x"):
-		#vr.setSlice(start,end)
+		#vr.setSliceBoundX(start,end)
 	elif (axis = "y"):
-		#vr.setSlice(start,end)
+		#vr.setSliceBoundY(start,end)
 	elif (axis = "z")
-		#vr.setSlice(start,end)
+		#vr.setSliceBoundZ(start,end)

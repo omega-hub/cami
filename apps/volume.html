@@ -387,11 +387,12 @@
         });
         porthole.connected = function(event) {
             {{py startApplication(%client_id%, 'volume') }}
-            document.addEventListener("mousemove", onMouseMove);
-            document.addEventListener("mouseup", onMouseUp);
-            document.addEventListener("mousedown", onMouseDown);
-            document.addEventListener("keydown", onKeyDown);
-            document.addEventListener("keyup", onKeyUp);       }
+            // document.addEventListener("mousemove", onMouseMove);
+            // document.addEventListener("mouseup", onMouseUp);
+            // document.addEventListener("mousedown", onMouseDown);
+            // document.addEventListener("keydown", onKeyDown);
+            // document.addEventListener("keyup", onKeyUp);       
+        }
         
         //window.blockMenuHeaderScroll = true;
         $('body').on('touchmove', function(e) {
@@ -548,17 +549,20 @@
         var seekMaxY = 100
         var seekMinZ = 0
         var seekMaxZ = 100
+        var min = 0
+        var max = 100
         function onUpdate(event,ui) {
             requestAnimationFrame(onUpdate); 
             if (seeking == true) {
-                var min = $("#range-1a").val()
-                var max = $("#range-1b").val()
+                min = $("#range-1a").val()
+                max = $("#range-1b").val()
                 // console.log(min)
                 // console.log(max)
                 if (currentAxis == "x"){
                     //console.log("setting X")
                     XStart = min
                     XEnd = max
+
                 } else if (currentAxis == "y") {
                     //console.log("setting Y")
                     YStart = min
@@ -568,6 +572,7 @@
                     ZStart = min
                     ZEnd = max
                 }
+                {{py adjustSlice(%currentAxis%, %min/100.0%,%max/100.0% ) }}
             } else {
             }
         }
