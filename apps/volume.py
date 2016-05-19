@@ -25,7 +25,7 @@ camera = getDefaultCamera()
 getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/dof.xml')
 
 #ModelDict = {}
-#currentModelName = "rabbit"
+currentModelName = "rabbit"
 l1 = Light.create()
 l1.setPosition(-0.1, 3, 0)
 l1.setColor(Color(1, 1, 0.8, 1))
@@ -58,6 +58,7 @@ def calljs(methodname, data):
         mc.postCommand('@server::calljs ' + methodname + ' ' + str(data))    
 
 def InitializeModelList():
+    return False
     # if (localDebug):
     #     os.chdir("../data")
     # else:
@@ -85,7 +86,8 @@ def InitializeModelList():
     # print(numfolders)
     # calljs('createModelButtons', fileList)
 
- def onModelSelect(modelName):
+def onModelSelect(modelName):
+    return False
 #     print("Inside On Model Select")
 #     print(modelName)
 #     global currentModelName
@@ -109,6 +111,7 @@ def InitializeModelList():
         
     
 def LoadModel(modelName):
+    return False
     # if (localDebug):
     #     path = "../data/" + modelName
     # else:
@@ -125,6 +128,7 @@ def LoadModel(modelName):
     
     
 def toggleModelVisible(modelName, visible):
+    return False
     # parent = getScene()
     # if visible:
     #     print "toggling to visible"
@@ -136,6 +140,7 @@ def toggleModelVisible(modelName, visible):
     #     print "toggling to invisible"
 
 def onModelLoaded():
+    return False
     # global obj
     # obj = StaticObject.create("model")
     # obj.setPosition(0, 2, -8)
@@ -149,17 +154,25 @@ def onModelLoaded():
     # time.sleep(5)
     # calljs('noloading', ScrollSpeed)
     
-InitializeModelList()
+#InitializeModelList()
 print("initialized Model List")
 
 #Model Manipulation Functions:
 def setZoom(z):
     oldX = camera.getPosition().x
     oldY = camera.getPosition().y
+    print camera.getPosition().z
+    print z
     camera.setPosition(oldX,oldY,z)
 
 def setPan(x,y):
     #print "inside on Pan!!!!!!!!!!!!!!!"
+    oldX = camera.getPosition().x
+    oldY = camera.getPosition().y
+    print oldX
+    print oldY
+    print "oldX = " + str(x)
+    print "oldY = " + str(y)
     oldZ = camera.getPosition().z
     camera.setPosition(x,y ,oldZ)
 
@@ -194,10 +207,10 @@ def logPan(dx,dy,dz,numTouch):
     #print dz
     #print numTouch
 
-def adjustSlice(axis, start,end):
-	if (axis = "x"):
-		#vr.setSliceBoundX(start,end)
-	elif (axis = "y"):
-		#vr.setSliceBoundY(start,end)
-	elif (axis = "z")
-		#vr.setSliceBoundZ(start,end)
+def changeSlice(axis, start,end):
+	if (axis == 1):
+		vr.setSliceBoundX(start,end)
+	elif (axis == 2):
+		vr.setSliceBoundY(start,end)
+	elif (axis == 3):
+		vr.setSliceBoundZ(start,end)
