@@ -94,10 +94,10 @@
         <!-- <input type="range" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> -->
         <input  input type="number" data-role="none" name="slider" id="slider" value="0" min="0" max="100" data-theme="c"/>
         
-        <button type="button" id="play"data-inline="true"onClick='togglePlay()'>
+        <button type="button" id="play" data-inline="true"onClick='togglePlay()'>
             <div id="div1"> Play </div>
         </button>
-        <button type="button" id="pause"data-inline="true"onClick='togglePlay()'>
+        <button type="button" id="pause" data-inline="true"onClick='togglePlay()'>
             <div id="div2"/> Pause </div>
         </button>
 
@@ -113,19 +113,18 @@
             </div>
         </div>
 
-</div>
+        <div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
+            <form class="userform">
+                <h2>Instructions for Use</h2>
+                <hr class="instructions">
+                    <h4>To Play/Pause:</h4> <p> Use the buttons on the bottom of the screen.</p>
+                    <h4>To Seek:</h4> <p> Move to a new place in the video with the slider, please be patient while the application processes your seek.</p> 
+                     <h4>To Restart:</h4> <p> Restart the movie by pressing the Restart button at the bottom of the screen.</p>
+                    <h4>To close the sidebars:</h4> <p> Tap on the main screen.</p>
+                </form>
+        </div><!-- /panel -->
 
-<div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
-    <form class="userform">
-        <h2>Instructions for Use</h2>
-        <hr class="instructions">
-            <h4>To Play/Pause:</h4> <p> Use the buttons on the bottom of the screen.</p>
-            <h4>To Seek:</h4> <p> Move to a new place in the video with the slider or enter the percentage of the full video you would like to jump to.</p> 
-             <h4>To Restart:</h4> <p> Restart the movie by pressing the Restart button at the bottom of the screen.</p>
-            <h4>To close the sidebars:</h4> <p> Tap on the main screen.</p>
-
-        </form>
-</div><!-- /panel -->
+    </div>
 
     <!-- <input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1"> -->
   <!-- Video -->
@@ -154,6 +153,26 @@
             //porthole.call("startApplication(%client_id%, 'hello')")
         }
         //$(document).ready(function () {}
+        var isMobile = {
+            Android: function() {
+                return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function() {
+                return navigator.userAgent.match(/BlackBerry/i);
+            },
+            iOS: function() {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function() {
+                return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function() {
+                return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function() {
+                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+            }
+        };
         var playButton = document.getElementById("play-pause");
         var restart = document.getElementById("restart");
         //$(playButton).css({ width: '300px', 'padding-top': '10px', 'padding-bottom': '10px' });
@@ -177,7 +196,14 @@
             $( "#slider").hide();
             $( "#slider").slider() ;
         })
-        
+        $(document).on('visibilitychange', function(){
+            if (isMobile.any()) {
+                {{mc@app: print "visibilityChanged" }}
+              //porthole.socket.close()
+              {{py onClientDisconnected(%client_id%) }}
+            }
+            }
+        )
         //onVideoLoad(0)
         // function pause(event) {
         //     console.log("Pause Button")

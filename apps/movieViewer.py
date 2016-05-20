@@ -185,21 +185,32 @@ def onMovieSelect(MovieName):
         
     
 def LoadMovie(MovieName):
+    global v, img
     if (localDebug):
         path = "../data/" + MovieName
     else:
         path = "/fastdata/opt/data/Videos/" + MovieName
-    if (True):
-        global v, img
-        v = VideoStream()
-        v.open(path)
-        #v.open('/opt/data/Videos/4ktest.mp4')
-        #img = Image.create(uim.getUi())
-        img.setData(v.getPixels())
-        img.setAutosize(False) # Inserting these resulted in it not working
-        img.setSize(uim.getUi().getSize())
-        v.play()
-        duration = v.getDuration()
-        print "Sending discovered duration: "
-        print duration
-        calljs('updateDuration',duration)
+    if (v):
+        print "Video Module detected, to delete module"
+    v = VideoStream()
+    v.open(path)
+    #v.open('/opt/data/Videos/4ktest.mp4')
+    #img = Image.create(uim.getUi())
+    # print "Getting width: " + str(v.getPixels().getWidth())
+    # print "Getting height: " + str(v.getPixels().getHeight())
+    # print "ratio = " + str(v.getPixels().getWidth()/v.getPixels().getHeight())
+    ratio = (v.getPixels().getWidth()/v.getPixels().getHeight())
+    # print "ratio found to be: " + str(ratio)
+    # print (ratio > (16/9))
+    if (ratio > (16/9)):
+        img.setStereo(True)
+    else:
+        img.setStereo(False)
+    img.setData(v.getPixels())
+    img.setAutosize(False) # Inserting these resulted in it not working
+    img.setSize(uim.getUi().getSize())
+    v.play()
+    duration = v.getDuration()
+    print "Sending discovered duration: "
+    print duration
+    calljs('updateDuration',duration)
