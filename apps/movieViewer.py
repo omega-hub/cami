@@ -62,27 +62,27 @@ def setLooping(loop):
 def setPlaying(play):
     global v
     if (v != False):
-        print "Accepted Command:"
-        print play
-        print "Before:"
-        print v.isPlaying()
+        # print "Accepted Command:"
+        # print play
+        # print "Before:"
+        # print v.isPlaying()
         v.setPlaying(play)
-        print "After:"
-        print v.isPlaying()
+        # print "After:"
+        # print v.isPlaying()
 
 def seekToTime(time):
     global v
     print v
     if (v != False):
-        print "AttemptingSeek to time:"
-        print time
+        # print "AttemptingSeek to time:"
+        # print time
         timeBef = v.getCurrentTime()
-        print "Time before:"
-        print timeBef
+        # print "Time before:"
+        # print timeBef
         v.seekToTime(time)
         timeBef = v.getCurrentTime()
-        print "Time after:"
-        print timeBef
+        # print "Time after:"
+        # print timeBef
 
 def requestUpdate():
     global v
@@ -174,7 +174,7 @@ def onMovieSelect(MovieName):
     global currentMovieName
     
     if MovieName == currentMovieName:
-        print "Current Movie is same as selected Movie"
+        #print "Current Movie is same as selected Movie"
         calljs('noloading', ScrollSpeed)
     else:
         #TODO: Hide current Movie
@@ -192,6 +192,7 @@ def LoadMovie(MovieName):
         path = "/fastdata/opt/data/Videos/" + MovieName
     if (v):
         print "Video Module detected, to delete module"
+        v.close()
     v = VideoStream()
     v.open(path)
     #v.open('/opt/data/Videos/4ktest.mp4')
