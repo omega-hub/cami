@@ -17,7 +17,7 @@ vr = volrend.initialize()
 vr.loadTiff('volrend/rabbit.tif')
 
 # move camera back a bit
-getDefaultCamera().translate(Vector3(0, 0, 20), Space.Local)
+getDefaultCamera().translate(Vector3(0, 0, 10), Space.Local)
 getDefaultCamera().getController().setSpeed(10)
 getDefaultCamera().setBackgroundColor(Color('black'))
 
@@ -50,7 +50,7 @@ l2.setShadow(sm2)
 ScrollSpeed = 0.1
 obj = None
 #localDebug = True
-
+pyresetOrientation()
 # Utility function to send data to the web client
 def calljs(methodname, data):
     mc = getMissionControlClient()
@@ -169,10 +169,10 @@ def setPan(x,y):
     #print "inside on Pan!!!!!!!!!!!!!!!"
     oldX = camera.getPosition().x
     oldY = camera.getPosition().y
-    print oldX
-    print oldY
-    print "oldX = " + str(x)
-    print "oldY = " + str(y)
+    # print oldX
+    # print oldY
+    # print "oldX = " + str(x)
+    # print "oldY = " + str(y)
     oldZ = camera.getPosition().z
     camera.setPosition(x,y ,oldZ)
 
@@ -187,15 +187,24 @@ def onRotate(dx,dy,dz):
 def onZoom(delta):
     #print "inside On Zoom"
     #print delta
+    print camera.getPosition.z()
+    print delta
     camera.translate(0,0,delta,Space.World)
     if (camera.getPosition().z < -10):
         camera.translate(0,0,delta ,Space.World)
-    elif (camera.getPosition().z > 15 ):
+    elif (camera.getPosition().z > 20 ):
         camera.translate(0,0,-delta ,Space.World)
 
 def pyresetOrientation(dummy):
     if currentModelName != "noModel":
-        currentModel = ModelDict[currentModelName]
+        currentModel = vr.node #ModelDict[currentModelName]
+        print camera.getPosition().x
+        print camera.getPosition().y
+        print camera.getPosition().z
+        camera.setPosition(0,0,10)
+        # print currentModel.getPosition().x
+        # print currentModel.getPosition().y
+        # print currentModel.getPosition().z
         currentModel.resetOrientation()
     print("in .py resetOrientation")
     

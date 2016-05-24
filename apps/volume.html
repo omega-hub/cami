@@ -11,7 +11,7 @@
     <script src='js/THREEx.WindowResize.js'></script>
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 
-        <style>
+    <style>
     .button{
     background-color: #e8e9f0; 
     border: 1px black;
@@ -175,7 +175,26 @@
             //$("#cutSlider").slider( {range: true})
             setAX()
         })
-
+        var isMobile = {
+            Android: function() {
+                return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function() {
+                return navigator.userAgent.match(/BlackBerry/i);
+            },
+            iOS: function() {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function() {
+                return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function() {
+                return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function() {
+                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+            }
+        };
         $(document).on( "click", ".button", function() {
                 var $this = $( this ),
                 html = $this.jqmData( "html" ) || "";
@@ -193,6 +212,16 @@
         .on( "click", ".hide-page-loading-msg", function() {
           $.mobile.loading( "hide" );
         });
+
+        $(document).on('visibilitychange', function(){
+            if (isMobile.any()) {
+                {{mc@app: print "visibilityChanged closing video" }}
+                {{mc@app: closeMovie() }}
+              //porthole.socket.close()
+              {{py onClientDisconnected(%client_id%) }}
+            }
+            }
+        )
         // create a simple instance
         // by default, it only adds horizontal recognizers
         var mc = new Hammer(myElement);
@@ -216,7 +245,7 @@
         isZooming = false;
         camX = 0;
         camY = 0;
-        camZ = 20;
+        camZ = 10;
         camX3JS = 0;
         camY3JS = 0;
         camZ3JS = 0;
@@ -224,7 +253,6 @@
         rotateDist = 0;
         dummyhtml = 0;
         navOpen = false;
-        setSensitivity(0.8)
         var currentAxis = 1
 
         seeking = false
@@ -234,7 +262,7 @@
         var YEnd = 100
         var ZStart = 0
         var ZEnd = 100
-
+        setSensitivity(0.8)
          mc.on("panstart", function(ev) {
             if (!navOpen){
                 ev.preventDefault()
@@ -315,6 +343,8 @@
                 {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
                 if ((numTouch >= 2 && !isZooming && !isRotating) || shiftDown) {
                     console.log("panning camera")
+                    dx = dx * 0.5
+                    dy = dy * 0.5
                     var limit = (5 + (camZ/3))
                     var limit3JS = (5 + (camZ))
                     var movSpeedX = (dx/(16-(camZ))) 
@@ -343,8 +373,8 @@
                     }else {
                         rotY = Math.min(15,rotY)
                     }
-                    {{mc@app: onRotate(%-rotX%, %-rotY%,0) }}
-                    onRotate3JS(-rotX,-rotY,0)
+                    {{mc@app: onRotate(%rotX%, %rotY%,0) }}
+                    onRotate3JS(rotX,rotY,0)
                 }
             }
         });
@@ -386,6 +416,7 @@
             isZooming = false
         });
         porthole.connected = function(event) {
+            console.log("starting App")
             {{py startApplication(%client_id%, 'volume') }}
             // document.addEventListener("mousemove", onMouseMove);
             // document.addEventListener("mouseup", onMouseUp);
