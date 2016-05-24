@@ -39,11 +39,11 @@ uim = UiModule.createAndInitialize()
 
 # setUpdateFunction(onUpdate)
 #toggleStereo()
-
+v = None
 #getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/motionblur.xml')
 if( not isMaster()):
     uim = UiModule.createAndInitialize()
-
+    global v
     v = VideoStream()
 
     v.open('/opt/data/Videos/Screensaver.mov')
@@ -81,8 +81,9 @@ def startApplication(clientId, appName):
     # 'app' is the application identifier, we can use it to send mission controlling
     # messages to the app using it.
     print("this is Inside my version of the function")
+    broadcastCommand('hideLauncher()')
     mc.spawn('app', 1, appName + '.py', 'default.cfg')
-    hideLauncher()
+    
 
 def onClientConnected(clientId):
     print "client connected: " + clientId
@@ -95,17 +96,19 @@ def onClientDisconnected(clientId):
     if(clientId == appControllerClient):
         print "stopping app: " + clientId
         mc.postCommand('@app: :q')
-        showLauncher()
+        broadcastCommand('showLauncher()')
     # Always force a refresh of the html/js files, so we can quickly test
     # code changes by refreshing an app web page.
     #ps.clearCache()    
         
         
 def hideLauncher():
-    setTilesEnabled(0, 0, 1, 1, False)
+    setTilesEnabled(0, 0, 5, 5, False)
+    if(not isMaster()): v.setPlaying(False)
     
 def showLauncher():
-    setTilesEnabled(0, 0, 1, 1, True)
+    setTilesEnabled(0, 0, 5, 5, True)
+    if(not isMaster()): v.setPlaying(True)
     
 # Event function: forward event to connected mission control clients
 def onEvent():
