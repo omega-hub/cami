@@ -15,9 +15,10 @@ import os, glob,math, time
 
 vr = volrend.initialize()
 vr.loadTiff('volrend/rabbit.tif')
+vr.node.setPosition(0,0,-14)
 
 # move camera back a bit
-getDefaultCamera().translate(Vector3(0, 0, 10), Space.Local)
+getDefaultCamera().translate(Vector3(0, 0, 0), Space.Local)
 getDefaultCamera().getController().setSpeed(10)
 getDefaultCamera().setBackgroundColor(Color('black'))
 
@@ -50,7 +51,6 @@ l2.setShadow(sm2)
 ScrollSpeed = 0.1
 obj = None
 #localDebug = True
-pyresetOrientation()
 # Utility function to send data to the web client
 def calljs(methodname, data):
     mc = getMissionControlClient()
@@ -201,13 +201,15 @@ def pyresetOrientation(dummy):
         print camera.getPosition().x
         print camera.getPosition().y
         print camera.getPosition().z
-        camera.setPosition(0,0,10)
+        camera.setPosition(0,0,-4)
         # print currentModel.getPosition().x
         # print currentModel.getPosition().y
         # print currentModel.getPosition().z
         currentModel.resetOrientation()
     print("in .py resetOrientation")
-    
+
+pyresetOrientation(0)
+
 def logPan(dx,dy,dz,numTouch):
     return 0
     #print "Pan Gesture detected."

@@ -245,7 +245,7 @@
         isZooming = false;
         camX = 0;
         camY = 0;
-        camZ = 10;
+        camZ = 0;
         camX3JS = 0;
         camY3JS = 0;
         camZ3JS = 0;
@@ -397,7 +397,7 @@
             if (delta > 0) {
                 delta = delta * 1.5
             }
-            camZ = Math.min(Math.max(camZ - delta,-11),20)
+            camZ = Math.min(Math.max(camZ - delta,-11),0)
             camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
             {{mc@app: setZoom(%camZ%)}}
             setZoom3JS(camZ3JS)
@@ -445,7 +445,7 @@
                 e.preventDefault();
                 var e = window.event || e; // old IE support
                 delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
-                camZ = Math.min(Math.max(camZ - delta,-10),20)
+                camZ = Math.min(Math.max(camZ - delta,-10),0)
                 camZ3JS = Math.min(Math.max(camZ3JS - (delta/3),-3.5),1)
                 {{mc@app: setZoom(%camZ%)}}
                 setZoom3JS(camZ3JS)
@@ -480,7 +480,7 @@
         {
             camX=0;
             camY=0;
-            camZ=0;
+            camZ=-4;
 
             camX3JS=0;
             camY3JS=0;
