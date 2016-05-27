@@ -175,7 +175,7 @@ def onMovieSelect(MovieName):
     
     if MovieName == currentMovieName:
         #print "Current Movie is same as selected Movie"
-        calljs('noloading', ScrollSpeed)
+        calljs('noloading', 0)
     else:
         #TODO: Hide current Movie
         #if currentMovieName != "noMovie":
@@ -215,3 +215,8 @@ def LoadMovie(MovieName):
     print "Sending discovered duration: "
     print duration
     calljs('updateDuration',duration)
+
+def closeMovie():
+    if (v):
+        print "Video Module detected, to delete module"
+        v.close()

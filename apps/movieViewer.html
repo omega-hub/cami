@@ -198,7 +198,8 @@
         })
         $(document).on('visibilitychange', function(){
             if (isMobile.any()) {
-                {{mc@app: print "visibilityChanged" }}
+                {{mc@app: print "visibilityChanged closing video" }}
+                {{mc@app: closeMovie() }}
               //porthole.socket.close()
               {{py onClientDisconnected(%client_id%) }}
             }
