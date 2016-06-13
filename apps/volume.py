@@ -10,7 +10,6 @@
 from omega import *
 from cyclops import *
 import volrend
-import Manipulator
 import os, glob,math, time
 
 vr = volrend.initialize()
@@ -23,7 +22,7 @@ getDefaultCamera().getController().setSpeed(10)
 getDefaultCamera().setBackgroundColor(Color('black'))
 
 camera = getDefaultCamera()
-getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/dof.xml')
+#getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/dof.xml')
 
 #ModelDict = {}
 currentModelName = "rabbit"
@@ -31,22 +30,22 @@ l1 = Light.create()
 l1.setPosition(-0.1, 3, 0)
 l1.setColor(Color(1, 1, 0.8, 1))
 l1.setAmbient(Color(0,0,0.1,1))
-sm = ShadowMap()
-sm.setTextureSize(1024,1024)
-sm.setSoft(True)
-#sm.setSoftShadowParameters(0.005, 5)
-l1.setShadow(sm)
+# sm = ShadowMap()
+# sm.setTextureSize(1024,1024)
+# sm.setSoft(True)
+# #sm.setSoftShadowParameters(0.005, 5)
+# l1.setShadow(sm)
 l1.setLightType(LightType.Spot)
 l1.setLightDirection(Vector3(0, 0, -1))
 
 l2 = Light.create()
 l2.setPosition(2.5, 3, 0)
 l2.setColor(Color(0.8, 0.8, 1, 1))
-sm2 = ShadowMap()
-sm2.setTextureSize(1024,1024)
-sm2.setSoft(True)
-#sm2.setSoftShadowParameters(0.005, 5)
-l2.setShadow(sm2)
+# sm2 = ShadowMap()
+# sm2.setTextureSize(1024,1024)
+# sm2.setSoft(True)
+# #sm2.setSoftShadowParameters(0.005, 5)
+# l2.setShadow(sm2)
 
 ScrollSpeed = 0.1
 obj = None
