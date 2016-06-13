@@ -215,7 +215,7 @@
 
         $(document).on('visibilitychange', function(){
             if (isMobile.any()) {
-                {{mc@app: print "visibilityChanged closing video" }}
+                {{mc@volume: print "visibilityChanged closing video" }}
               //porthole.socket.close()
               {{py onClientDisconnected(%client_id%) }}
             }
@@ -339,7 +339,7 @@
                 startMouseX = ev.center.x 
                 startMouseY = ev.center.y
                 numTouch = ev.pointers.length
-                {{mc@app: logPan(%dx%, %dy%,0,%numTouch%) }}
+                {{mc@volume: logPan(%dx%, %dy%,0,%numTouch%) }}
                 if ((numTouch >= 2 && !isZooming && !isRotating) || shiftDown) {
                     console.log("panning camera")
                     dx = dx * 0.5
@@ -350,7 +350,7 @@
                     var movSpeedY = (dy/(16-(camZ)))
                     camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
                     camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
-                    {{mc@app: setPan(%camX%, %camY%) }}
+                    {{mc@volume: setPan(%camX%, %camY%) }}
                     // camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
                     // camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
                     camX3JS = camX3JS - movSpeedX/4
@@ -372,7 +372,7 @@
                     }else {
                         rotY = Math.min(15,rotY)
                     }
-                    {{mc@app: onRotate(%rotX%, %rotY%,0) }}
+                    {{mc@volume: onRotate(%rotX%, %rotY%,0) }}
                     onRotate3JS(rotX,rotY,0)
                 }
             }
@@ -398,13 +398,13 @@
             }
             camZ = Math.min(Math.max(camZ - delta,-11),0)
             camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
-            {{mc@app: setZoom(%camZ%)}}
+            {{mc@volume: setZoom(%camZ%)}}
             setZoom3JS(camZ3JS)
             var limit = (5 + (camZ/3))
             var limit3JS = (5 + (camZ3JS))
             // camX = Math.min(Math.max(camX,-limit),limit)
             // camY = Math.min(Math.max(camY,-limit),limit)
-            // {{mc@app: setPan(%camX%, %camY%) }}
+            // {{mc@volume: setPan(%camX%, %camY%) }}
             if (camZ > -5.0) {
                 // camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
                 // camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
@@ -446,13 +446,13 @@
                 delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
                 camZ = Math.min(Math.max(camZ - delta,-10),0)
                 camZ3JS = Math.min(Math.max(camZ3JS - (delta/3),-3.5),1)
-                {{mc@app: setZoom(%camZ%)}}
+                {{mc@volume: setZoom(%camZ%)}}
                 setZoom3JS(camZ3JS)
                 var limit = (5 + (camZ/3))
                 var limit3JS = (5 + (camZ3JS))
                 // camX = Math.min(Math.max(camX,-limit),limit)
                 // camY = Math.min(Math.max(camY,-limit),limit)
-                //{{mc@app: setPan(%camX%, %camY%) }}
+                //{{mc@volume: setPan(%camX%, %camY%) }}
                 if (camZ > -5.0) {
                     // camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
                     // camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
@@ -484,13 +484,13 @@
             camX3JS=0;
             camY3JS=0;
             camZ3JS=0;
-            {{mc@app: setPan(%camX%, %camY%) }}
+            {{mc@volume: setPan(%camX%, %camY%) }}
             setPan3JS(camX,camY)
-            {{mc@app: setZoom(%camZ%)}}
+            {{mc@volume: setZoom(%camZ%)}}
             setZoom3JS(camZ3JS)
 
             resetOrientation3JS()
-            {{mc@app: pyresetOrientation(%dummyhtml%)}}
+            {{mc@volume: pyresetOrientation(%dummyhtml%)}}
 
         }
 
@@ -565,7 +565,7 @@
             event.target.path = path
             console.log(event.target.value)
             console.log(event.target.id)
-            {{mc@app: onModelSelect("%event.target.path%" + "%event.target.value%") }}
+            {{mc@volume: onModelSelect("%event.target.path%" + "%event.target.value%") }}
             resetImage(); 
         }
         function seekEnd(event) {
@@ -603,7 +603,7 @@
                     ZEnd = max
                 }
                 console.log("changing slices")
-                {{mc@app: changeSlice(%currentAxis%, %min/100.0%,%max/100.0% ) }}
+                {{mc@volume: changeSlice(%currentAxis%, %min/100.0%,%max/100.0% ) }}
             } else {
             }
         }

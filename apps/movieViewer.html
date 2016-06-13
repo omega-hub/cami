@@ -178,6 +178,7 @@
         //$(playButton).css({ width: '300px', 'padding-top': '10px', 'padding-bottom': '10px' });
         //creating a jquery function for always occuring events.
         var videoPlaying = false
+        var appName = 'modelViewer'
         var seeking = false
         var videoLength = 0
         var currentTime = 0
@@ -198,8 +199,8 @@
         })
         $(document).on('visibilitychange', function(){
             if (isMobile.any()) {
-                {{mc@app: print "visibilityChanged closing video" }}
-                {{mc@app: closeMovie() }}
+                {{mc@movieViewer: print "visibilityChanged closing video" }}
+                {{mc@movieViewer: closeMovie() }}
               //porthole.socket.close()
               {{py onClientDisconnected(%client_id%) }}
             }
@@ -212,16 +213,16 @@
 
         function seekStart(event) {
             console.log("Seek Start")
-            //{{mc@app: setPlaying(false) }}
+            //{{mc@movieViewer: setPlaying(false) }}
             seeking = true
         }
 
         function seekEnd(event) {
             console.log("Seek End")
-            //{{mc@app: setPlaying(videoPlaying) }}
+            //{{mc@movieViewer: setPlaying(videoPlaying) }}
             currentSeek = $('#slider').val()
             //console.log(currentSeek)
-            //{{mc@app: seekToTime(currentSeek) }}
+            //{{mc@movieViewer: seekToTime(currentSeek) }}
             seeking = false
         }
 
@@ -229,8 +230,8 @@
             console.log("Reset Button")
             lastGoodTime = currentTime
             showLoading(true)
-            {{mc@app: seekToTime(0) }}
-            //{{mc@app: setPlaying(False) }}
+            {{mc@movieViewer: seekToTime(0) }}
+            //{{mc@movieViewer: setPlaying(False) }}
             videoPlaying = false;
         }
         function loop(event) {
@@ -251,9 +252,9 @@
             looping = !looping
             console.log(looping)
             if (looping) {
-            	{{mc@app: setLooping(True) }}
+            	{{mc@movieViewer: setLooping(True) }}
             } else {
-            	{{mc@app: setLooping(False) }}
+            	{{mc@movieViewer: setLooping(False) }}
             }
         }
         function togglePlay(event) {
@@ -262,9 +263,9 @@
             playing = !playing
             
             if (playing) {
-            	{{mc@app: setPlaying(True) }}
+            	{{mc@movieViewer: setPlaying(True) }}
             } else {
-            	{{mc@app: setPlaying(False) }}
+            	{{mc@movieViewer: setPlaying(False) }}
             }
         }
         function select(event) {
@@ -275,7 +276,7 @@
             requestAnimationFrame(onUpdate); 
             if (seeking == true) {
                 currentSeek = $('#slider').val()//$("#video-controls").slider( "option", "value" );
-                {{mc@app: setPlaying(False) }}
+                {{mc@movieViewer: setPlaying(False) }}
                 startedSeeking = true
                 seekTime = ((currentSeek /100) * videoLength)
                 //console.log(currentSeek)
@@ -287,9 +288,9 @@
                     startedSeeking = false
                     lastGoodTime = currentTime
                     showLoading(true)
-                	{{mc@app: seekToTime(%seekTime%) }}
+                	{{mc@movieViewer: seekToTime(%seekTime%) }}
                     if (playing) {
-                        {{mc@app: setPlaying(True) }}
+                        {{mc@movieViewer: setPlaying(True) }}
                     } 
                 }
                 updateSlider()
@@ -301,9 +302,9 @@
             // $('#slider').slider("refresh")
         }
         function updateSlider() {
-            //{{mc@app: setPlaying(false) }}
-            {{mc@app: requestUpdate() }}
-            //{{mc@app: requestDuration() }}
+            //{{mc@movieViewer: setPlaying(false) }}
+            {{mc@movieViewer: requestUpdate() }}
+            //{{mc@movieViewer: requestDuration() }}
         }
         function setSliderTime(time) {
             $('#slider').val(time).slider("refresh");
@@ -392,7 +393,7 @@
             event.target.path = path
             console.log(event.target.value)
             console.log(event.target.id)
-            {{mc@app: onMovieSelect("%event.target.path%" + "%event.target.value%") }}
+            {{mc@movieViewer: onMovieSelect("%event.target.path%" + "%event.target.value%") }}
 
             //$('#'+panelID).toggle(); //you can concatenate strings with +.
             //use the '#' to gattret the object the id is referring to.

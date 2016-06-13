@@ -4,6 +4,9 @@ from oav import *
 import porthole
 
 uim = UiModule.createAndInitialize()
+AppDict = {}
+numApps = 0
+currApp = False
 #label = Label.create(uim.getUi())
 
 #label.setText('Hello Launcher')
@@ -75,14 +78,23 @@ if(isMaster()):
 addQuickCommand('calljs', "ps.sendjs(\"%1%({0})\".format(%2%), appControllerClient)", 2, 'call js on porthole clients')
 
 def startApplication(clientId, appName):
-    global appControllerClient
-    print "Preparing to Launch" + appName
+    global appControllerClient, numApps, AppDict, currApp
+    print "Preparing to Launch " + appName
     appControllerClient = clientId
     # 'app' is the application identifier, we can use it to send mission controlling
     # messages to the app using it.
-    print("this is Inside my version of the function")
+    if currApp:
+        hideApplication(currApp)
     broadcastCommand('hideLauncher()')
-    mc.spawn('app', 1, appName + '.py', 'default.cfg')
+    currApp = appName
+    if appName in AppDict:
+        print "Application already loaded, showing application"
+        showApplication(appName)
+    else:
+        numApps = numApps + 1
+        print "Spawning new instance of " + appName
+        mc.spawn(appName, numApps, appName + '.py', 'default.cfg')
+        AppDict[appName] = True
     
 
 def onClientConnected(clientId):
@@ -90,13 +102,18 @@ def onClientConnected(clientId):
     
 def onClientDisconnected(clientId):
     global appControllerClient
+    #print "Client for the following App disconnected: " + str(appName)
     # web client disconnected: stop application and go back to launcher.
     print appControllerClient
     print clientId
     if(clientId == appControllerClient):
-        print "stopping app: " + clientId
-        mc.postCommand('@app: :q')
+        print "hiding app: " + clientId
+        #hideApplication(appName)
+        # mc.postCommand('@app: :q')
         broadcastCommand('showLauncher()')
+
+
+
     # Always force a refresh of the html/js files, so we can quickly test
     # code changes by refreshing an app web page.
     #ps.clearCache()    
@@ -109,7 +126,21 @@ def hideLauncher():
 def showLauncher():
     setTilesEnabled(0, 0, 5, 5, True)
     if(not isMaster()): v.setPlaying(True)
+
+def showApplication(appName):
+    print "Showing application: " + str(appName)
+    if appName in AppDict:
+        mc.postCommand('@' + appName + ': setTilesEnabled(0, 0, 5, 5, True)')
+    else:
+        print "App: " + str(appName) + " not currently running. Starting New instance of app"
     
+def hideApplication(appName):
+    print "Hiding application: " + str(appName)
+    if appName in AppDict:
+        mc.postCommand('@' + appName + ': setTilesEnabled(0, 0, 5, 5, False)')
+    else:
+        print "App: " + str(appName) + " not currently running."
+
 # Event function: forward event to connected mission control clients
 def onEvent():
     e = getEvent()
