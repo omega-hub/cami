@@ -220,3 +220,7 @@ def closeMovie():
     if (v):
         print "Video Module detected, to delete module"
         v.close()
+
+def onReload():
+    print "Returning to Movie Viewer"
+    InitializeMovieList()

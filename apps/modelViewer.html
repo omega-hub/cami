@@ -28,6 +28,22 @@
     box-shadow: inset -.5px -1px 5px 0px black;
     }
 
+    .newButton{
+    background-color: #e8e9f0; 
+    border: 1px black;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    width:235px;
+    height: 45px;
+    font-size: 15px;
+    margin: 4px 2px;
+    border-radius: 1px;
+    float: center;
+    outline:none;
+    box-shadow: inset -.5px -1px 5px 0px black;
+    }
+
     div.hide { display:none; }
 
     div.show {  }
@@ -36,8 +52,38 @@
          border: 10px black;
     }
 
-    .button:active{
-      box-shadow: inset .5px 1px 5px 0px black;
+    .newButton:active{
+    	background-color: #8C8C8C;
+    	box-shadow: inset .5px 1px 5px 0px black;
+    }
+
+    .oldButton{
+    background-color: #2DBE46; 
+    border: 1px black;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    width:235px;
+    height: 45px;
+    font-size: 15px;
+    margin: 4px 2px;
+    border-radius: 1px;
+    float: center;
+    outline:none;
+    box-shadow: inset -.5px -1px 5px 0px black;
+    }
+
+    div.hide { display:none; }
+
+    div.show {  }
+
+    .image{
+         border: 10px black;
+    }
+
+    .oldButton:active{
+    	background-color: #196826;
+    	box-shadow: inset .5px 1px 5px 0px black;
     }
 
 h4 {
@@ -149,23 +195,42 @@ p{
             $( "#slider").slider() ;
         })
 
-$(document).on( "click", ".button", function() {
-        var $this = $( this ),
-        html = $this.jqmData( "html" ) || "";
-    
-    $.mobile.loading( 'show', {
-        text: "Loading Model",
-        textVisible: true,
-        theme: "b",
-        textonly: false,
-        icon:"ajax-loader.gif",
-        //html: html
-    });
-})
+		$(document).on( "click", ".newButton", function() {
+		    var $this = $( this ),
+		    html = $this.jqmData( "html" ) || "";
+		    
+		    $.mobile.loading( 'show', {
+		        text: "Loading Model",
+		        textVisible: true,
+		        theme: "b",
+		        textonly: false,
+		        icon:"ajax-loader.gif",
+		        //html: html
+		    });
+		    $this.className = "oldButton"
+		})
 
-.on( "click", ".hide-page-loading-msg", function() {
-  $.mobile.loading( "hide" );
-});
+		$(document).on( "click", ".oldButton", function() {
+		    var $this = $( this ),
+		    html = $this.jqmData( "html" ) || "";
+		    
+		    $.mobile.loading( 'show', {
+		        text: "Loading Model",
+		        textVisible: true,
+		        theme: "b",
+		        textonly: false,
+		        icon:"ajax-loader.gif",
+		        //html: html
+		    });
+		})
+		$(document).on( "click", ".button", function() {
+		    var $this = $( this ),
+		    html = $this.jqmData( "html" ) || "";
+		})
+
+		.on( "click", ".hide-page-loading-msg", function() {
+		  $.mobile.loading( "hide" );
+		});
 
 		var isMobile = {
 		    Android: function() {
@@ -521,8 +586,8 @@ $(document).on( "click", ".button", function() {
             lastFolder = "defaultFolder"
             while (i < n)
             {
-                console.log("lastfolder:" + lastFolder)
-                console.log("currentFolder:" + ml[i][0])
+                //console.log("lastfolder:" + lastFolder)
+                //console.log("currentFolder:" + ml[i][0])
                 if (ml[i][0] != lastFolder){
                     j = j + 1
                     var content = "<div data-role='collapsible' id='set" + j + "'><h4>" + ml[i][0].substring(0,(ml[i][0].length)-1) + "</h4><div id='pageButtons" + j + "'></div></div>";
@@ -531,26 +596,25 @@ $(document).on( "click", ".button", function() {
                     lastFolder = ml[i][0]
                 }
                 var pageButtons = $('#pageButtons' + j);
-                pageButtons.append('<input type="button" class="button" id="button'+i+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick= "addloading()"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
+                pageButtons.append('<input type="button" class="newButton" id="b_'+ml[i][1]+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick= "addloading()"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
                 i = i + 1;
             }
-            /* some links of helpful guides 
-                https://www.youtube.com/watch?v=G-POtu9J-m4&feature=iv&src_vid=hMxGhHNOkCU&annotation_id=annotation_1494025287
-
-                https://www.youtube.com/watch?v=Cc3K2jDdKTo&list=UUVTlvUkGslCV_h-nSAId8Sw&feature=iv&src_vid=G-POtu9J-m4&annotation_id=annotation_4141828117
-
-                http://stackoverflow.com/questions/21192763/how-to-dynamically-add-list-items-in-jquery
-
-                http://stackoverflow.com/questions/20685492/creating-dynamic-list-with-jquery
-                */
 
         }
+
+        function setButtonAsLoaded(buttonID) {
+        	console.log("setting button as loaded: ")
+        	console.log(buttonID[0])
+        	document.getElementById("b_" + buttonID[0]).className = "oldButton";
+        }
+
         function addloading(){
         modelButtonClicked(event);
         }
 
-        function noloading(dummy){
-        $.mobile.loading( "hide" );
+        function noloading(dummyhtml){
+        	$.mobile.loading( "hide" );
+        	
         }
 
         function setSensitivity(s) {
@@ -560,19 +624,20 @@ $(document).on( "click", ".button", function() {
         //creating a jquery function for always occuring events.
        function modelButtonClicked(event) {
 
-                console.log("Outputting")
+                console.log("Model Button Clicked")
+                resetImage();
                 var path = $(event.target).data('path');
                 console.log(path);
                 event.target.path = path
                 console.log(event.target.value)
                 console.log(event.target.id)
                 {{mc@modelViewer: onModelSelect("%event.target.path%" + "%event.target.value%") }}
+                //setButtonAsLoaded(event.target.id)
 
                 //$('#'+panelID).toggle(); //you can concatenate strings with +.
                 //use the '#' to gattret the object the id is referring to.
                 //var newString = "my new String"
                // $('#'+panelID+ ' .panel-body').html(newString);
-               resetImage();
                
             }
         function seekEnd(event) {

@@ -224,3 +224,6 @@ def changeSlice(axis, start,end):
 		vr.setSliceBoundY(start,end)
 	elif (axis == 3):
 		vr.setSliceBoundZ(start,end)
+
+def onReload():
+    calljs('resetImage', False)

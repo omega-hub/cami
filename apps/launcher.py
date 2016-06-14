@@ -131,6 +131,7 @@ def showApplication(appName):
     print "Showing application: " + str(appName)
     if appName in AppDict:
         mc.postCommand('@' + appName + ': setTilesEnabled(0, 0, 5, 5, True)')
+        mc.postCommand('@' + appName + ': onReload()')
     else:
         print "App: " + str(appName) + " not currently running. Starting New instance of app"
     

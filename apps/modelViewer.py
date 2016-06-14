@@ -76,6 +76,7 @@ def InitializeModelList():
     #onModelSelect("A_CueR_Exp.fbx")
     print "number of folders: " ,numfolders
     calljs('createModelButtons', fileList)
+    print("initialized Model List")
 
 def onModelSelect(modelName):
     print("Inside On Model Select")
@@ -101,6 +102,7 @@ def onModelSelect(modelName):
         
     
 def LoadModel(modelName):
+    print "Loading Model: " , modelName
     if (localDebug):
         path = "../data/" + modelName
     else:
@@ -114,6 +116,7 @@ def LoadModel(modelName):
     model.optimize = False
     model.size = 10
     getSceneManager().loadModelAsync(model, 'onModelLoaded()')
+
     
     
 def toggleModelVisible(modelName, visible):
@@ -128,7 +131,7 @@ def toggleModelVisible(modelName, visible):
         print "toggling to invisible"
 
 def onModelLoaded():
-    global obj
+    global obj, currentModelName
     obj = StaticObject.create("model")
     obj.setPosition(0, 2, -8)
     mat = obj.getMaterial()
@@ -139,11 +142,18 @@ def onModelLoaded():
     l1.lookAt(obj.getPosition(), Vector3(0, 1, 0))
     ModelDict[currentModelName] = obj
     time.sleep(5)
-    calljs('noloading', ScrollSpeed)
+    calljs('noloading', 9)
+    print "Finished loading model!"
+    buttonID = '\'' +currentModelName[(currentModelName.rfind('/') + 1):] + '\''
+    print buttonID 
+    send = []
+    send.append(buttonID)
+    calljs('setButtonAsLoaded', send)
+    print "Successful Button Loading"
 
 onModelSelect(defaultModel)
 InitializeModelList()
-print("initialized Model List")
+
 
 #Model Manipulation Functions:
 def setZoom(z):
@@ -192,3 +202,7 @@ def printMessage():
     print "Message from HTML:"
     print message
     return
+
+def onReload():
+    calljs('resetImage', 0)
+    InitializeModelList()
