@@ -143,13 +143,11 @@ def onModelLoaded():
     ModelDict[currentModelName] = obj
     time.sleep(5)
     calljs('noloading', 9)
-    print "Finished loading model!"
+    print "Finished loading model"
     buttonID = '\'' +currentModelName[(currentModelName.rfind('/') + 1):] + '\''
-    print buttonID 
     send = []
     send.append(buttonID)
     calljs('setButtonAsLoaded', send)
-    print "Successful Button Loading"
 
 onModelSelect(defaultModel)
 InitializeModelList()
