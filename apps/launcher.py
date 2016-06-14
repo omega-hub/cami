@@ -45,6 +45,7 @@ currApp = False
 v = None
 #getSceneManager().getCompositingLayer().loadCompositor('cyclops/common/compositor/motionblur.xml')
 if( not isMaster()):
+    #initializeAllApps()
     uim = UiModule.createAndInitialize()
     global v
     v = VideoStream()
@@ -95,7 +96,7 @@ def startApplication(clientId, appName):
         print "Spawning new instance of " + appName
         mc.spawn(appName, numApps, appName + '.py', 'default.cfg')
         AppDict[appName] = True
-    
+
 
 def onClientConnected(clientId):
     print "client connected: " + clientId
@@ -154,3 +155,22 @@ setEventFunction(onEvent)
 
 # Start the cluster CPU/GPU monitor service (comment this when testing on laptop)
 import monitor
+
+def initializeAllApps():
+    print "initializing All apps"
+
+    mc.spawn('modelViewer',1,'modelViewer.py','default.cfg')
+    AppDict['modelViewer'] = True
+    hideApplication('modelViewer')
+    print "modelViewer initialized"
+    
+    # mc.spawn('movieViewer',2,'movieViewer.py','default.cfg')
+    # AppDict['movieViewer'] = True
+    # hideApplication('movieViewer')
+    # print "movieViewer initialized"
+
+    # mc.spawn('volume',3,'volume.py','default.cfg')
+    # AppDict['volume'] = True
+    # hideApplication('volume')
+    # print "volume Viewer initialized"
+    # broadcastCommand('showLauncher()')
