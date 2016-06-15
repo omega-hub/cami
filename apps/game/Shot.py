@@ -1,19 +1,19 @@
 class Shot(Entity):
 
-	def onCreate(shtr):
+	def onCreate(self,shtr):
 		self.shooter = shtr
 		self.totalShotTime = 100
 		self.shotTime = self.totalShotTime
 		self.damage = 10
 		return False
 
-	def setDamage(dmg):
+	def setDamage(self,dmg):
 		self.damage = dmg
-		
-	def setPosition(x,y):
+
+	def setPosition(self,x,y):
 		return False
 
-	def tick():
+	def tick(self):
 		Entity.tick(self)
 		hitList = calculateCollision()
 		for obj in hitList:
@@ -26,11 +26,5 @@ class Shot(Entity):
 			onDestroy()
 		return False
 
-	def dissispateShot():
-
-		return False
-
-	def testCollide():
-
-	def draw():
+	def draw(self):
 		return False
