@@ -1,0 +1,652 @@
+<html lang="en">
+<head>
+
+    <title>Model Viewer</title>
+    <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css">
+    <script src="js/jquery-1.12.0.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="porthole/res/porthole.js"></script>
+    <script src="js/hammer.js"></script>
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <script src='js/THREEx.WindowResize.js'></script>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+
+    <style>
+    .button{
+    background-color: #e8e9f0; 
+    border: 1px black;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    width:235px;
+    height: 45px;
+    font-size: 15px;
+    margin: 4px 2px;
+    border-radius: 1px;
+    float: center;
+    outline:none;
+    box-shadow: inset -.5px -1px 5px 0px black;
+    }
+
+    .newButton{
+    background-color: #e8e9f0; 
+    border: 1px black;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    width:235px;
+    height: 45px;
+    font-size: 15px;
+    margin: 4px 2px;
+    border-radius: 1px;
+    float: center;
+    outline:none;
+    box-shadow: inset -.5px -1px 5px 0px black;
+    }
+
+    div.hide { display:none; }
+
+    div.show {  }
+
+    .image{
+         border: 10px black;
+    }
+
+    .newButton:active{
+    	background-color: #8C8C8C;
+    	box-shadow: inset .5px 1px 5px 0px black;
+    }
+
+    .oldButton{
+    background-color: #2DBE46; 
+    border: 1px black;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    width:235px;
+    height: 45px;
+    font-size: 15px;
+    margin: 4px 2px;
+    border-radius: 1px;
+    float: center;
+    outline:none;
+    box-shadow: inset -.5px -1px 5px 0px black;
+    }
+
+    div.hide { display:none; }
+
+    div.show {  }
+
+    .image{
+         border: 10px black;
+    }
+
+    .oldButton:active{
+    	background-color: #196826;
+    	box-shadow: inset .5px 1px 5px 0px black;
+    }
+
+h4 {
+    color: #333333;
+    margin-bottom: 0em;
+}
+
+h2{
+ 
+    margin-bottom: .2em;
+}
+
+
+hr.old{
+    display: block;
+    color: red;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 3px;
+
+}
+hr{
+    border: 0;
+    width: 100%;
+    color: #ccccce;
+    margin-top: 0em;
+    margin-bottom: .2em;
+    background-color: #ccccce;
+    height: 1px;
+}
+
+p{
+    margin-top: 0em;
+    margin-bottom: 0.5em;
+}
+
+    .collapsable{
+        outline:none;
+    }
+
+    #set3{
+        outline:none;
+    }
+
+    .content{
+        float: center;
+        float: top;
+    }
+    body { margin: 0; }
+    canvas { width: 100%; height: 100% }
+    </style> 
+
+</head>
+
+<body>
+<!--<body style="overflow:hidden;">-->
+    <div data-role="page" id="model-page">
+        <div data-role="header" id="header" data-position ="fixed">
+            <a href="#nav-panel" data-icon="bars"  data-iconpos="notext">Menu</a>
+            <a href="#help-panel" data-icon="info"   data-iconpos="notext">Add</a>
+            <h1>Model Viewer</h1>
+            <script src="js/three.min.js"></script>
+            <script src="js/modelViewerPreview.js"></script>        
+
+        </div>
+
+        <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
+            <ul data-role="listview" class="panel">
+            
+            <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
+              
+            <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
+                
+            </div>
+        </div>
+
+
+            </ul>
+        </div><!-- /panel -->
+        
+        <div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
+            <form class="userform">
+                <h2>Instructions for Use</h2>
+                <hr class="instructions">
+                    <h4>To rotate:</h4> <p> Use one finger and swipe anywhere on the screen</p> 
+                    <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
+                    <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
+                    <h4>To close the sidebars:</h4> <p> Tap on the main screen</p>
+                    <h4>Sensitivity:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> <BR>
+                    <button onclick="resetImage()" class="button"  type="button">Reset Orientation</button> 
+                </form>
+        </div><!-- /panel -->
+    </div>
+</body>
+    <script>
+
+        var myElement = document.getElementById('header');
+        
+        $(document).on("pageinit","#model-page",function(){
+            // PLACE ALL YOU EVENTS CODE HERE e.g.
+            console.log("page init")
+            // $( "#slider" ).on( "slidestart", function( event, ui ) {seekStart(event,ui)} );
+            $('#slider').on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
+
+            $( "#slider").slider() ;
+        })
+
+		$(document).on( "click", ".newButton", function() {
+		    var $this = $( this ),
+		    html = $this.jqmData( "html" ) || "";
+		    
+		    $.mobile.loading( 'show', {
+		        text: "Loading Model",
+		        textVisible: true,
+		        theme: "b",
+		        textonly: false,
+		        icon:"ajax-loader.gif",
+		        //html: html
+		    });
+		    $this.className = "oldButton"
+		})
+
+		$(document).on( "click", ".oldButton", function() {
+		    var $this = $( this ),
+		    html = $this.jqmData( "html" ) || "";
+		    
+		    $.mobile.loading( 'show', {
+		        text: "Loading Model",
+		        textVisible: true,
+		        theme: "b",
+		        textonly: false,
+		        icon:"ajax-loader.gif",
+		        //html: html
+		    });
+		})
+		$(document).on( "click", ".button", function() {
+		    var $this = $( this ),
+		    html = $this.jqmData( "html" ) || "";
+		})
+
+		.on( "click", ".hide-page-loading-msg", function() {
+		  $.mobile.loading( "hide" );
+		});
+
+		var isMobile = {
+		    Android: function() {
+		        return navigator.userAgent.match(/Android/i);
+		    },
+		    BlackBerry: function() {
+		        return navigator.userAgent.match(/BlackBerry/i);
+		    },
+		    iOS: function() {
+		        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+		    },
+		    Opera: function() {
+		        return navigator.userAgent.match(/Opera Mini/i);
+		    },
+		    Windows: function() {
+		        return navigator.userAgent.match(/IEMobile/i);
+		    },
+		    any: function() {
+		        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+		    }
+		};
+        // create a simple instance
+        // by default, it only adds horizontal recognizers
+        var mc = new Hammer(myElement);
+        // let the pan gesture support all directions.
+        // this will block the vertical scrolling on a touch-device while on the element
+        mc.get('pan').set({ pointers: 0 });
+        mc.get('pan').set({ threshold: 15 });
+        mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+        mc.get('pinch').set({ enable: true });
+        mc.get('pinch').set({ threshold: 0.08 });
+
+        var startMouseX = -1
+        var startMouseY = -1
+        var dx = 0
+        var dy = 0
+        var rotX = 0
+        var rotY = 0
+        var isRotating = false
+        var isPanning = false
+        delta = 0;
+        isZooming = false;
+        camX = 0;
+        camY = 0;
+        camZ = 0;
+        camX3JS = 0;
+        camY3JS = 0;
+        camZ3JS = 0;
+        shiftDown = false;
+        rotateDist = 0;
+        dummyhtml = 0;
+        navOpen = false;
+        setSensitivity(0.8)
+        mc.on("panstart", function(ev) {
+            if (!navOpen){
+                ev.preventDefault()
+                if (isPanning == false) {
+                    startMouseX = ev.center.x 
+                    startMouseY = ev.center.y
+                    rotateDist = 0;
+                    isPanning = true
+                }
+            }
+            // setCubeColor(0X00ff00)
+            // setBackgroundColor(0Xff0000)
+        });
+        mc.on("panend", function(ev) {
+            if (!navOpen){
+                ev.preventDefault()
+                isRotating = false
+                isPanning = false
+            }
+        });
+        // listen to events...
+        numTouch = 0
+        $( "#nav-panel" ).panel({
+          beforeclose: function( event, ui ) {
+            navOpen = false
+            window.scrollTo(0,0);
+            setCubeColor(0X3b5a5f)
+            setBackgroundColor(0Xf1f1f1)
+        }
+        });
+        $( "#nav-panel" ).panel({
+          beforeopen: function( event, ui ) {
+            navOpen = true
+            window.scrollTo(0,0);
+            setCubeColor(0x0B1011)
+            setBackgroundColor(0X707070)
+        }});
+        $( "#help-panel" ).panel({
+          beforeclose: function( event, ui ) {
+            navOpen = false
+            window.scrollTo(0,0);
+            setCubeColor(0X3b5a5f)
+            setBackgroundColor(0Xf1f1f1)
+        }
+        });
+        $( "#help-panel" ).panel({
+          beforeopen: function( event, ui ) {
+            navOpen = true
+            window.scrollTo(0,0);
+            setCubeColor(0x0B1011)
+            setBackgroundColor(0X707070)
+        }
+        });
+        $('body').on('touchmove', function(e) {
+            if (!navOpen){
+                e.preventDefault();
+            }
+        });
+	    $(document).on('visibilitychange', function(){
+	    	if (isMobile.any()) {
+	    		{{mc@modelViewer: print "visibilityChanged" }}
+	          //porthole.socket.close()
+	          {{py onClientDisconnected(%client_id%) }}
+	        }
+	    	}
+	    )
+   //      $(window).blur(function(){
+   //        //your code here
+   //        console.log("Blurred")
+	  // {{mc@modelViewer: print "Blurred" }}
+   //        porthole.socket.close()
+   //      });
+   //      $(window).focus(function(){
+   //        //your code
+   //        console.log("Focused")
+   //        {{mc@modelViewer: print "Focused" }}
+   //      });
+        mc.on("pan", function(ev) {
+            if (!navOpen) {
+                //window.scrollTo(0,0);
+                ev.preventDefault()
+                dx = (ev.center.x - startMouseX) * sensitivity
+                dy = (ev.center.y - startMouseY) * sensitivity
+                startMouseX = ev.center.x 
+                startMouseY = ev.center.y
+                numTouch = ev.pointers.length
+                //{{mc@modelViewer: logPan(%dx%, %dy%,0,%numTouch%) }}
+                if ((numTouch >= 2 && !isZooming && !isRotating) || shiftDown) {
+                    console.log("panning camera")
+                    var limit = (5 + (camZ/3))
+                    var limit3JS = (5 + (camZ))
+                    var movSpeedX = (dx/(16-(camZ))) 
+                    var movSpeedY = (dy/(16-(camZ)))
+                    camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
+                    camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
+                    {{mc@modelViewer: setPan(%camX%, %camY%) }}
+                    // camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
+                    // camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
+                    camX3JS = camX3JS - movSpeedX/4
+                    camY3JS = camY3JS + movSpeedY/4
+                    setPan3JS(camX3JS,camY3JS)
+                } else {
+                    isRotating = true
+                    var Z = camZ - 3
+                    var propZ = -2/Z
+                    rotX = dx * propZ
+                    if (rotX < 0) {
+                        rotX = Math.max(-15,rotX)
+                    }else {
+                        rotX = Math.min(15,rotX)
+                    }
+                    rotY = dy * propZ
+                    if (rotY < 0) {
+                        rotY = Math.max(-15,rotY)
+                    }else {
+                        rotY = Math.min(15,rotY)
+                    }
+                    {{mc@modelViewer: onRotate(%rotX%, %rotY%,0) }}
+                    onRotate3JS(rotX,rotY,0)
+                }
+            }
+            //console.log(ev.type +" gesture detected.");
+        });
+        /*
+        mc.add(new Hammer.Pan(
+        event: 'triplepan',
+        pointers: 3,
+        direction: Hammer.DIRECTION_HORIZONTAL,
+        threshold: 0
+        ));
+
+        mc.on("triplepan", function(ev) {
+            {{mc@modelViewer: logPan(%dx%, %dy%,0,%numTouch%) }}
+            console.log(ev.type +" triplepanned");
+        });
+    
+        mc.on("tap", function(ev) {
+            console.log(ev.type +" gesture detected.");
+        });
+        */
+        mc.on("tap", function(ev) {
+            console.log(ev.type +" gesture detected.");
+        });
+
+        lastScale = 0
+        mc.on("pinchstart", function(ev){
+            if (lastScale != 0) {
+                delta = ev.scale - lastScale
+            }
+            lastScale = ev.scale
+        });
+        mc.on("pinchmove", function(ev){
+            ev.preventDefault()
+            isZooming = true
+            delta = (ev.scale - lastScale) * sensitivity
+            lastScale = ev.scale
+            if (delta > 0) {
+                delta = delta * 1.5
+            }
+            camZ = Math.min(Math.max(camZ - delta,-11),2)
+            camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
+            {{mc@modelViewer: setZoom(%camZ%)}}
+            setZoom3JS(camZ3JS)
+            var limit = (5 + (camZ/3))
+            var limit3JS = (5 + (camZ3JS))
+            // camX = Math.min(Math.max(camX,-limit),limit)
+            // camY = Math.min(Math.max(camY,-limit),limit)
+            // {{mc@modelViewer: setPan(%camX%, %camY%) }}
+            if (camZ > -5.0) {
+                // camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+                // camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+                // setPan3JS(camX3JS,camY3JS)
+            }
+        });
+        mc.on("pinchend", function(ev){
+            isZooming = false
+        });
+        porthole.connected = function(event) {
+            {{py startApplication(%client_id%, 'modelViewer') }}
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+            document.addEventListener("mousedown", onMouseDown);
+            document.addEventListener("keydown", onKeyDown);
+            document.addEventListener("keyup", onKeyUp);       }
+        
+        //window.blockMenuHeaderScroll = true;
+        document.ontouchmove = function(e){ 
+            if (!navOpen) {
+                e.preventDefault(); 
+            }
+        }
+
+        document.addEventListener("mousewheel",onMouseWheel);
+
+        function onMouseWheel(e) {
+            if (!navOpen ) {
+                //window.scrollTo(0,0);
+                e.preventDefault();
+                var e = window.event || e; // old IE support
+                delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
+                camZ = Math.min(Math.max(camZ - delta,-10),0)
+                camZ3JS = Math.min(Math.max(camZ3JS - (delta/3),-3.5),1)
+                {{mc@modelViewer: setZoom(%camZ%)}}
+                setZoom3JS(camZ3JS)
+                var limit = (5 + (camZ/3))
+                var limit3JS = (5 + (camZ3JS))
+                // camX = Math.min(Math.max(camX,-limit),limit)
+                // camY = Math.min(Math.max(camY,-limit),limit)
+                //{{mc@modelViewer: setPan(%camX%, %camY%) }}
+                if (camZ > -5.0) {
+                    // camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+                    // camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+                    // setPan3JS(camX3JS,camY3JS)
+                }
+            }
+        }
+
+        function onKeyDown(e) {
+            var keycode;
+            if (window.event)
+                keycode = window.event.keyCode;
+            else if (e)
+                keycode = e.which;
+            console.log(keycode)
+            if (keycode == 16) {
+                shiftDown = true
+                console.log("Shift Down")
+            }
+
+        }
+
+        function resetImage()
+        {
+            camX=0;
+            camY=0;
+            camZ=0;
+
+            camX3JS=0;
+            camY3JS=0;
+            camZ3JS=0;
+            {{mc@modelViewer: setPan(%camX%, %camY%) }}
+            setPan3JS(camX,camY)
+            {{mc@modelViewer: setZoom(%camZ%)}}
+            setZoom3JS(camZ3JS)
+
+            resetOrientation3JS()
+            {{mc@modelViewer: pyresetOrientation(%dummyhtml%)}}
+
+        }
+
+        function onKeyUp(e) {
+            var keycode;
+            if (window.event)
+                keycode = window.event.keyCode;
+            else if (e)
+                keycode = e.which;
+            if (keycode == 16) {
+                console.log("shift up")
+                shiftDown = false
+            }
+        }
+        var isMouseDown = false
+        function onMouseDown(e) {
+            dx = 0
+            dy = 0
+            isMouseDown = true
+        }
+        function onMouseUp(e) {
+            isMouseDown = false
+        }
+        function onMouseMove(e) {
+            if (isMouseDown) {
+                dx = (e.clientX - startMouseX)
+                dy = (e.clientY - startMouseY)
+                //startMouseX = e.clientX
+                //startMouseY = e.clientY
+                //{{mc@modelViewer: onRotate(%dx%, %dy%,0) }}
+                //onRotate3JS(dx,dy,0)
+            }
+        }
+
+        
+        modelList=null
+
+        function createModelButtons(ml) {
+            // save the argument to the global modelList variable
+            // so we can access it from other parts of the interface
+            // and we can pass it back to the server app using {{mc@modelViewer}}
+           modelList=ml;
+            //use this $('id of object') to get the object's id and do stuff with it.
+            //$('nav-panel').hide(300).show(1000).hide(200).show(1000);
+            //other events, fadeIn/fadeOut, fadeToggle, slideUp, slideDown
+            // you can use the .html operator to rewrite HTML code!!!
+            // example $('nav-panel').html('codecodecodecode<tag>')
+            // this completely removes the elements inside of the HTML tag and replaces it with your own code.
+            // to listen to a button, you use the operator.
+            i=0;
+            n = ml.length;
+            j = 0
+            lastFolder = "defaultFolder"
+            while (i < n)
+            {
+                //console.log("lastfolder:" + lastFolder)
+                //console.log("currentFolder:" + ml[i][0])
+                if (ml[i][0] != lastFolder){
+                    j = j + 1
+                    var content = "<div data-role='collapsible' id='set" + j + "'><h4>" + ml[i][0].substring(0,(ml[i][0].length)-1) + "</h4><div id='pageButtons" + j + "'></div></div>";
+                    //var content = "fjwiofhwiofhi"
+                    $("#Allcollapsable").append( content ).collapsibleset('refresh');;
+                    lastFolder = ml[i][0]
+                }
+                var pageButtons = $('#pageButtons' + j);
+                pageButtons.append('<input type="button" class="newButton" id="b_'+ml[i][1]+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick= "addloading()"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
+                i = i + 1;
+            }
+
+        }
+
+        function setButtonAsLoaded(buttonID) {
+        	console.log("setting button as loaded: ")
+        	console.log(buttonID[0])
+        	document.getElementById("b_" + buttonID[0]).className = "oldButton";
+        }
+
+        function addloading(){
+        modelButtonClicked(event);
+        }
+
+        function noloading(dummyhtml){
+        	$.mobile.loading( "hide" );
+        	
+        }
+
+        function setSensitivity(s) {
+            sensitivity = s
+        }
+
+        //creating a jquery function for always occuring events.
+       function modelButtonClicked(event) {
+
+                console.log("Model Button Clicked")
+                resetImage();
+                var path = $(event.target).data('path');
+                console.log(path);
+                event.target.path = path
+                console.log(event.target.value)
+                console.log(event.target.id)
+                {{mc@modelViewer: onModelSelect("%event.target.path%" + "%event.target.value%") }}
+                //setButtonAsLoaded(event.target.id)
+
+                //$('#'+panelID).toggle(); //you can concatenate strings with +.
+                //use the '#' to gattret the object the id is referring to.
+                //var newString = "my new String"
+               // $('#'+panelID+ ' .panel-body').html(newString);
+               
+            }
+        function seekEnd(event) {
+            currentSeek = $('#slider').val()
+            setSensitivity(currentSeek/100)
+            console.log("seek end")
+        }
+    </script>
+    
+    
+</body>
+</html>
