@@ -158,8 +158,6 @@ def onEvent():
 setEventFunction(onEvent)
 
 
-# Start the cluster CPU/GPU monitor service (comment this when testing on laptop)
-import monitor
 
 def initializeAllApps():
     print "initializing All apps"
@@ -179,3 +177,6 @@ def initializeAllApps():
     # hideApplication('volume')
     # print "volume Viewer initialized"
     # broadcastCommand('showLauncher()')
+
+# Start the cluster CPU/GPU monitor service (comment this when testing on laptop)
+import monitor

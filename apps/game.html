@@ -1,0 +1,401 @@
+<html lang="en">
+<head>
+
+    <title>Model Viewer</title>
+    <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css">
+    <script src="js/jquery-1.12.0.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="porthole/res/porthole.js"></script>
+    <script src="js/hammer.js"></script>
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <script src='js/THREEx.WindowResize.js'></script>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+
+    <style>
+    .newButton{
+        background-color: #e8e9f0; 
+        border: 1px black;
+        color: black;
+        text-align: center;
+        vertical-align: middle;
+        width:235px;
+        height: 45px;
+        font-size: 15px;
+        margin: 4px 2px;
+        border-radius: 1px;
+        float: center;
+        outline:none;
+        box-shadow: inset -.5px -1px 5px 0px black;
+    }
+
+    div.hide { display:none; }
+
+    div.show {  }
+
+    .image{
+         border: 10px black;
+    }
+
+    .newButton:active{
+    	background-color: #8C8C8C;
+    	box-shadow: inset .5px 1px 5px 0px black;
+    }
+
+    h4 {
+        color: #333333;
+        margin-bottom: 0em;
+    }
+
+    h2{
+        margin-bottom: .2em;
+    }
+
+
+    hr.old{
+        display: block;
+        color: red;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        margin-left: auto;
+        margin-right: auto;
+        border-style: inset;
+        border-width: 3px;
+
+    }
+    hr{
+        border: 0;
+        width: 100%;
+        color: #ccccce;
+        margin-top: 0em;
+        margin-bottom: .2em;
+        background-color: #ccccce;
+        height: 1px;
+    }
+
+    p{
+        margin-top: 0em;
+        margin-bottom: 0.5em;
+    }
+
+    .collapsable{
+        outline:none;
+    }
+
+    #set3{
+        outline:none;
+    }
+
+    .content{
+        float: center;
+        float: top;
+    }
+    body { margin: 0; }
+    canvas { width: 100%; height: 100% }
+    </style> 
+
+</head>
+
+<body>
+
+<!--<body style="overflow:hidden;">-->
+    <div data-role="page" id="model-page">
+        <div data-role="header" id="header" data-position ="fixed">
+            <a href="#help-panel" data-icon="info"   data-iconpos="notext">Add</a>
+            <h1>Model Viewer</h1>
+            <script src="js/three.min.js"></script>
+            <script src="js/modelViewerPreview.js"></script>        
+
+        </div>
+
+        <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
+            <ul data-role="listview" class="panel">
+            
+            <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
+              
+            <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
+                
+            </div>
+        </div>
+
+
+            </ul>
+        </div><!-- /panel -->
+        
+        <div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
+            <form class="userform">
+                <h2>Instructions for Use</h2>
+                <hr class="instructions">
+                    <h4>To rotate:</h4> <p> Use one finger and swipe anywhere on the screen</p> 
+                    <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
+                    <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
+                    <h4>To close the sidebars:</h4> <p> Tap on the main screen</p>
+                </form>
+        </div><!-- /panel -->
+    </div>
+</body>
+    <script>
+
+        var myElement = document.getElementById('header');
+        
+        $(document).on("pageinit","#model-page",function(){
+            // PLACE ALL YOU EVENTS CODE HERE e.g.
+            console.log("page init")
+            // $( "#slider" ).on( "slidestart", function( event, ui ) {seekStart(event,ui)} );
+            $('#slider').on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
+            $( "#slider").slider() ;
+        })
+
+		$(document).on( "click", ".newButton", function() {
+		    var $this = $( this ),
+		    html = $this.jqmData( "html" ) || "";
+		    
+		    $.mobile.loading( 'show', {
+		        text: "Loading Model",
+		        textVisible: true,
+		        theme: "b",
+		        textonly: false,
+		        icon:"ajax-loader.gif",
+		        //html: html
+		    });
+		    $this.className = "oldButton"
+		})
+
+		$(document).on( "click", ".oldButton", function() {
+		    var $this = $( this ),
+		    html = $this.jqmData( "html" ) || "";
+		    
+		    $.mobile.loading( 'show', {
+		        text: "Loading Model",
+		        textVisible: true,
+		        theme: "b",
+		        textonly: false,
+		        icon:"ajax-loader.gif",
+		        //html: html
+		    });
+		})
+		$(document).on( "click", ".button", function() {
+		    var $this = $( this ),
+		    html = $this.jqmData( "html" ) || "";
+		})
+
+		.on( "click", ".hide-page-loading-msg", function() {
+		  $.mobile.loading( "hide" );
+		});
+
+		var isMobile = {
+		    Android: function() {
+		        return navigator.userAgent.match(/Android/i);
+		    },
+		    BlackBerry: function() {
+		        return navigator.userAgent.match(/BlackBerry/i);
+		    },
+		    iOS: function() {
+		        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+		    },
+		    Opera: function() {
+		        return navigator.userAgent.match(/Opera Mini/i);
+		    },
+		    Windows: function() {
+		        return navigator.userAgent.match(/IEMobile/i);
+		    },
+		    any: function() {
+		        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+		    }
+		};
+        // create a simple instance
+        // by default, it only adds horizontal recognizers
+        var mc = new Hammer(myElement);
+        // let the pan gesture support all directions.
+        // this will block the vertical scrolling on a touch-device while on the element
+        mc.get('pan').set({ pointers: 0 });
+        mc.get('pan').set({ threshold: 15 });
+        mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+        mc.get('pinch').set({ enable: true });
+        mc.get('pinch').set({ threshold: 0.08 });
+
+        var startMouseX = -1
+        var startMouseY = -1
+        var dx = 0
+        var dy = 0
+        var rotX = 0
+        var rotY = 0
+        var isRotating = false
+        var isPanning = false
+        delta = 0;
+        isZooming = false;
+        camX = 0;
+        camY = 0;
+        camZ = 0;
+        camX3JS = 0;
+        camY3JS = 0;
+        camZ3JS = 0;
+        shiftDown = false;
+        rotateDist = 0;
+        dummyhtml = 0;
+        navOpen = false;
+        mc.on("panstart", function(ev) {
+            if (!navOpen){
+                ev.preventDefault()
+                if (isPanning == false) {
+                    startMouseX = ev.center.x 
+                    startMouseY = ev.center.y
+                    rotateDist = 0;
+                    isPanning = true
+                }
+            }
+        });
+        mc.on("panend", function(ev) {
+            if (!navOpen){
+                ev.preventDefault()
+                isRotating = false
+                isPanning = false
+            }
+        });
+
+        // listen to events...
+        numTouch = 0
+        $('body').on('touchmove', function(e) {
+            if (!navOpen){
+                e.preventDefault();
+            }
+        });
+	    $(document).on('visibilitychange', function(){
+	    	if (isMobile.any()) {
+	    		{{mc@modelViewer: print "visibilityChanged" }}
+	          //porthole.socket.close()
+	          {{py onClientDisconnected(%client_id%) }}
+	        }
+	    	}
+	    )
+
+        mc.on("pan", function(ev) {
+            if (!navOpen) {
+                //window.scrollTo(0,0);
+                ev.preventDefault()
+                dx = (ev.center.x - startMouseX) * sensitivity
+                dy = (ev.center.y - startMouseY) * sensitivity
+                startMouseX = ev.center.x 
+                startMouseY = ev.center.y
+                numTouch = ev.pointers.length
+                //{{mc@modelViewer: logPan(%dx%, %dy%,0,%numTouch%) }}
+                if ((numTouch >= 2 && !isZooming && !isRotating) || shiftDown) {
+                    console.log("panning camera")
+                    var limit = (5 + (camZ/3))
+                    var limit3JS = (5 + (camZ))
+                    var movSpeedX = (dx/(16-(camZ))) 
+                    var movSpeedY = (dy/(16-(camZ)))
+                    camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
+                    camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
+                    {{mc@modelViewer: setPan(%camX%, %camY%) }}
+                    // camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
+                    // camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
+                    camX3JS = camX3JS - movSpeedX/4
+                    camY3JS = camY3JS + movSpeedY/4
+                    setPan3JS(camX3JS,camY3JS)
+                } else {
+                    isRotating = true
+                    var Z = camZ - 3
+                    var propZ = -2/Z
+                    rotX = dx * propZ
+                    if (rotX < 0) {
+                        rotX = Math.max(-15,rotX)
+                    }else {
+                        rotX = Math.min(15,rotX)
+                    }
+                    rotY = dy * propZ
+                    if (rotY < 0) {
+                        rotY = Math.max(-15,rotY)
+                    }else {
+                        rotY = Math.min(15,rotY)
+                    }
+                    {{mc@modelViewer: onRotate(%rotX%, %rotY%,0) }}
+                    onRotate3JS(rotX,rotY,0)
+                }
+            }
+            //console.log(ev.type +" gesture detected.");
+        });
+
+        mc.on("tap", function(ev) {
+            console.log(ev.type +" gesture detected.");
+        });
+
+        lastScale = 0
+        mc.on("pinchstart", function(ev){
+            if (lastScale != 0) {
+                delta = ev.scale - lastScale
+            }
+            lastScale = ev.scale
+        });
+        mc.on("pinchmove", function(ev){
+            ev.preventDefault()
+            isZooming = true
+            delta = (ev.scale - lastScale) * sensitivity
+            lastScale = ev.scale
+            if (delta > 0) {
+                delta = delta * 1.5
+            }
+            camZ = Math.min(Math.max(camZ - delta,-11),2)
+            camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
+            {{mc@modelViewer: setZoom(%camZ%)}}
+            setZoom3JS(camZ3JS)
+            var limit = (5 + (camZ/3))
+            var limit3JS = (5 + (camZ3JS))
+            // camX = Math.min(Math.max(camX,-limit),limit)
+            // camY = Math.min(Math.max(camY,-limit),limit)
+            // {{mc@modelViewer: setPan(%camX%, %camY%) }}
+            if (camZ > -5.0) {
+                // camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+                // camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+                // setPan3JS(camX3JS,camY3JS)
+            }
+        });
+        mc.on("pinchend", function(ev){
+            isZooming = false
+        });
+        porthole.connected = function(event) {
+            {{py startApplication(%client_id%, 'game/gameBase') }}
+            document.addEventListener("keydown", onKeyDown);
+            document.addEventListener("keyup", onKeyUp);       }
+        
+        //window.blockMenuHeaderScroll = true;
+        document.ontouchmove = function(e){ 
+            if (!navOpen) {
+                e.preventDefault(); 
+            }
+        }
+
+        //document.addEventListener("mousewheel",onMouseWheel);
+
+        function onKeyDown(e) {
+            var keycode;
+            if (window.event)
+                keycode = window.event.keyCode;
+            else if (e)
+                keycode = e.which;
+            console.log(keycode)
+            if (keycode == 16) {
+                shiftDown = true
+                console.log("Shift Down")
+            }
+        }
+
+        function onKeyUp(e) {
+            var keycode;
+            if (window.event)
+                keycode = window.event.keyCode;
+            else if (e)
+                keycode = e.which;
+            if (keycode == 16) {
+                console.log("shift up")
+                shiftDown = false
+            }
+        }
+        modelList=null
+
+        //creating a jquery function for always occuring events.
+       function modelButtonClicked(event) {}
+    </script>
+    
+    
+</body>
+</html>
