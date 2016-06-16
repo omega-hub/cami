@@ -193,6 +193,7 @@ p{
             $('#slider').on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
 
             $( "#slider").slider() ;
+            visible = true
         })
 
 		$(document).on( "click", ".newButton", function() {
@@ -252,6 +253,7 @@ p{
 		        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
 		    }
 		};
+        isMobile = true
         // create a simple instance
         // by default, it only adds horizontal recognizers
         var mc = new Hammer(myElement);
@@ -343,24 +345,14 @@ p{
             }
         });
 	    $(document).on('visibilitychange', function(){
-	    	if (isMobile.any()) {
-	    		{{mc@modelViewer: print "visibilityChanged" }}
-	          //porthole.socket.close()
-	          {{py onClientDisconnected(%client_id%) }}
+	    	if ((isMobile.any() && visible)) {
+	    	  {{mc@modelViewer: print "visibilityChanged, closing modelViewer" }}
+	          {{py onClientDisconnected(%client_id%,'modelViewer') }}
+              visible = false
+              //porthole.socket.close()
 	        }
 	    	}
 	    )
-   //      $(window).blur(function(){
-   //        //your code here
-   //        console.log("Blurred")
-	  // {{mc@modelViewer: print "Blurred" }}
-   //        porthole.socket.close()
-   //      });
-   //      $(window).focus(function(){
-   //        //your code
-   //        console.log("Focused")
-   //        {{mc@modelViewer: print "Focused" }}
-   //      });
         mc.on("pan", function(ev) {
             if (!navOpen) {
                 //window.scrollTo(0,0);

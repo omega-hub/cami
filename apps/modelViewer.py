@@ -68,19 +68,19 @@ def InitializeModelList():
             else:
                 newTuple = ["",file[len(path)+1:],image]
 
-            print(newTuple)
+            #print(newTuple)
             fileList.append(newTuple)
 
-    print(fileList)
+    #print(fileList)
     #onModelSelect("ben.fbx=
     #onModelSelect("A_CueR_Exp.fbx")
-    print "number of folders: " ,numfolders
+    #print "number of folders: " ,numfolders
     calljs('createModelButtons', fileList)
     print("initialized Model List")
 
 def onModelSelect(modelName):
-    print("Inside On Model Select")
-    print(modelName)
+    print("Selecting Model...")
+    #print(modelName)
     global currentModelName
     
     if modelName == currentModelName:

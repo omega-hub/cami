@@ -101,15 +101,17 @@ def startApplication(clientId, appName):
 def onClientConnected(clientId):
     print "client connected: " + clientId
     
-def onClientDisconnected(clientId):
+def onClientDisconnected(clientId,appName="lastApp"):
     global appControllerClient
     #print "Client for the following App disconnected: " + str(appName)
     # web client disconnected: stop application and go back to launcher.
-    print appControllerClient
-    print clientId
+    print "On Client Disconnected ID is: " , appControllerClient
     if(clientId == appControllerClient):
-        print "hiding app: " + clientId
-        #hideApplication(appName)
+        print "Client ID matches appController ID: hiding app for : " + clientId
+        if appName == "lastApp":
+            hideApplication(currApp)
+        else:
+            hideApplication(appName)
         # mc.postCommand('@app: :q')
         broadcastCommand('showLauncher()')
 
@@ -121,10 +123,12 @@ def onClientDisconnected(clientId):
         
         
 def hideLauncher():
+    print "Hiding Launcher"
     setTilesEnabled(0, 0, 5, 5, False)
     if(not isMaster()): v.setPlaying(False)
     
 def showLauncher():
+    print "Showing Launcher"
     setTilesEnabled(0, 0, 5, 5, True)
     if(not isMaster()): v.setPlaying(True)
 
@@ -149,6 +153,7 @@ def onEvent():
     mcs = getMissionControlServer()
     appConnection = mcs.findConnection('app')
     if(appConnection != None):
+        print "App connection"
         mcs.sendEventTo(e, appConnection)
 setEventFunction(onEvent)
 

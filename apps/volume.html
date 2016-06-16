@@ -174,6 +174,7 @@
             $("#cutSlider").on( "slidestop", function( event, ui ) {cutSeekEnd(event,ui)} );
             //$("#cutSlider").slider( {range: true})
             setAX()
+            visible = true
         })
         var isMobile = {
             Android: function() {
@@ -195,6 +196,8 @@
                 return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
             }
         };
+        isMobile = true
+
         $(document).on( "click", ".button", function() {
                 var $this = $( this ),
                 html = $this.jqmData( "html" ) || "";
@@ -214,10 +217,11 @@
         });
 
         $(document).on('visibilitychange', function(){
-            if (isMobile.any()) {
-                {{mc@volume: print "visibilityChanged closing video" }}
-              //porthole.socket.close()
-              {{py onClientDisconnected(%client_id%) }}
+            if (isMobile.any() && visible == true) {
+                {{mc@volume: print "visibilityChanged closing volume Viewer" }}
+                {{py onClientDisconnected(%client_id%, 'volume') }}
+                visible = false
+                //porthole.socket.close()
             }
             }
         )
@@ -315,21 +319,7 @@
             setBackgroundColor(0X707070)
         }
         });
-        // $("#volume-page").visibilityChanged({
-        //     callback: function(element, visible) {
-        //        console.log(visible)
-        //     },
-        //     runOnLoad: false,
-        //     frequency: 100
-        // });
-        $(window).blur(function(){
-          //your code here
-          console.log("Blurred")
-        });
-        $(window).focus(function(){
-          //your code
-          console.log("Focused")
-        });
+
         mc.on("pan", function(ev) {
             if (!navOpen) {
                 //window.scrollTo(0,0);
