@@ -202,7 +202,8 @@
                 {{mc@movieViewer: print "visibilityChanged closing video" }}
                 {{mc@movieViewer: closeMovie() }}
               //porthole.socket.close()
-              {{py onClientDisconnected(%client_id%) }}
+              //{{py onClientDisconnected(%client_id%) }}
+              window.close()
             }
             }
         )

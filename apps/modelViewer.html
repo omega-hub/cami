@@ -346,8 +346,9 @@ p{
 	    $(document).on('visibilitychange', function(){
 	    	if ((isMobile.any() && visible)) {
 	    	  {{mc@modelViewer: print "visibilityChanged, closing modelViewer" }}
-	          {{py onClientDisconnected(%client_id%,'modelViewer') }}
+	          //{{py onClientDisconnected(%client_id%,'modelViewer') }}
               visible = false
+              window.close()
               //porthole.socket.close()
 	        }
 	    	}

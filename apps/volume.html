@@ -218,8 +218,9 @@
         $(document).on('visibilitychange', function(){
             if (isMobile.any() && visible == true) {
                 {{mc@volume: print "visibilityChanged closing volume Viewer" }}
-                {{py onClientDisconnected(%client_id%, 'volume') }}
+                //{{py onClientDisconnected(%client_id%, 'volume') }}
                 visible = false
+                window.close()
                 //porthole.socket.close()
             }
             }
