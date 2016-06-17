@@ -17,6 +17,7 @@ sm.setSoft(True)
 #sm.setSoftShadowParameters(0.005, 5)
 l1.setShadow(sm)
 l1.setLightType(LightType.Spot)
+print Vector3(0,0,-1)
 l1.setLightDirection(Vector3(0, 0, -1))
 
 l2 = Light.create()
@@ -50,6 +51,8 @@ def setLocalDebugging(debugMode):
     
 
 def InitializeModelList():
+    print "----------Initializing Model List -------------"
+    print ModelDict
     if (localDebug):
         os.chdir("../data")
     else:
@@ -64,9 +67,17 @@ def InitializeModelList():
             image = "../data/" + name[:len(name)-4] + ".jpg"
 
             if len(path[len(cwd)+1:]) > 1:
-                newTuple = [path[len(cwd)+1:] + "/",name,image]
+                newStr = path[len(cwd)+1:] + "/"+ name
+                print newStr
+                if newStr in ModelDict.keys():
+                    newTuple = [path[len(cwd)+1:] + "/",name,image,"loaded"]
+                else:
+                    newTuple = [path[len(cwd)+1:] + "/",name,image,"new"]
             else:
-                newTuple = ["",file[len(path)+1:],image]
+                if name in ModelDict.keys():
+                    newTuple = ["",file[len(path)+1:],image,alreadyLoaded,"loaded"]
+                else:
+                    newTuple = ["",file[len(path)+1:],image,alreadyLoaded,"new"]
 
             #print(newTuple)
             fileList.append(newTuple)
