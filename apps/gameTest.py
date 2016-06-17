@@ -192,6 +192,7 @@ class Entity:
         return False
 
     def onDestroy(self):
+        self.model.getParent().removeChildByRef(self.model)
         return False
 
     def setPosition(self,x,y):

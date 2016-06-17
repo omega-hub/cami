@@ -107,7 +107,6 @@
         </div>
 
         <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
-            <ul data-role="listview" class="panel">
             
             <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
               
@@ -116,8 +115,8 @@
             </div>
         </div>
 
-
-            </ul>
+        <button type="button" id="restart"data-inline="true" onClick='fire()'>Fire</button>
+        <button type="button" id="loop"data-inline="true" onClick='thrust()'>Thrust</button>
         </div><!-- /panel -->
         
         <div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
@@ -232,8 +231,8 @@
 	    	if (isMobile.any()) {
 	    		{{mc@modelViewer: print "visibilityChanged" }}
 	          //porthole.socket.close()
-	          {{py onClientDisconnected(%client_id%) }}
-	        }
+                window.close()
+    	        }
 	    	}
 	    )
 
@@ -241,47 +240,15 @@
             if (!navOpen) {
                 //window.scrollTo(0,0);
                 ev.preventDefault()
-                dx = (ev.center.x - startMouseX) * sensitivity
-                dy = (ev.center.y - startMouseY) * sensitivity
-                startMouseX = ev.center.x 
-                startMouseY = ev.center.y
+                dx = (ev.center.x - startMouseX) 
+                dy = (ev.center.y - startMouseY)
                 numTouch = ev.pointers.length
                 //{{mc@modelViewer: logPan(%dx%, %dy%,0,%numTouch%) }}
-                if ((numTouch >= 2 && !isZooming && !isRotating) || shiftDown) {
-                    console.log("panning camera")
-                    var limit = (5 + (camZ/3))
-                    var limit3JS = (5 + (camZ))
-                    var movSpeedX = (dx/(16-(camZ))) 
-                    var movSpeedY = (dy/(16-(camZ)))
-                    camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
-                    camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
-                    {{mc@modelViewer: setPan(%camX%, %camY%) }}
-                    // camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
-                    // camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
-                    camX3JS = camX3JS - movSpeedX/4
-                    camY3JS = camY3JS + movSpeedY/4
-                    setPan3JS(camX3JS,camY3JS)
-                } else {
-                    isRotating = true
-                    var Z = camZ - 3
-                    var propZ = -2/Z
-                    rotX = dx * propZ
-                    if (rotX < 0) {
-                        rotX = Math.max(-15,rotX)
-                    }else {
-                        rotX = Math.min(15,rotX)
-                    }
-                    rotY = dy * propZ
-                    if (rotY < 0) {
-                        rotY = Math.max(-15,rotY)
-                    }else {
-                        rotY = Math.min(15,rotY)
-                    }
-                    {{mc@modelViewer: onRotate(%rotX%, %rotY%,0) }}
-                    onRotate3JS(rotX,rotY,0)
-                }
+                var limit = (5 + (camZ/3))
+                var limit3JS = (5 + (camZ))
+                var plyrAngle = Math.atan2(dy,dx)
+                {{mc@game: currentPlayer.setAngle(%plyrAngle%) }}
             }
-            //console.log(ev.type +" gesture detected.");
         });
 
         mc.on("tap", function(ev) {
@@ -331,7 +298,9 @@
         modelList=null
 
         //creating a jquery function for always occuring events.
-       function modelButtonClicked(event) {}
+       function fire(event) {}
+       function thrust(event) {}
+
     </script>
     
     
