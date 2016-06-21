@@ -129,7 +129,6 @@ def LoadModel(modelName):
     getSceneManager().loadModelAsync(model, 'onModelLoaded()')
 
     
-    
 def toggleModelVisible(modelName, visible):
     parent = getScene()
     if visible:

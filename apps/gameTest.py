@@ -6,7 +6,9 @@ import os, glob,math, time, random
 # camera.setPosition(0,0,0)
 # camera.setBackgroundColor(Color('blue'))
 
-# redColor = Color("red")
+redColor = Color("red")
+greenColor = Color("green")
+
 # whiteColor = Color("white")
 
 l1 = Light.create()
@@ -32,6 +34,7 @@ lastFrameTime = 0
 entities = []
 currentPlayer = False
 score = 0
+modelsLoaded = 0
 #Adjustable Variables:
 maxAsteroids = 4.0
 numAsteroids = 0
@@ -46,7 +49,7 @@ saucerCurrPeriod = 0
 
 saucerSpeed = 0.4
 
-enemyFireFrequency = 0
+enemyFireFrequency = 10
 enemyAccuracy = 1.0
 enemyMaxShots = 3
 shotLifetime = 50
@@ -59,7 +62,7 @@ playerShotSpeed = 1.5
 playerFireRate = 10
 playerMaxShots = 20
 playerThrustVal = 0.05
-
+enemyShotSpeed = 0.8
 
 def calljs(methodname, data):
     mc = getMissionControlClient()
@@ -89,7 +92,10 @@ def initGame():
     currentPlayer = Player()
     createObj(currentPlayer,screenWidth/2,screenHeight/2)
     dummy = False
+    setUpdateFunction(onUpdate)
     calljs('onPythoninit',dummy)
+    
+
 
 def gameLoop(t,dt):
     global lastFrameTime
@@ -99,6 +105,13 @@ def gameLoop(t,dt):
         lastFrameTime = t
         gameTick(dt)
 
+def gameTick(dt):
+    for ent in entities:   
+        ent.tick(dt)
+    calculateSpawn()
+    draw()
+    return False
+
 def requestStatusUpdate():
     global currentPlayer
     if currentPlayer:
@@ -107,13 +120,6 @@ def requestStatusUpdate():
         info.append(score)
         info.append(currentPlayer.health)
         calljs('updateHealthScore',info)
-
-def gameTick(dt):
-    for ent in entities:   
-        ent.tick(dt)
-    calculateSpawn()
-    draw()
-    return False
 
 def draw():
     for ent in entities:   
@@ -233,7 +239,8 @@ class Entity:
 
     def setAngle(self,angle):
         self.model.resetOrientation()
-        self.model.roll(angle)
+        self.model.pitch(1.57)
+        self.model.yaw(angle)
         self.angle = angle
         
     def setVelocity(self,x,y):
@@ -316,6 +323,7 @@ class Fighter(Entity):
         if (self.currShots < self.maxShots and self.currFirePeriod <= 0):
             self.currShots = self.currShots + 1
             # print "Successful Shot fired"
+            global currentPlayer
             if self == currentPlayer:
                 self.currFirePeriod = (22 - playerFireRate)
             else:
@@ -325,11 +333,16 @@ class Fighter(Entity):
             createObj(newShot,self.x,self.y,[self])
             if fireAng == False:
                 fireAng = self.angle
-            velX = math.cos(fireAng) * playerShotSpeed
-            velY = math.sin(fireAng) * playerShotSpeed
+            if (self == currentPlayer):
+                velX = math.cos(fireAng) * playerShotSpeed
+                velY = math.sin(fireAng) * playerShotSpeed
+            else:
+                velX = math.cos(fireAng) * enemyShotSpeed
+                velY = math.sin(fireAng) * enemyShotSpeed
             newShot.setVelocity(velX,velY)
 
     def onHit(self,damage):
+        global currentPlayer
         if self.invincibleTime <= 0:
             if self == currentPlayer:
                 self.invincibleTime = 60
@@ -348,13 +361,19 @@ class Player(Fighter):
 
     def onCreate(self,x,y):
         Fighter.onCreate(self,x,y)
-        self.model = BoxShape.create(2.0,1.0,1.0)
-        self.radius = 0.5
+        #self.model = BoxShape.create(2.0,1.0,1.0)
+        self.radius = 1
         self.maxHealth = playerHealth
         self.health = self.maxHealth
         self.maxShots = playerMaxShots
         self.invincibleTime = 100
+        self.prepareModel()
         return False
+
+    def prepareModel(self):
+        self.model = StaticObject.create("ship.fbx")
+        self.model.setScale(0.2,0.2,0.2)
+        print "Finished loading model"
 
     def tick(self,dt):
         Fighter.tick(self,dt)
@@ -384,7 +403,9 @@ class Asteroid(Fighter):
 
     def setAsteroidSize(self,size):
         self.size = size
-        self.model = SphereShape.create(size * 6,4)
+        self.model = StaticObject.create("asteroid2.fbx")
+        scale = size * 1.2
+        self.model.setScale(scale,scale,scale)
         self.radius = 6 * size
 
 
@@ -399,9 +420,13 @@ class Asteroid(Fighter):
                 break
         
     def onDestroy(self):
-        global numAsteroids
+        global numAsteroids,score
         Entity.onDestroy(self)
         if self.size > 0.25:
+            if self.size > 0.75:
+                score = score + 20
+            else:
+                score = score + 50
             asteroid1 = Asteroid()
             createObj(asteroid1,self.x,self.y)
             asteroid1.setAsteroidSize(self.size/2)
@@ -410,6 +435,7 @@ class Asteroid(Fighter):
             createObj(asteroid2,self.x,self.y)
             asteroid2.setAsteroidSize(self.size/2)
         else:
+            score = score = 200
             numAsteroids = numAsteroids - 0.25
 
 ########Shot######################
@@ -417,8 +443,14 @@ class Asteroid(Fighter):
 class Shot(Entity):
 
     def onCreate(self,x,y,shooter):
+        global currentPlayer
         Entity.onCreate(self,x,y)
         self.model = SphereShape.create(1,4)
+        mat = self.model.getMaterial()
+        if (shooter == currentPlayer):
+            mat.setColor(greenColor,greenColor)
+        else:
+            mat.setColor(redColor,redColor)
 
         self.shooter = shooter
         self.radius = 1.0
@@ -428,7 +460,7 @@ class Shot(Entity):
             self.damage = playerShotDamage
         else:
             self.damage = shotDamage
-        print "shot initialized with damage: " , self.damage
+        # print "shot initialized with damage: " , self.damage
         return False
 
     def setDamage(self,dmg):
@@ -441,10 +473,8 @@ class Shot(Entity):
         Entity.tick(self,dt)
         hitList = calculateCollisions(self)
         for obj in hitList:
-            print "collision detected"
             if (obj != self.shooter and obj.isFighter):
                 self.shotTime = 0
-                print "Shot hit with damage :" , self.damage
                 obj.onHit(self.damage)
                 break
         self.shotTime = self.shotTime - 1
@@ -459,14 +489,16 @@ class Shot(Entity):
 
 class Saucer(Fighter):
 
-    def __init__(self):
-        print "Saucer Spawned"
+    # def __init__(self):
+        # print "Saucer Spawned"
 
     def onCreate(self,x,y):
         Fighter.onCreate(self,x,y)
         self.radius = 2.5
-        self.model = BoxShape.create(5.0,5.0,5.0)
-        self.health = 100
+        self.model = StaticObject.create("ufo.fbx")
+        self.model.setScale(0.7,0.7,0.7)
+
+        self.health = 50
         angle = random.random()*math.pi
         spd = random.uniform(saucerSpeed/2,saucerSpeed)
         newVelX = spd * math.cos(angle)
@@ -476,6 +508,7 @@ class Saucer(Fighter):
 
     def tick(self,dt):
         Fighter.tick(self,dt)
+        global currentPlayer
         # print "saucer tick"
         if ((random.random() * 1000) <= enemyFireFrequency):
             # print self.y
@@ -492,15 +525,10 @@ class Saucer(Fighter):
             self.fire(targetAngle)
 
     def onDestroy(self):
-        global numSaucers
+        global numSaucers,score
         Entity.onDestroy(self)
+        score = score + 200
         numSaucers = numSaucers - 1.0
-
-initGame()
-
-def onUpdate(frame, t, dt):
-    gameLoop(t,dt)
-setUpdateFunction(onUpdate)
 
 ###############Game Settings###############
 
@@ -539,6 +567,16 @@ def setEnemyAccuracy(num):
     print "setting enemy accuracy to " , num
     enemyAccuracy = num
 
+def setEnemyShotSpeed(num):
+    global enemyShotSpeed
+    print "setting enemy shot Speed to " , num
+    enemyShotSpeed = num
+
+def setPlayerShotSpeed(num):
+    global playerShotSpeed
+    print "setting player shot Speed to " , num
+    playerShotSpeed = num
+
 def setPlayerMaxHealth(num):
     global playerHealth, currentPlayer
     print "setting player max health to " , num
@@ -565,3 +603,37 @@ def setPlayerFireRate(num):
 
 def onReload():
     return True
+
+##################### Model Loading ###################
+
+def LoadModel(modelName):
+    print "Loading Model: " , modelName
+    path = "../data/" + modelName
+    model = ModelInfo()
+    model.name = modelName
+    model.path = path
+    model.generateNormals = False
+    model.optimize = False
+    model.size = 10
+    getSceneManager().loadModelAsync(model, 'onModelLoaded()')
+
+def onModelLoaded():
+    print "Finished loading model"
+    global modelsLoaded
+    modelsLoaded = modelsLoaded + 1
+    if modelsLoaded >= 3:
+        print "all models loaded initializing game"
+        initGame()
+
+################Game Initialization ################
+
+
+def loadModels():
+    LoadModel("ship.fbx")
+    LoadModel("asteroid2.fbx")
+    LoadModel("ufo.fbx")
+
+
+def onUpdate(frame, t, dt):
+    gameLoop(t,dt)
+loadModels()

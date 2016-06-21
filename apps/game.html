@@ -347,10 +347,12 @@
 
         //Game Events...
        function fireHold(event) {
+            fireDown = true
             {{mc@gameTest: currentPlayer.fire() }}
         }
 
         function thrustHold() {
+            thrustDown = true
             // {{mc@gameTest: print "Player is thrusting" }}
             {{mc@gameTest: currentPlayer.thrust() }}
         }
@@ -362,6 +364,8 @@
             // if (mouseStillDown2 == true) {
             //     fireHold()
             // }
+            fireDown = false
+            thrustDown = false
             if (statusReady == true) {
                     {{mc@gameTest: requestStatusUpdate() }}
             }
