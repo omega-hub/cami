@@ -3,6 +3,9 @@
 
     <title>Asteroids!</title>
     <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css">
+    <script src="js/touch-emulator.js"></script>
+    <script> TouchEmulator();
+    </script>   
     <script src="js/jquery-1.12.0.min.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
     <script src="porthole/res/porthole.js"></script>
@@ -12,145 +15,153 @@
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 
     <style>
-    .newButton{
-        background-color: #e8e9f0; 
-        border: 1px black;
-        color: black;
-        text-align: center;
-        vertical-align: middle;
-        width:235px;
-        height: 45px;
-        font-size: 15px;
-        margin: 4px 2px;
-        border-radius: 1px;
-        float: center;
-        outline:none;
-        box-shadow: inset -.5px -1px 5px 0px black;
-    }
+        .gameButton{
+            background-color: #e8e9f0; 
+            border: 1px black;
+            color: black;
+            text-align: center;
+            vertical-align: middle;
+            width:260px;
+            height: 120px;
+            font-size: 32px;
+            margin: 4px 2px;
+            border-radius: 1px;
+            float: center;
+            outline:none;
+            box-shadow: inset -.5px -1px 5px 0px black;
+        }
+        div.hide { display:none; }
+        div.show {}
+        .image{ border: 10px black; }
+        .gameButton:active{
+        	background-color: #8C8C8C;
+        	box-shadow: inset .5px 1px 5px 0px black;
+        }
+        h4 {
+            color: #333333;
+            margin-bottom: 0em;
+        }
+        h2{ margin-bottom: .2em; }
+        hr.old{
+            display: block;
+            color: red;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            margin-left: auto;
+            margin-right: auto;
+            border-style: inset;
+            border-width: 3px;
+        }
 
-    div.hide { display:none; }
+        hr{
+            border: 0;
+            width: 100%;
+            color: #ccccce;
+            margin-top: 0em;
+            margin-bottom: .2em;
+            background-color: #ccccce;
+            height: 1px;
+        }
 
-    div.show {  }
+        p{
+            margin-top: 0em;
+            margin-bottom: 0.5em;
+        }
 
-    .image{
-         border: 10px black;
-    }
+        .collapsable{
+            outline:none;
+        }
 
-    .newButton:active{
-    	background-color: #8C8C8C;
-    	box-shadow: inset .5px 1px 5px 0px black;
-    }
+        #set3{
+            outline:none;
+        }
 
-    h4 {
-        color: #333333;
-        margin-bottom: 0em;
-    }
-
-    h2{
-        margin-bottom: .2em;
-    }
-
-
-    hr.old{
-        display: block;
-        color: red;
-        margin-top: 0.5em;
-        margin-bottom: 0.5em;
-        margin-left: auto;
-        margin-right: auto;
-        border-style: inset;
-        border-width: 3px;
-    }
-
-    hr{
-        border: 0;
-        width: 100%;
-        color: #ccccce;
-        margin-top: 0em;
-        margin-bottom: .2em;
-        background-color: #ccccce;
-        height: 1px;
-    }
-
-    p{
-        margin-top: 0em;
-        margin-bottom: 0.5em;
-    }
-
-    .collapsable{
-        outline:none;
-    }
-
-    #set3{
-        outline:none;
-    }
-
-    .content{
-        float: center;
-        float: top;
-    }
-    body { margin: 0; }
-    canvas { width: 100%; height: 100% }
+        .content{
+            float: center;
+            float: top;
+        }
+        body { margin: 0; }
+        canvas { width: 100%; height: 100% }
     </style> 
 </head>
-
 <body>
 
-<!--<body style="overflow:hidden;">-->
     <div data-role="page" id="game-page">
         <div data-role="header" id="header" data-position ="fixed">
-            <a href="#help-panel" data-icon="info"   data-iconpos="notext">Add</a>
+<!--             <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+ -->            <a href="#mod-panel" data-icon="info"   data-iconpos="notext">Add</a>
             <h1>Asteroids!!!</h1>
-            <script src="js/three.min.js"></script>
-            <script src="js/modelViewerPreview.js"></script>        
-
         </div>
 
-        <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
-            
-            <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
-              
-            <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
-                
-            </div>
-        </div>
+    <div data-role="content" id="main-content" data-position="fixed">
+        <script src="js/three.min.js"></script>
+        <script src="js/asteroidsInterface.js"></script>     
+    </div>
 
-        <button type="button" id="restart"data-inline="true" onClick='fire()'>Fire</button>
-        <button type="button" id="loop"data-inline="true" onClick='thrust()'>Thrust</button>
-        </div><!-- /panel -->
-        
-        <div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
+    <div data-role="footer" id="footer" data-swipe-close = "false" data-position="fixed">
+ <!--            <button type="button" class ="gameButton" id="fireButton" data-inline="true" onClick='fire()'><div id="div1">--------Fire!--------</div></button>
+            <button type="button" class ="gameButton" id="thrustButton" data-inline="true">--------Thrust--------</button>  -->
+            Score : <span id="score">0</span>   Health: <span id="health">0</span>
+    </div>
+
+        <div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="mod-panel">
             <form class="userform">
-                <h2>Instructions for Use</h2>
+                <h2>Modify Game Variables</h2>
                 <hr class="instructions">
-                    <h4>To rotate:</h4> <p> Use one finger and swipe anywhere on the screen</p> 
-                    <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
-                    <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
-                    <h4>To close the sidebars:</h4> <p> Tap on the main screen</p>
-                </form>
-        </div><!-- /panel -->
+                    <h3>Enemy Settings</h3> <BR>
+                    <h4>Max Number of Asteroids:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider1" id="slider1" value="4" min="0" max="10" data-theme="c"/> <BR>
+                    <h4>Asteroid Frequency:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider2" id="slider2" value="20" min="0" max="100" data-theme="c"/> <BR>
+                    <h4>Max Number of Saucers:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider3" id="slider3" value="2" min="0" max="10" data-theme="c"/> <BR>
+                    <h4>Saucer Frequency:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider4" id="slider4" value="10" min="0" max="100" data-theme="c"/> <BR>
+                    <h4>Asteroid Speed:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider5" id="slider5" value="50" min="0" max="200" data-theme="c"/> <BR>
+                    <h4>Saucer Fire Frequency:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider6" id="slider6" value="0" min="0" max="20" data-theme="c"/> <BR>
+                    <h3>Player Settings</h3> <BR>
+                    <h4>Player Max Speed:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider7" id="slider7" value="80" min="0" max="200" data-theme="c"/> <BR>
+                    <h4>Player Thrust Power:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider8" id="slider8" value="50" min="0" max="200" data-theme="c"/> <BR>
+                    <h4>Player Fire Rate:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider9" id="slider9" value="5" min="0" max="20" data-theme="c"/> <BR>
+            </form>
+        </div>
     </div>
 </body>
     <script>
-
         var myElement = document.getElementById('header');
+        // function log(ev) {
+        //  console.log(ev);
+        // }
+        // document.body.addEventListener('touchstart', log, false);
+        // document.body.addEventListener('touchmove', log, false);
+        // document.body.addEventListener('touchend', log, false);
         
-        $(document).on("pageinit","#model-page",function(){
-            // PLACE ALL YOU EVENTS CODE HERE e.g.
+        $(document).on("pageinit","#game-page",function(){
             console.log("page init")
-            // $( "#slider" ).on( "slidestart", function( event, ui ) {seekStart(event,ui)} );
-            $('#slider').on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
-            $( "#slider").slider() ;
+            $('#slider1').on( "slidestop", function( event, ui ) {seekEnd1(event,ui)} );
+            $('#slider1').slider() ;
+            $('#slider2').on( "slidestop", function( event, ui ) {seekEnd2(event,ui)} );
+            $('#slider2').slider() ;
+            $('#slider3').on( "slidestop", function( event, ui ) {seekEnd3(event,ui)} );
+            $('#slider3').slider() ;
+            $('#slider4').on( "slidestop", function( event, ui ) {seekEnd4(event,ui)} );
+            $('#slider4').slider() ;
+            $('#slider5').on( "slidestop", function( event, ui ) {seekEnd5(event,ui)} );
+            $('#slider5').slider() ;
+            $('#slider6').on( "slidestop", function( event, ui ) {seekEnd6(event,ui)} );
+            $('#slider6').slider() ;
+            $('#slider7').on( "slidestop", function( event, ui ) {seekEnd7(event,ui)} );
+            $('#slider7').slider() ;
+            $('#slider8').on( "slidestop", function( event, ui ) {seekEnd8(event,ui)} );
+            $('#slider8').slider() ;
+            $('#slider9').on( "slidestop", function( event, ui ) {seekEnd9(event,ui)} );
+            $('#slider9').slider() ;
         })
-
-		$(document).on( "click", ".button", function() {
-		    var $this = $( this ),
-		    html = $this.jqmData( "html" ) || "";
-		})
-
-		.on( "click", ".hide-page-loading-msg", function() {
-		  $.mobile.loading( "hide" );
-		});
 
 		var isMobile = {
 		    Android: function() {
@@ -173,55 +184,63 @@
 		    }
 		};
         // create a simple instance
-        // by default, it only adds horizontal recognizers
         var mc = new Hammer(myElement);
-        // let the pan gesture support all directions.
-        // this will block the vertical scrolling on a touch-device while on the element
-        mc.get('pan').set({ pointers: 0 });
-        mc.get('pan').set({ threshold: 15 });
+        mc.get('pan').set({ pointers: 0});
+        mc.get('pan').set({ threshold: 0 });
         mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 
         var startMouseX = -1
         var startMouseY = -1
         var dx = 0
         var dy = 0
-        var rotX = 0
-        var rotY = 0
-        var isRotating = false
-        var isPanning = false
-        delta = 0;
-        isZooming = false;
-        camX = 0;
-        camY = 0;
-        camZ = 0;
-        camX3JS = 0;
-        camY3JS = 0;
-        camZ3JS = 0;
         shiftDown = false;
-        rotateDist = 0;
         dummyhtml = 0;
         navOpen = false;
+        statusReady = false
+
         mc.on("panstart", function(ev) {
             if (!navOpen){
                 ev.preventDefault()
-                if (isPanning == false) {
-                    startMouseX = ev.center.x 
-                    startMouseY = ev.center.y
-                    rotateDist = 0;
-                    isPanning = true
+                console.log(ev)
+                console.log(ev.pointers.length)
+                for (var i = ev.pointers.length - 1; i >= 0; i--) {
+                    console.log(ev.pointers[i])
+                    var valX = ev.pointers[i].screenX
+                    var valY = ev.pointers[i].screenY
+                    if (valY > 750 && valX < 150) {
+                        fireHold()
+                    }else if (valY > 750 && valX > 150 && valX < 300) {
+                        thrustHold()
+                    } else {
+                        console.log(startMouseX)
+                        if (startMouseX != -1) {
+                            dx = (valX - startMouseX) 
+                            dy = (valY - startMouseY)
+                            var plyrAngle = Math.atan2(-dy,dx)
+                            var rocketSpriteAngle = Math.atan2(-dy,dx)
+                            {{mc@gameTest: currentPlayer.setAngle(%plyrAngle%) }}
+                            setRocketAngle(rocketSpriteAngle)
+                        } else {
+                            startMouseX = valX
+                            startMouseY = valY
+                            setRocketPos(valX,-valY)
+                            console.log(startMouseX)
+                            console.log(startMouseY)
+                        }
+                    }
                 }
+
             }
         });
         mc.on("panend", function(ev) {
             if (!navOpen){
                 ev.preventDefault()
-                isRotating = false
-                isPanning = false
+                startMouseX = -1
+                startMouseY = -1
             }
         });
 
-        // listen to events...
-        numTouch = 0
+        var numTouch = 0
         $('body').on('touchmove', function(e) {
             if (!navOpen){
                 e.preventDefault();
@@ -229,80 +248,194 @@
         });
 	    $(document).on('visibilitychange', function(){
 	    	if (isMobile.any()) {
-	    		{{mc@modelViewer: print "visibilityChanged" }}
-	          //porthole.socket.close()
+	    		{{mc@gameTest: print "visibilityChanged" }}
                 window.close()
     	        }
 	    	}
 	    )
-
         mc.on("pan", function(ev) {
             if (!navOpen) {
-                //window.scrollTo(0,0);
-                ev.preventDefault()
-                dx = (ev.center.x - startMouseX) 
-                dy = (ev.center.y - startMouseY)
                 numTouch = ev.pointers.length
-                //{{mc@modelViewer: logPan(%dx%, %dy%,0,%numTouch%) }}
-                var limit = (5 + (camZ/3))
-                var limit3JS = (5 + (camZ))
-                var plyrAngle = Math.atan2(dy,dx)
-                {{mc@game: currentPlayer.setAngle(%plyrAngle%) }}
+                var valX = ev.pointers[0].screenX
+                var valY = ev.pointers[0].screenY
+                // {{mc@gameTest: print "new entry" }}
+                // {{mc@gameTest: print %valX% }}
+                // {{mc@gameTest: print %valY% }}
+
+                if (valY > 750 && valX < 150) {
+                    // {{mc@gameTest: print "firing" }}
+                    fireHold()
+                } else if (valY > 750 && valX > 150 && valX < 300) {
+                    // {{mc@gameTest: print "thrusting" }}
+                    thrustHold()
+                } else {
+                    if (startMouseX != -1) {
+                        dx = (ev.pointers[0].screenX - startMouseX) 
+                        dy = (ev.pointers[0].screenY - startMouseY)
+                        var plyrAngle = Math.atan2(-dy,dx)
+                        var rocketSpriteAngle = Math.atan2(-dy,dx)
+                        {{mc@gameTest: currentPlayer.setAngle(%plyrAngle%) }}
+                        setRocketAngle(rocketSpriteAngle)
+                    } else {
+                        startMouseX = valX
+                        startmouseY = valY
+                        setRocketPos(valX,-valY)
+                    }
+                }
+                // {{mc@gameTest: print "number of Touches" }}
+                // {{mc@gameTest: print %numTouch% }}
+                if (numTouch > 1) {                    
+                    for (var i = ev.pointers.length - 1; i >= 1; i--) {
+                        var valX = ev.pointers[i].screenX
+                        var valY = ev.pointers[i].screenY
+                        if (valY > 750 && valX < 150) {
+                            fireHold()
+                        }else if (valY > 750 && valX > 150 && valX < 300) {
+                            thrustHold()
+                        } else {
+                            if (startMouseX != -1) {
+                                dx = (valX - startMouseX) 
+                                dy = (valY - startMouseY)
+                                var plyrAngle = Math.atan2(-dy,dx)
+                                var rocketSpriteAngle = Math.atan2(-dy,dx)
+                                {{mc@gameTest: currentPlayer.setAngle(%plyrAngle%) }}
+                                setRocketAngle(rocketSpriteAngle)
+                            } else {
+                                startMouseX = valX
+                                startmouseY = valY
+                                setRocketPos(valX,-valY)
+                            }
+                        }
+                    }
+                }
             }
         });
 
         mc.on("tap", function(ev) {
             console.log(ev.type +" gesture detected.");
+            console.log(ev)
+            var valX = ev.center.x
+            var valY = ev.center.y
+            if (valY > 750 && valX < 150) {
+                fireHold()
+            }else if (valY > 750 && valX > 150 && valX < 300) {
+                thrustHold()
+            } 
         });
 
-        lastScale = 0
-
         porthole.connected = function(event) {
-            {{py startApplication(%client_id%, 'gameTest') }}
-            document.addEventListener("keydown", onKeyDown);
-            document.addEventListener("keyup", onKeyUp);       }
-        
-        //window.blockMenuHeaderScroll = true;
+            {{py startApplication(%client_id%, 'gameTest') }}}
+
         document.ontouchmove = function(e){ 
             if (!navOpen) {
                 e.preventDefault(); 
             }
         }
+        $( "#mod-panel" ).panel({
+          beforeopen: function( event, ui ) {
+            navOpen = true
+            window.scrollTo(0,0);
+            setBackgroundColor(0X707070)
+        }});
+        $( "#mod-panel" ).panel({
+          beforeclose: function( event, ui ) {
+            navOpen = false
+            window.scrollTo(0,0);
+            setBackgroundColor(0Xf1f1f1)
+        }
+        });
 
-        //document.addEventListener("mousewheel",onMouseWheel);
-
-        function onKeyDown(e) {
-            var keycode;
-            if (window.event)
-                keycode = window.event.keyCode;
-            else if (e)
-                keycode = e.which;
-            console.log(keycode)
-            if (keycode == 16) {
-                shiftDown = true
-                console.log("Shift Down")
-            }
+        //Game Events...
+       function fireHold(event) {
+            {{mc@gameTest: currentPlayer.fire() }}
         }
 
-        function onKeyUp(e) {
-            var keycode;
-            if (window.event)
-                keycode = window.event.keyCode;
-            else if (e)
-                keycode = e.which;
-            if (keycode == 16) {
-                console.log("shift up")
-                shiftDown = false
+        function thrustHold() {
+            // {{mc@gameTest: print "Player is thrusting" }}
+            {{mc@gameTest: currentPlayer.thrust() }}
+        }
+        function onUpdate(event,ui) {
+            requestAnimationFrame(onUpdate); 
+            // if (mouseStillDown == true) {
+            //     thrustHold()
+            // }
+            // if (mouseStillDown2 == true) {
+            //     fireHold()
+            // }
+            if (statusReady == true) {
+                    {{mc@gameTest: requestStatusUpdate() }}
             }
         }
-        modelList=null
+        onUpdate()
 
-        //creating a jquery function for always occuring events.
-       function fire(event) {}
-       function thrust(event) {}
+        function updateHealthScore(info) {
+            $("#health").html(info[1])
+            $("#score").html(info[0])
+        }
 
+        function onPythonInit() {
+            seekEnd1()
+            seekEnd2()
+            seekEnd3()
+            seekEnd4()
+            seekEnd5()
+            seekEnd6()
+            seekEnd7()
+            seekEnd8()
+            seekEnd9()
+            statusReady = true
+        }
+
+        //-----------variable modding---------
+        function seekEnd1(event) {
+            currentSeek = $('#slider1').val()
+            console.log("setting Max Asteroids to ", currentSeek)
+            {{mc@gameTest: setMaxAsteroids(%currentSeek%) }}
+        }
+        function seekEnd2(event) {
+            currentSeek = $('#slider2').val()
+            console.log("setting Asteroid Frequency to ", currentSeek)
+            {{mc@gameTest: setAsteroidSpawnRate(%currentSeek%) }}
+        }
+        function seekEnd3(event) {
+            currentSeek = $('#slider3').val()
+            console.log("setting Max Saucers to ", currentSeek)
+            {{mc@gameTest: setMaxSaucers(%currentSeek%) }}
+        }
+        function seekEnd4(event) {
+            currentSeek = $('#slider4').val()
+            console.log("setting Saucer Frequency to ", currentSeek)
+            {{mc@gameTest: setSaucerSpawnRate(%currentSeek%) }}
+        }
+        function seekEnd5(event) {
+            currentSeek = $('#slider5').val()
+            var realValue = currentSeek/100.0
+            console.log("setting Asteroid Speed to ", realValue)
+            {{mc@gameTest: setAsteroidSpeed(%realValue%) }}
+        }
+        function seekEnd6(event) {
+            currentSeek = $('#slider6').val()
+            console.log("setting Saucer Firerate to ", currentSeek)
+            {{mc@gameTest: setSaucerShotFrequency(%currentSeek%) }}
+        }
+        function seekEnd7(event) {
+            currentSeek = $('#slider7').val()
+            var realValue = currentSeek/100.0
+            console.log("setting Player Max Speed to ", realValue)
+            {{mc@gameTest: setPlayerSpeed(%realValue%) }}
+        }
+        function seekEnd8(event) {
+            currentSeek = $('#slider8').val()
+            var realValue = currentSeek/1000.0
+            console.log("setting Player Thrust Power ", realValue)
+            {{mc@gameTest: setPlayerThrustVal(%realValue%) }}
+        }
+        function seekEnd9(event) {
+            currentSeek = $('#slider9').val()
+            console.log("setting Player Firerate to ", currentSeek)
+            {{mc@gameTest: setPlayerFireRate(%currentSeek%) }}
+        }
     </script>
-    
     
 </body>
 </html>

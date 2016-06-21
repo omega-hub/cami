@@ -568,10 +568,8 @@ p{
             // and we can pass it back to the server app using {{mc@modelViewer}}
            modelList=ml;
             //use this $('id of object') to get the object's id and do stuff with it.
-            //$('nav-panel').hide(300).show(1000).hide(200).show(1000);
             //other events, fadeIn/fadeOut, fadeToggle, slideUp, slideDown
             // you can use the .html operator to rewrite HTML code!!!
-            // example $('nav-panel').html('codecodecodecode<tag>')
             // this completely removes the elements inside of the HTML tag and replaces it with your own code.
             // to listen to a button, you use the operator.
             i=0;
@@ -585,7 +583,6 @@ p{
                 if (ml[i][0] != lastFolder){
                     j = j + 1
                     var content = "<div data-role='collapsible' id='set" + j + "'><h4>" + ml[i][0].substring(0,(ml[i][0].length)-1) + "</h4><div id='pageButtons" + j + "'></div></div>";
-                    //var content = "fjwiofhwiofhi"
                     $("#Allcollapsable").append( content ).collapsibleset('refresh');;
                     lastFolder = ml[i][0]
                 }
