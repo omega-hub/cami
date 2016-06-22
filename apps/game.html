@@ -108,6 +108,7 @@
             <form class="userform">
                 <h2>Modify Game Variables</h2>
                 <hr class="instructions">
+                    <button onclick="restartGame()" class="button"  type="button">Restart Game</button> 
                     <h3>Enemy Settings</h3> <BR>
                     <h4>Max Number of Asteroids:</h4> <BR>
                     <input input type="number" data-role="none" name="slider1" id="slider1" value="4" min="0" max="10" data-theme="c"/> <BR>
@@ -129,7 +130,8 @@
                     <h4>Player Fire Rate:</h4> <BR>
                     <input input type="number" data-role="none" name="slider9" id="slider9" value="5" min="0" max="20" data-theme="c"/> <BR>
                     <h4>Player Max Health:</h4> <BR>
-                    <input input type="number" data-role="none" name="slider10" id="slider10" value="100" min="0" max="300" data-theme="c"/> <BR>s
+                    <input input type="number" data-role="none" name="slider10" id="slider10" value="100" min="0" max="300" data-theme="c"/> <BR>
+
             </form>
         </div>
     </div>
@@ -163,6 +165,8 @@
             $('#slider8').slider() ;
             $('#slider9').on( "slidestop", function( event, ui ) {seekEnd9(event,ui)} );
             $('#slider9').slider() ;
+            $('#slider10').on( "slidestop", function( event, ui ) {seekEnd10(event,ui)} );
+            $('#slider10').slider() ;
         })
 
 		var isMobile = {
@@ -203,6 +207,7 @@
         dummyhtml = 0;
         navOpen = false;
         statusReady = false
+        gameOver = false;
 
         mc.on("panstart", function(ev) {
             // fireDown = false
@@ -402,10 +407,17 @@
             seekEnd7()
             seekEnd8()
             seekEnd9()
+            seekEnd10()
             statusReady = true
+        }
+        function isGameOver(isGameOver) {
+            gameOver = isGameOver[0]
         }
 
         //-----------variable modding---------
+        function restartGame() {
+            {{mc@gameTest: restartGame() }}
+        }
         function seekEnd1(event) {
             currentSeek = $('#slider1').val()
             console.log("setting Max Asteroids to ", currentSeek)

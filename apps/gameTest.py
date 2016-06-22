@@ -45,8 +45,8 @@ getSceneManager().setSkyBox(skybox)
 # Apply an emissive textured effect (no lighting)
 #box.setEffect("textured -v emissive -d cyclops/test/omega-transparent.png")
 
-screenWidth = 130
-screenHeight = 100
+screenWidth = 70
+screenHeight = 50
 lastFrameTime = 0
 entities = []
 currentPlayer = False
@@ -64,7 +64,7 @@ numSaucers = 0
 saucerSpawnRate = 10
 saucerCurrPeriod = 0
 
-saucerSpeed = 0.4
+saucerSpeed = 0.2
 
 enemyFireFrequency = 10
 enemyAccuracy = 1.0
@@ -73,14 +73,14 @@ shotLifetime = 50
 shotDamage = 10
 playerShotDamage = 100
 
-playerHealth = 10000
+playerHealth = 100
 playerMaxSpeed = 0.8
-playerShotSpeed = 1.5
+playerShotSpeed = 2.0
 playerFireRate = 10
 playerMaxShots = 20
 playerThrustVal = 0.05
 enemyShotSpeed = 0.8
-deceleration = 0.985
+deceleration = 0.975
 gameOver = False
 
 def calljs(methodname, data):
@@ -88,8 +88,20 @@ def calljs(methodname, data):
     if(mc != None):
         mc.postCommand('@server::calljs ' + methodname + ' ' + str(data))
 
+def restartGame():
+    global entities, gameOver
+    if (gameOver == False):
+        destroyObj(currentPlayer)
+    for ent in entities:
+        destroyObj(ent)
+    initGame()
+
 def initGame():
-    print "Initializing Game"
+    global gameOver
+    gameOver = False
+    isGameOver = []
+    isGameOver.append('started')
+    calljs('isGameOver',isGameOver)
     screenWidth = 100
     screenHeight = 100
     lastFrameTime = 0
@@ -109,12 +121,13 @@ def initGame():
     saucerSpeed = 4
     global currentPlayer
     currentPlayer = Player()
-    createObj(currentPlayer,screenWidth/2,screenHeight/2)
-    dummy = False
+    createObj(currentPlayer,screenWidth/4,screenHeight/4)
     setUpdateFunction(onUpdate)
-    calljs('onPythoninit',dummy)
-    
-
+    info = []
+    info.append(score)
+    calljs('onPythonInit', info)
+    overText.setPosition(Vector2(-200, -800))
+    finalScore.setPosition(Vector2(-200, -1000))
 
 def gameLoop(t,dt):
     global lastFrameTime, gameOver
@@ -123,7 +136,7 @@ def gameLoop(t,dt):
     if (change > (1.0/60.0)):
         lastFrameTime = t
         if (gameOver):
-            gameOverTick(dt)
+            gameOverTick()
         else:
             gameTick(dt)
 
@@ -137,6 +150,10 @@ def gameTick(dt):
     l2.setText(newString)
     newString = "Score: " + str(score)
     l.setText(newString)
+    info = []
+    info.append(score)
+    info.append(currentPlayer.health)
+    calljs('updateHealthScore',info)
 
 
 def requestStatusUpdate():
@@ -234,13 +251,15 @@ def calculateDistance(obj1,obj2):
 
 def gameOverTick():
     overText.setStyleValue('font','fonts/arial.ttf 240')
-    overText.setPosition(Vector2(320, 640))
-    overText.setText("Game Over")
+    overText.setPosition(Vector2(800, 1200))
+    overText.setText("Game Over: Restart button from Menu")
     finalScore.setStyleValue('font','fonts/arial.ttf 180')
-    finalScore.setPosition(Vector2(320, 800))
+    finalScore.setPosition(Vector2(1000, 1400))
     newString = "Score: " + str(score)
     finalScore.setText(newString)
-    # print "GameOver"
+    isGameOver = []
+    isGameOver.append('over')
+    calljs('isGameOver',isGameOver)
 
 ################
 
@@ -322,7 +341,7 @@ class Entity:
         if (self.model):
             # print "X: " , (self.x- screenWidth/2)
             # print "Y: " , (self.y- screenHeight/2)
-            self.model.setPosition(self.x - screenWidth/2 ,self.y - screenHeight/2 - 10,-50)
+            self.model.setPosition(self.x - screenWidth/2 - self.radius/2 ,self.y - screenHeight/2 - self.radius/2,-25)
         return False
 
 ##########FIghter###########
@@ -362,18 +381,16 @@ class Fighter(Entity):
         self.accY = 0
 
     def fire(self,fireAng =False):
-        # print "Firing shot"
-
         if (self.currShots < self.maxShots and self.currFirePeriod <= 0):
             self.currShots = self.currShots + 1
-            # print "Successful Shot fired"
+
             global currentPlayer
             if self == currentPlayer:
                 self.currFirePeriod = (22 - playerFireRate)
             else:
                 self.currFirePeriod = 10
             newShot = Shot()
-            # print "enemy firing shot"
+
             createObj(newShot,self.x,self.y,[self])
             if fireAng == False:
                 fireAng = self.angle
@@ -393,7 +410,7 @@ class Fighter(Entity):
             else:
                 self.invincibleTime = 20
             self.health = self.health - damage
-            if self.health < 0:
+            if self.health <= 0:
                 destroyObj(self)
 
 ####################Player###################
@@ -419,18 +436,19 @@ class Player(Fighter):
         self.model.setScale(0.4,0.4,0.4)
         mat = self.model.getMaterial()
         mat.setProgram("textured")
-        print "Finished loading model"
+        print "Finished player model"
 
     def tick(self,dt):
         Fighter.tick(self,dt)
         self.velX = self.velX * deceleration
         self.velY = self.velY * deceleration
-        # self.thrust()
+        # self.thrust()or
         # self.fire()
 
     def onDestroy(self):
+        Entity.onDestroy(self)
+        global gameOver
         gameOver = True
-        return False
 
 ##################Asteroid#############
 
@@ -461,6 +479,8 @@ class Asteroid(Fighter):
     def tick(self,dt):
         Fighter.tick(self,dt)
         hitList = calculateCollisions(self)
+        # self.model.roll(0.02)
+        # self.model.yaw(0.02)
         for obj in hitList:
             if (obj.isFighter):
                 obj.onHit(self.damage * self.size)
@@ -483,7 +503,7 @@ class Asteroid(Fighter):
             createObj(asteroid2,self.x,self.y)
             asteroid2.setAsteroidSize(self.size/2)
         else:
-            score = score = 200
+            score = score + 200
             numAsteroids = numAsteroids - 0.25
 
 ########Shot######################
@@ -493,7 +513,7 @@ class Shot(Entity):
     def onCreate(self,x,y,shooter):
         global currentPlayer
         Entity.onCreate(self,x,y)
-        self.model = SphereShape.create(1,4)
+        self.model = SphereShape.create(0.5,4)
         mat = self.model.getMaterial()
         if (shooter == currentPlayer):
             mat.setColor(greenColor,greenColor)
@@ -501,14 +521,14 @@ class Shot(Entity):
             mat.setColor(redColor,redColor)
         mat.setProgram("colored")
         self.shooter = shooter
-        self.radius = 1.0
+        self.radius = 0.5
         self.totalShotTime = shotLifetime
         self.shotTime = self.totalShotTime
         if self.shooter == currentPlayer:
             self.damage = playerShotDamage
         else:
             self.damage = shotDamage
-        # print "shot initialized with damage: " , self.damage
+
         return False
 
     def setDamage(self,dmg):
@@ -595,7 +615,7 @@ def setAsteroidSpawnRate(num):
 def setAsteroidSpeed(num):
     global asteroidSpeed
     print "setting asteroid speed to " , num
-    asteroidSpeed = (num/3.0)
+    asteroidSpeed = (num/10.0)
 
 def setMaxSaucers(num):
     global maxSaucers
@@ -636,7 +656,7 @@ def setPlayerMaxHealth(num):
 def setPlayerSpeed(num):
     global playerMaxSpeed,currentPlayer
     print "setting player max speed to " , num
-    playerMaxSpeed = (num/3.0)
+    playerMaxSpeed = (num/10.0)
     currentPlayer.maxVelX = playerMaxSpeed
     currentPlayer.maxVelY = playerMaxSpeed
 
@@ -644,7 +664,7 @@ def setPlayerThrustVal(num):
     global playerThrustVal,currentPlayer
     print "setting player thrust val to " , num
     playerThrustVal = num
-    currentPlayer.thrustVal = playerThrustVal
+    currentPlayer.thrustVal = (playerThrustVal/4.0)
 
 def setPlayerFireRate(num):
     global playerFireRate
@@ -673,7 +693,6 @@ def onModelLoaded():
     global modelsLoaded
     modelsLoaded = modelsLoaded + 1
     if modelsLoaded >= 3:
-        print "all models loaded initializing game"
         initGame()
 
 ################Game Initialization ################
