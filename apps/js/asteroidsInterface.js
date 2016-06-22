@@ -3,7 +3,7 @@ var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHe
 
 var renderer = new THREE.WebGLRenderer();
 var fireDown = false
-var thrustDown = true
+var thrustDown = false
 // get the DOM element to attach to
 // - assume we've got jQuery to hand
 var $container = $('#header');
@@ -47,7 +47,7 @@ sprite2.position.y = -2.6
 var map2down = new THREE.TextureLoader().load( "js/thrust_buttondown.png" );
 var materialSpr2down  = new THREE.SpriteMaterial( { map: map2down , color: 0xffffff, fog: true } );
 var sprite2down  = new THREE.Sprite( materialSpr2down  );
-scene.add( sprite2 );
+scene.add( sprite2down );
 sprite2down.position.z = -5
 sprite2down.position.x = -1.5
 sprite2down.position.y = -2.6
@@ -73,16 +73,20 @@ function render() {
 	renderer.render( scene, camera );
     if (fireDown == true){
         spritedown.position.x = -2.5
+        sprite.position.x = -12
     }
     else{
         spritedown.position.x = -15
+        sprite.position.x = -2.5
     }
 
     if (thrustDown == true){
-        sprite2down.position.x = -2.5
+        sprite2down.position.x = -1.5
+        sprite2.position.x = -15
     }
     else{
         sprite2down.position.x = -15
+        sprite2.position.x = -1.5
     }
 }
 render();

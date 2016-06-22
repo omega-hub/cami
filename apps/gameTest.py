@@ -1,6 +1,19 @@
 from omega import *
 from cyclops import *
+from omegaToolkit import *
 import os, glob,math, time, random
+
+ui = UiModule.createAndInitialize().getUi()
+l = Label.create(ui)
+l.setStyleValue('font','fonts/arial.ttf 120')
+l.setPosition(Vector2(4, 26))
+newNumber = 80
+l2 = Label.create(ui)
+l2.setStyleValue('font','fonts/arial.ttf 120')
+l2.setPosition(Vector2(4, 140))
+
+overText = Label.create(ui)
+finalScore = Label.create(ui)
 
 # camera = getDefaultCamera()
 # camera.setPosition(0,0,0)
@@ -12,12 +25,16 @@ greenColor = Color("green")
 # whiteColor = Color("white")
 
 l1 = Light.create()
-l1.setPosition(0, 0, 0)
+l1.setPosition(0, 0, -0.5)
 l1.setColor(Color(1, 1, 0.8, 1))
-l1.setAmbient(Color(0,0,0.1,1))
+l1.setAmbient(Color(0.1,0.1,0.1,1))
 l1.setLightType(LightType.Spot)
 l1.setLightDirection(Vector3(0, 0, -1))
-random.seed("qwerty")
+random.seed("randomseed")
+
+skybox = Skybox()
+skybox.loadCubeMap("../data/space", "png")
+getSceneManager().setSkyBox(skybox)
 # testObj = BoxShape.create(100, 100, 100)
 # testObj.getMaterial().setColor(redColor, whiteColor)
 # testObj.setPosition(Vector3(0, 0, 4))
@@ -63,6 +80,8 @@ playerFireRate = 10
 playerMaxShots = 20
 playerThrustVal = 0.05
 enemyShotSpeed = 0.8
+deceleration = 0.985
+gameOver = False
 
 def calljs(methodname, data):
     mc = getMissionControlClient()
@@ -98,19 +117,27 @@ def initGame():
 
 
 def gameLoop(t,dt):
-    global lastFrameTime
+    global lastFrameTime, gameOver
     #currentTime = time.time()
     change = t - lastFrameTime
     if (change > (1.0/60.0)):
         lastFrameTime = t
-        gameTick(dt)
+        if (gameOver):
+            gameOverTick(dt)
+        else:
+            gameTick(dt)
 
 def gameTick(dt):
     for ent in entities:   
         ent.tick(dt)
     calculateSpawn()
     draw()
-    return False
+    global l2, l, currentPlayer,score
+    newString = "Health: " + str(currentPlayer.health)
+    l2.setText(newString)
+    newString = "Score: " + str(score)
+    l.setText(newString)
+
 
 def requestStatusUpdate():
     global currentPlayer
@@ -205,8 +232,15 @@ def calculateDistance(obj1,obj2):
     dist = math.sqrt(math.pow(obj1.y-obj2.y,2) + math.pow(obj1.x-obj2.x,2))
     return dist
 
-def gameOver():
-    print "GameOver"
+def gameOverTick():
+    overText.setStyleValue('font','fonts/arial.ttf 240')
+    overText.setPosition(Vector2(320, 640))
+    overText.setText("Game Over")
+    finalScore.setStyleValue('font','fonts/arial.ttf 180')
+    finalScore.setPosition(Vector2(320, 800))
+    newString = "Score: " + str(score)
+    finalScore.setText(newString)
+    # print "GameOver"
 
 ################
 
@@ -271,8 +305,18 @@ class Entity:
             self.y = screenHeight
         if abs(self.velX + self.accX) < self.maxVelX:
             self.velX = self.velX + self.accX
+        else:
+            if self.velX > 0:
+                self.velX = self.maxVelX
+            else:
+                self.velX = -self.maxVelX
         if abs(self.velY + self.accY) < self.maxVelY: 
             self.velY = self.velY + self.accY
+        else:
+            if self.velY > 0:
+                self.velY = self.maxVelY
+            else:
+                self.velY = -self.maxVelY
 
     def draw(self):
         if (self.model):
@@ -362,25 +406,30 @@ class Player(Fighter):
     def onCreate(self,x,y):
         Fighter.onCreate(self,x,y)
         #self.model = BoxShape.create(2.0,1.0,1.0)
-        self.radius = 1
+        self.radius = 2
         self.maxHealth = playerHealth
         self.health = self.maxHealth
         self.maxShots = playerMaxShots
         self.invincibleTime = 100
         self.prepareModel()
-        return False
+        self.setAngle(0)
 
     def prepareModel(self):
         self.model = StaticObject.create("ship.fbx")
-        self.model.setScale(0.2,0.2,0.2)
+        self.model.setScale(0.4,0.4,0.4)
+        mat = self.model.getMaterial()
+        mat.setProgram("textured")
         print "Finished loading model"
 
     def tick(self,dt):
         Fighter.tick(self,dt)
+        self.velX = self.velX * deceleration
+        self.velY = self.velY * deceleration
         # self.thrust()
         # self.fire()
+
     def onDestroy(self):
-        gameOver()
+        gameOver = True
         return False
 
 ##################Asteroid#############
@@ -390,10 +439,9 @@ class Asteroid(Fighter):
         Fighter.onCreate(self,x,y)
         self.health = 50
         self.damage = 50
-        self.invincibleTime = 10
+        self.invincibleTime = 20
         self.size = 1.0
         self.model = False
-
 
         angle = random.random()*math.pi
         spd = random.uniform(asteroidSpeed/2.0,asteroidSpeed)
@@ -406,9 +454,9 @@ class Asteroid(Fighter):
         self.model = StaticObject.create("asteroid2.fbx")
         scale = size * 1.2
         self.model.setScale(scale,scale,scale)
+        mat = self.model.getMaterial()
+        mat.setProgram("textured")
         self.radius = 6 * size
-
-
 
     def tick(self,dt):
         Fighter.tick(self,dt)
@@ -451,7 +499,7 @@ class Shot(Entity):
             mat.setColor(greenColor,greenColor)
         else:
             mat.setColor(redColor,redColor)
-
+        mat.setProgram("colored")
         self.shooter = shooter
         self.radius = 1.0
         self.totalShotTime = shotLifetime
@@ -497,6 +545,8 @@ class Saucer(Fighter):
         self.radius = 2.5
         self.model = StaticObject.create("ufo.fbx")
         self.model.setScale(0.7,0.7,0.7)
+        mat = self.model.getMaterial()
+        mat.setProgram("textured")
 
         self.health = 50
         angle = random.random()*math.pi
@@ -545,7 +595,7 @@ def setAsteroidSpawnRate(num):
 def setAsteroidSpeed(num):
     global asteroidSpeed
     print "setting asteroid speed to " , num
-    asteroidSpeed = num
+    asteroidSpeed = (num/3.0)
 
 def setMaxSaucers(num):
     global maxSaucers
@@ -586,7 +636,7 @@ def setPlayerMaxHealth(num):
 def setPlayerSpeed(num):
     global playerMaxSpeed,currentPlayer
     print "setting player max speed to " , num
-    playerMaxSpeed = num
+    playerMaxSpeed = (num/3.0)
     currentPlayer.maxVelX = playerMaxSpeed
     currentPlayer.maxVelY = playerMaxSpeed
 
@@ -615,7 +665,8 @@ def LoadModel(modelName):
     model.generateNormals = False
     model.optimize = False
     model.size = 10
-    getSceneManager().loadModelAsync(model, 'onModelLoaded()')
+    getSceneManager().loadModel(model)
+    onModelLoaded()
 
 def onModelLoaded():
     print "Finished loading model"
@@ -627,12 +678,10 @@ def onModelLoaded():
 
 ################Game Initialization ################
 
-
 def loadModels():
     LoadModel("ship.fbx")
     LoadModel("asteroid2.fbx")
     LoadModel("ufo.fbx")
-
 
 def onUpdate(frame, t, dt):
     gameLoop(t,dt)

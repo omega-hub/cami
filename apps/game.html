@@ -128,6 +128,8 @@
                     <input input type="number" data-role="none" name="slider8" id="slider8" value="50" min="0" max="200" data-theme="c"/> <BR>
                     <h4>Player Fire Rate:</h4> <BR>
                     <input input type="number" data-role="none" name="slider9" id="slider9" value="5" min="0" max="20" data-theme="c"/> <BR>
+                    <h4>Player Max Health:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider10" id="slider10" value="100" min="0" max="300" data-theme="c"/> <BR>s
             </form>
         </div>
     </div>
@@ -189,6 +191,10 @@
         mc.get('pan').set({ threshold: 0 });
         mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 
+        mc.get('press').set({ pointers: 0});
+        mc.get('press').set({ threshold: 9 });
+        mc.get('press').set({ time: 5 });
+
         var startMouseX = -1
         var startMouseY = -1
         var dx = 0
@@ -199,6 +205,8 @@
         statusReady = false
 
         mc.on("panstart", function(ev) {
+            // fireDown = false
+            // thrustDown = false
             if (!navOpen){
                 ev.preventDefault()
                 console.log(ev)
@@ -235,9 +243,13 @@
         mc.on("panend", function(ev) {
             if (!navOpen){
                 ev.preventDefault()
-                startMouseX = -1
-                startMouseY = -1
+                if (ev.pointers.length <= 1){
+                    startMouseX = -1
+                    startMouseY = -1
+                }
             }
+            fireDown = false
+            thrustDown = false
         });
 
         var numTouch = 0
@@ -254,6 +266,8 @@
 	    	}
 	    )
         mc.on("pan", function(ev) {
+            fireDown = false
+            thrustDown = false
             if (!navOpen) {
                 numTouch = ev.pointers.length
                 var valX = ev.pointers[0].screenX
@@ -276,6 +290,9 @@
                         var rocketSpriteAngle = Math.atan2(-dy,dx)
                         {{mc@gameTest: currentPlayer.setAngle(%plyrAngle%) }}
                         setRocketAngle(rocketSpriteAngle)
+                        if (Math.sqrt(dx * dx + dy * dy) > 180) {
+                            thrustHold()
+                        }
                     } else {
                         startMouseX = valX
                         startmouseY = valY
@@ -311,7 +328,7 @@
             }
         });
 
-        mc.on("tap", function(ev) {
+        mc.on("press", function(ev) {
             console.log(ev.type +" gesture detected.");
             console.log(ev)
             var valX = ev.center.x
@@ -364,8 +381,6 @@
             // if (mouseStillDown2 == true) {
             //     fireHold()
             // }
-            fireDown = false
-            thrustDown = false
             if (statusReady == true) {
                     {{mc@gameTest: requestStatusUpdate() }}
             }
@@ -438,6 +453,11 @@
             currentSeek = $('#slider9').val()
             console.log("setting Player Firerate to ", currentSeek)
             {{mc@gameTest: setPlayerFireRate(%currentSeek%) }}
+        }
+        function seekEnd10(event) {
+            currentSeek = $('#slider10').val()
+            console.log("setting Player Health to ", currentSeek)
+            {{mc@gameTest: setPlayerMaxHealth(%currentSeek%) }}
         }
     </script>
     
