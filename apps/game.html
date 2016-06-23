@@ -121,7 +121,7 @@
                     <h4>Asteroid Speed:</h4> <BR>
                     <input input type="number" data-role="none" name="slider5" id="slider5" value="50" min="0" max="200" data-theme="c"/> <BR>
                     <h4>Saucer Fire Frequency:</h4> <BR>
-                    <input input type="number" data-role="none" name="slider6" id="slider6" value="0" min="0" max="20" data-theme="c"/> <BR>
+                    <input input type="number" data-role="none" name="slider6" id="slider6" value="15" min="0" max="20" data-theme="c"/> <BR>
                     <h3>Player Settings</h3> <BR>
                     <h4>Player Max Speed:</h4> <BR>
                     <input input type="number" data-role="none" name="slider7" id="slider7" value="80" min="0" max="200" data-theme="c"/> <BR>
@@ -131,6 +131,10 @@
                     <input input type="number" data-role="none" name="slider9" id="slider9" value="5" min="0" max="20" data-theme="c"/> <BR>
                     <h4>Player Max Health:</h4> <BR>
                     <input input type="number" data-role="none" name="slider10" id="slider10" value="100" min="0" max="300" data-theme="c"/> <BR>
+                    <h4>Player Shot Speed:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider11" id="slider11" value="100" min="0" max="300" data-theme="c"/> <BR>
+                    <h4>Player Shot LifeTime:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider12" id="slider12" value="50" min="0" max="200" data-theme="c"/> <BR>
 
             </form>
         </div>
@@ -167,6 +171,10 @@
             $('#slider9').slider() ;
             $('#slider10').on( "slidestop", function( event, ui ) {seekEnd10(event,ui)} );
             $('#slider10').slider() ;
+            $('#slider11').on( "slidestop", function( event, ui ) {seekEnd11(event,ui)} );
+            $('#slider11').slider() ;
+            $('#slider12').on( "slidestop", function( event, ui ) {seekEnd12(event,ui)} );
+            $('#slider12').slider() ;
         })
 
 		var isMobile = {
@@ -265,7 +273,7 @@
         });
 	    $(document).on('visibilitychange', function(){
 	    	if (isMobile.any()) {
-	    		{{mc@gameTest: print "visibilityChanged" }}
+	    		{{mc@gameTest: print "visibilityChanged closing asteroids game" }}
                 window.close()
     	        }
 	    	}
@@ -408,6 +416,8 @@
             seekEnd8()
             seekEnd9()
             seekEnd10()
+            seekEnd11()
+            seekEnd12()
             statusReady = true
         }
         function isGameOver(isGameOver) {
@@ -470,6 +480,16 @@
             currentSeek = $('#slider10').val()
             console.log("setting Player Health to ", currentSeek)
             {{mc@gameTest: setPlayerMaxHealth(%currentSeek%) }}
+        }
+        function seekEnd11(event) {
+            currentSeek = $('#slider11').val()
+            console.log("setting Player Shot Speed to ", currentSeek)
+            {{mc@gameTest: setPlayerShotSpeed(%currentSeek%) }}
+        }
+        function seekEnd12(event) {
+            currentSeek = $('#slider12').val()
+            console.log("setting Shot life time ", currentSeek)
+            {{mc@gameTest: setShotLifeTime(%currentSeek%) }}
         }
     </script>
     

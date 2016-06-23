@@ -79,7 +79,7 @@ playerShotSpeed = 2.0
 playerFireRate = 10
 playerMaxShots = 20
 playerThrustVal = 0.05
-enemyShotSpeed = 0.8
+enemyShotSpeed = 0.35
 deceleration = 0.975
 gameOver = False
 
@@ -275,8 +275,8 @@ class Entity:
         self.accX = 0
         self.accY = 0
         self.angle = 0
-        self.maxVelX = playerMaxSpeed
-        self.maxVelY = playerMaxSpeed
+        self.maxVelX = 9000
+        self.maxVelY = 9000
         self.damage = 30
         self.isFighter = False
         return False
@@ -341,7 +341,7 @@ class Entity:
         if (self.model):
             # print "X: " , (self.x- screenWidth/2)
             # print "Y: " , (self.y- screenHeight/2)
-            self.model.setPosition(self.x - screenWidth/2 - self.radius/2 ,self.y - screenHeight/2 - self.radius/2,-25)
+            self.model.setPosition(self.x - screenWidth/2  ,self.y - screenHeight/2 ,-25)
         return False
 
 ##########FIghter###########
@@ -391,15 +391,15 @@ class Fighter(Entity):
                 self.currFirePeriod = 10
             newShot = Shot()
 
-            createObj(newShot,self.x,self.y,[self])
+            createObj(newShot,(self.x *  1.0),(self.y * 1.0),[self])
             if fireAng == False:
                 fireAng = self.angle
             if (self == currentPlayer):
-                velX = math.cos(fireAng) * playerShotSpeed
-                velY = math.sin(fireAng) * playerShotSpeed
+                velX = math.cos(fireAng * 1.0) * (playerShotSpeed * 1.0)
+                velY = math.sin(fireAng * 1.0) * (playerShotSpeed * 1.0)
             else:
-                velX = math.cos(fireAng) * enemyShotSpeed
-                velY = math.sin(fireAng) * enemyShotSpeed
+                velX = math.cos(fireAng * 1.0) * (enemyShotSpeed * 1.0)
+                velY = math.sin(fireAng * 1.0) * (enemyShotSpeed * 1.0)
             newShot.setVelocity(velX,velY)
 
     def onHit(self,damage):
@@ -430,6 +430,8 @@ class Player(Fighter):
         self.invincibleTime = 100
         self.prepareModel()
         self.setAngle(0)
+        self.maxVelX = playerMaxSpeed
+        self.maxVelY = playerMaxSpeed
 
     def prepareModel(self):
         self.model = StaticObject.create("ship.fbx")
@@ -528,7 +530,6 @@ class Shot(Entity):
             self.damage = playerShotDamage
         else:
             self.damage = shotDamage
-
         return False
 
     def setDamage(self,dmg):
@@ -615,7 +616,7 @@ def setAsteroidSpawnRate(num):
 def setAsteroidSpeed(num):
     global asteroidSpeed
     print "setting asteroid speed to " , num
-    asteroidSpeed = (num/10.0)
+    asteroidSpeed = (num/6.0)
 
 def setMaxSaucers(num):
     global maxSaucers
@@ -645,7 +646,7 @@ def setEnemyShotSpeed(num):
 def setPlayerShotSpeed(num):
     global playerShotSpeed
     print "setting player shot Speed to " , num
-    playerShotSpeed = num
+    playerShotSpeed = (num/100.0)
 
 def setPlayerMaxHealth(num):
     global playerHealth, currentPlayer
@@ -656,20 +657,25 @@ def setPlayerMaxHealth(num):
 def setPlayerSpeed(num):
     global playerMaxSpeed,currentPlayer
     print "setting player max speed to " , num
-    playerMaxSpeed = (num/10.0)
+    playerMaxSpeed = (num/6.0)
     currentPlayer.maxVelX = playerMaxSpeed
     currentPlayer.maxVelY = playerMaxSpeed
 
 def setPlayerThrustVal(num):
     global playerThrustVal,currentPlayer
     print "setting player thrust val to " , num
-    playerThrustVal = num
-    currentPlayer.thrustVal = (playerThrustVal/4.0)
+    playerThrustVal = (num/4.0)
+    currentPlayer.thrustVal = playerThrustVal
 
 def setPlayerFireRate(num):
     global playerFireRate
     print "setting player firerate to " , num
     playerFireRate = num
+
+def setShotLifeTime(num):
+    global shotLifetime
+    print "setting shot life time to " , num
+    shotLifetime = num
 
 def onReload():
     return True

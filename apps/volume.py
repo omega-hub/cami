@@ -227,3 +227,5 @@ def changeSlice(axis, start,end):
 
 def onReload():
     calljs('resetImage', False)
+
+# setTilesEnabled(0, 0, 5, 5, False)

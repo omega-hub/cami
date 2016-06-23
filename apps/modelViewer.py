@@ -52,7 +52,7 @@ def setLocalDebugging(debugMode):
 
 def InitializeModelList():
     print "----------Initializing Model List -------------"
-    print ModelDict
+    # print ModelDict
     if (localDebug):
         os.chdir("../data")
     else:
@@ -68,7 +68,7 @@ def InitializeModelList():
 
             if len(path[len(cwd)+1:]) > 1:
                 newStr = path[len(cwd)+1:] + "/"+ name
-                print newStr
+                # print newStr
                 if newStr in ModelDict.keys():
                     newTuple = [path[len(cwd)+1:] + "/",name,image,"loaded"]
                 else:
@@ -214,3 +214,9 @@ def printMessage():
 def onReload():
     calljs('resetImage', 0)
     InitializeModelList()
+
+# if ('firstTimeLoad' in globals()):
+#     print "found in locals"
+setTilesEnabled(0, 0, 5, 5, False)
+# else:
+#     print "not found in locals"

@@ -224,3 +224,5 @@ def closeMovie():
 def onReload():
     print "Returning to Movie Viewer"
     InitializeMovieList()
+
+# setTilesEnabled(0, 0, 5, 5, False)
