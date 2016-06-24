@@ -28,9 +28,7 @@
     float: center;
     outline:none;
     box-shadow: inset -.5px -1px 5px 0px black;
-    display:inline !important;
-
-    
+    display:inline !important;    
     }
 
     div.hide { display:none; }
@@ -98,10 +96,10 @@
         <input  input type="number" data-role="none" name="slider" id="slider" value="0" min="0" max="100" data-theme="c"/>
         
         <button type="button" id="play" data-inline="true"onClick='togglePlay()'>
-            <div id="div1"> Play </div>
+        <div id="div1"> Play </div>
         </button>
         <button type="button" id="pause" data-inline="true"onClick='togglePlay()'>
-            <div id="div2"/> Pause </div>
+        <div id="div2"/> Pause </div>
         </button>
 
         <button type="button" id="restart"data-inline="true" onClick='doRestart()'>Restart</button>
@@ -125,12 +123,9 @@
                      <h4>To Restart:</h4> <p> Restart the movie by pressing the Restart button at the bottom of the screen.</p>
                     <h4>To close the sidebars:</h4> <p> Tap on the main screen.</p>
                 </form>
-        </div><!-- /panel -->
-
+        </div>
     </div>
 
-    <!-- <input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1"> -->
-  <!-- Video -->
     <script>
     $(document).on('pageshow','#movie-page', function(e,data){ 
         $('#main-content').css('margin-top',($(window).height() - $('[data-role=header]').height() - $('[data-role=footer]').height() - $('#index-content').outerHeight())/2);
@@ -181,7 +176,7 @@
         //$(playButton).css({ width: '300px', 'padding-top': '10px', 'padding-bottom': '10px' });
         //creating a jquery function for always occuring events.
         var videoPlaying = false
-        var appName = 'modelViewer'
+        var appName = 'movieViewer'
         var seeking = false
         var videoLength = 0
         var currentTime = 0
