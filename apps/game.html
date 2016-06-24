@@ -205,9 +205,9 @@
         mc.get('pan').set({ threshold: 0 });
         mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 
-        mc.get('press').set({ pointers: 0});
-        mc.get('press').set({ threshold: 9 });
-        mc.get('press').set({ time: 5 });
+        // mc.get('press').set({ pointers: 0});
+        // mc.get('press').set({ threshold: 0 });
+        // mc.get('press').set({ time: 0});
 
         var startMouseX = -1
         var startMouseY = -1
@@ -223,7 +223,7 @@
             // fireDown = false
             // thrustDown = false
             if (!navOpen){
-                ev.preventDefault()
+                // ev.preventDefault()
                 console.log(ev)
                 console.log(ev.pointers.length)
                 for (var i = ev.pointers.length - 1; i >= 0; i--) {
@@ -343,16 +343,23 @@
             }
         });
 
-        mc.on("press", function(ev) {
+        mc.on("tap", function(ev) {
+            // ev.preventDefault()
             console.log(ev.type +" gesture detected.");
             console.log(ev)
             var valX = ev.center.x
             var valY = ev.center.y
+            thrustDown = false
+            fireDown = false
+            // startMouseX = -1
+            // startMouseY = -1
             if (valY > 750 && valX < 150) {
+                ev.preventDefault()
                 fireHold()
             }else if (valY > 750 && valX > 150 && valX < 300) {
+                ev.preventDefault()
                 thrustHold()
-            } 
+            }
         });
 
         porthole.connected = function(event) {
