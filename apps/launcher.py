@@ -163,6 +163,8 @@ def initializeAllApps():
 
     mc.spawn('modelViewer',1,'modelViewer.py','default.cfg')
     AppDict['modelViewer'] = True
+    global numApps
+    numApps = 1
 
     # mc.spawn('volume',1,'volume.py','default.cfg')
     # AppDict['volume'] = True

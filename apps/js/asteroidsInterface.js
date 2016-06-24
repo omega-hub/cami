@@ -27,6 +27,12 @@ sprite.position.z = -5
 sprite.position.x = -2.5
 sprite.position.y = -2.6
 
+var spriteRight = new THREE.Sprite( materialSpr );
+scene.add( spriteRight );
+spriteRight.position.z = -5
+spriteRight.position.x = 2.5
+spriteRight.position.y = -2.6
+
 var mapdown = new THREE.TextureLoader().load( "js/fire_buttondown.png" );
 var materialSprdown = new THREE.SpriteMaterial( { map: mapdown, color: 0xffffff, fog: true } );
 var spritedown = new THREE.Sprite( materialSprdown );
@@ -35,6 +41,11 @@ spritedown.position.z = -5
 spritedown.position.x = -2.5
 spritedown.position.y = -2.6
 
+var spritedownRight = new THREE.Sprite( materialSprdown );
+scene.add( spritedownRight );
+spritedownRight.position.z = -5
+spritedownRight.position.x = -2.5
+spritedownRight.position.y = -2.6
 
 var map2 = new THREE.TextureLoader().load( "js/thrust_button.png" );
 var materialSpr2 = new THREE.SpriteMaterial( { map: map2, color: 0xffffff, fog: true } );
@@ -44,6 +55,12 @@ sprite2.position.z = -5
 sprite2.position.x = -1.5
 sprite2.position.y = -2.6
 
+var sprite2Right = new THREE.Sprite( materialSpr2 );
+scene.add( sprite2Right );
+sprite2Right.position.z = -5
+sprite2Right.position.x = 1.5
+sprite2Right.position.y = -2.6
+
 var map2down = new THREE.TextureLoader().load( "js/thrust_buttondown.png" );
 var materialSpr2down  = new THREE.SpriteMaterial( { map: map2down , color: 0xffffff, fog: true } );
 var sprite2down  = new THREE.Sprite( materialSpr2down  );
@@ -51,6 +68,12 @@ scene.add( sprite2down );
 sprite2down.position.z = -5
 sprite2down.position.x = -1.5
 sprite2down.position.y = -2.6
+
+var sprite2downRight = new THREE.Sprite( materialSpr2down );
+scene.add( sprite2downRight );
+sprite2downRight.position.z = -5
+sprite2downRight.position.x = 1.5
+sprite2downRight.position.y = -2.6
 
 var rocketMap = new THREE.TextureLoader().load( "js/rocket.png" );
 var rocketMat = new THREE.SpriteMaterial( { map: rocketMap, color: 0xffffff, fog: true } );
@@ -74,19 +97,27 @@ function render() {
     if (fireDown == true){
         spritedown.position.x = -2.5
         sprite.position.x = -12
+        spritedownRight.position.x = 2.5
+        spriteRight.position.x=15
     }
     else{
         spritedown.position.x = -15
         sprite.position.x = -2.5
+        spritedownRight.position.x = 15
+        spriteRight.position.x=2.5
     }
 
     if (thrustDown == true){
         sprite2down.position.x = -1.5
         sprite2.position.x = -15
+        sprite2downRight.position.x = 1.5
+        sprite2Right.position.x=15
     }
     else{
         sprite2down.position.x = -15
         sprite2.position.x = -1.5
+        sprite2downRight.position.x = 15
+        sprite2Right.position.x=1.5
     }
 }
 render();
