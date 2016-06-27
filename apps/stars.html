@@ -1,0 +1,652 @@
+<html lang="en">
+<head>
+
+    <title>Star Viewer</title>
+    <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css">
+    <script src="js/jquery-1.12.0.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="porthole/res/porthole.js"></script>
+    <script src="js/hammer.js"></script>
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <script src='js/THREEx.WindowResize.js'></script>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="apple-touch-icon" href="./stars.png" />
+    <style>
+    .button{
+        background-color: #e8e9f0; 
+        border: 1px black;
+        color: black;
+        text-shadow: none !important;
+        text-align: center;
+        vertical-align: middle;
+        width:235px;
+        height: 40px;
+        font-size: 15px;
+        margin: 4px 2px;
+        border-radius: 1px;
+        float: center;
+        outline: none;
+        box-shadow: inset -.5px -1px 5px 0px black;
+    }
+    button{ text-shadow: none !important; }
+    div.hide { display:none; }
+    div.show {  }
+    .image{ border: 10px black; }
+    .button:active{ box-shadow: inset .5px 1px 5px 0px black; }
+    h4 {
+        color: #333333;
+        margin-bottom: 0em;
+    }
+    h2{ margin-bottom: .2em; }
+    hr.old{
+        display: block;
+        color: red;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        margin-left: auto;
+        margin-right: auto;
+        border-style: inset;
+        border-width: 3px;
+    }
+    .cAxis{ background-color: red !important; }
+    hr{
+        border: 0;
+        width: 100%;
+        color: #ccccce;
+        margin-top: 0em;
+        margin-bottom: .2em;
+        background-color: #ccccce;
+        height: 1px;
+    }
+    p{
+        margin-top: 0em;
+        margin-bottom: 0.5em;
+    }
+    .collapsable{ outline:none; }
+    .content{
+        float: center;
+        float: top;
+    }
+    body { margin: 0; }
+    canvas { width: 100%; height: 100% }
+    </style> 
+<body>
+<!--<body style="overflow:hidden;">-->
+    <div data-role="page" id="stars-page">
+        <div data-role="header" id="header" data-position ="fixed">
+            <a href="#nav-panel" data-icon="bars"  data-iconpos="notext">Menu</a>
+            <a href="#help-panel" data-icon="info"   data-iconpos="notext">Add</a>
+            <h1>Star Viewer</h1>
+            <script src="js/three.min.js"></script>
+            <script src="js/modelViewerPreview.js"></script> 
+        </div>
+        <div data-role="footer" id="footer" data-swipe-close = "false" data-position="fixed">
+            <button type="button" id="starset-1" data-inline="true"onClick='setStar1()'>Star Set 1</button>
+            <button type="button" id="starset-2" data-inline="true"onClick='setStar2()'>Star Set 2</button>
+            <button type="button" id="starset-3" data-inline="true"onClick='setStar3()'>Star Set 3</button>
+            <button type="button" id="starset-4" data-inline="true"onClick='setStar4()'>Star Set 4</button>
+            <button type="button" id="overWriteView" data-inline="true"onClick='overwrite()'>Overwrite Current View</button>
+            <button type="button" id="newView" data-inline="true"onClick='saveView()'>Save New View</button>
+
+            <button type="button" id="play" data-inline="true"onClick='togglePlay()'>
+            <div id="div1"> Auto-Scroll </div>
+            </button>
+            <button type="button" id="pause" data-inline="true"onClick='togglePlay()'>
+            <div id="div2"/> Fixed </div>
+            </button>
+            <label for="range-1a">Star Size:</label>
+            <input  input type="number" data-role="none" name="sizeSlider" id="sizeSlider" value="0" min="0" max="20" step = "0.1" data-theme="c"/>
+        </div>
+        <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
+            <ul data-role="listview" class="panel">
+                <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
+                <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">  
+                </div>
+        </div>
+            </ul>
+        </div>
+        <div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
+            <form class="userform">
+                <h2>Instructions for Use</h2>
+                <hr class="instructions">
+                    <h4>To choose an axis:</h4> <p> Tap the button for the corresponding axis.</p> 
+                    <h4>To cut away stars:</h4> <p> Use the slide bar to cut away stars from both sides of the model on the selected axis</p> 
+                    <h4>To rotate:</h4> <p> Use one finger and swipe anywhere on the screen</p> 
+                    <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
+                    <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
+                    <h4>To close the sidebars:</h4> <p> Tap on the main screen</p>
+                    <h4>Sensitivity:</h4> <BR>
+                    <input input type="number" data-role="none" name="slider" id="slider" value="3" min="0" max="20" step="0.1" data-theme="c"/> <BR>
+                    <button onclick="resetImage()" id="reset"  type="button">Reset Orientation</button> 
+            </form>
+        </div>
+    </div>
+</body>
+    <script>
+        var myElement = document.getElementById('header');
+        
+        $(document).on("pageinit","#stars-page",function(){
+            console.log("page init")
+            $('#slider').on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
+            $( "#slider").slider() ;
+            $('#slider').on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
+
+            $( "#sizeSlider" ).on( "slidestart", function( event, ui ) {sizeSeekStart(event,ui)} );
+            $( "#sizeSlider" ).on( "slidestop", function( event, ui ) {sizeSeekEnd(event,ui)} );
+            // $( "#sizeSlider").hide();
+            $( "#sizeSlider").slider() ;
+            setStar1()
+            visible = true
+        })
+        $("#play").hide();
+
+        $("#play").on('click', function() {
+        $("#play").hide();
+        $("#pause").show();
+        });
+
+        $("#pause").on('click', function() {
+        $("#pause").hide();
+        $("#play").show();
+        });
+        var isMobile = {
+            Android: function() {
+                return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function() {
+                return navigator.userAgent.match(/BlackBerry/i);
+            },
+            iOS: function() {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function() {
+                return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function() {
+                return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function() {
+                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+            }
+        };
+
+        // $(document).on( "click", ".button", function() {
+        //         var $this = $( this ),
+        //         html = $this.jqmData( "html" ) || "";
+        //     $.mobile.loading( 'show', {
+        //         text: "Loading Model",
+        //         textVisible: true,
+        //         theme: "b",
+        //         textonly: false,
+        //         icon:"ajax-loader.gif",
+        //     });
+        // })
+
+        $(document).on( "click", ".hide-page-loading-msg", function() { $.mobile.loading( "hide" ); });
+
+        $(document).on('visibilitychange', function(){
+            if (isMobile.any() && visible == true) {
+                {{mc@stars: print "visibilityChanged closing Stars Viewer" }}
+                visible = false
+                window.close()
+            }
+        })
+        // create a simple instance
+        // by default, it only adds horizontal recognizers
+        var mc = new Hammer(myElement);
+        // let the pan gesture support all directions.
+        // this will block the vertical scrolling on a touch-device while on the element
+        mc.get('pan').set({ pointers: 0 });
+        mc.get('pan').set({ threshold: 15 });
+        mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+        mc.get('pinch').set({ enable: true });
+        mc.get('pinch').set({ threshold: 0.08 });
+
+        var startMouseX = -1
+        var startMouseY = -1
+        var dx = 0
+        var dy = 0
+        var rotX = 0
+        var rotY = 0
+        var isRotating = false
+        var isPanning = false
+        delta = 0;
+        isZooming = false;
+        camX = 0;
+        camY = 0;
+        camZ = 0;
+        camX3JS = 0;
+        camY3JS = 0;
+        camZ3JS = 0;
+        shiftDown = false;
+        rotateDist = 0;
+        dummyhtml = 0;
+        viewList=null
+        navOpen = false;
+        var currentStarSet = 1
+        var currSlider = 0
+        var currentView = -1
+        var currentNumViews = 0
+        seeking = false
+        var XStart = 0
+        var XEnd = 100
+        var YStart = 0
+        var YEnd = 100
+        var ZStart = 0
+        var ZEnd = 100
+        var numButtons = -1
+        var playing = false
+        setSensitivity(0.8)
+        mc.on("panstart", function(ev) {
+            if (!navOpen){
+                ev.preventDefault()
+                if (isPanning == false) {
+                    startMouseX = ev.center.x 
+                    startMouseY = ev.center.y
+                    rotateDist = 0;
+                    isPanning = true
+                    {{mc@stars: toggleAutoRotate(False) }} 
+                }
+            }
+        });
+        mc.on("panend", function(ev) {
+            if (!navOpen){
+                ev.preventDefault()
+                isRotating = false
+                isPanning = false
+                if (playing) {
+                    {{mc@stars: toggleAutoRotate(True) }} 
+                } else {
+                    {{mc@stars: toggleAutoRotate(False) }} 
+                } 
+            }
+        });
+        // listen to events...
+        numTouch = 0
+        $( "#nav-panel" ).panel({
+          beforeclose: function( event, ui ) {
+            navOpen = false
+            window.scrollTo(0,0);
+            setCubeColor(0X3b5a5f)
+            setBackgroundColor(0Xf1f1f1)
+        }
+        });
+        $( "#nav-panel" ).panel({
+          beforeopen: function( event, ui ) {
+            navOpen = true
+            window.scrollTo(0,0);
+            setCubeColor(0x0B1011)
+            setBackgroundColor(0X707070)
+        }});
+        $( "#help-panel" ).panel({
+          beforeclose: function( event, ui ) {
+            navOpen = false
+            window.scrollTo(0,0);
+            setCubeColor(0X3b5a5f)
+            setBackgroundColor(0Xf1f1f1)
+        }
+        });
+        $( "#help-panel" ).panel({
+          beforeopen: function( event, ui ) {
+            navOpen = true
+            window.scrollTo(0,0);
+            setCubeColor(0x0B1011)
+            setBackgroundColor(0X707070)
+        }
+        });
+
+        mc.on("pan", function(ev) {
+            if (!navOpen) {
+                //window.scrollTo(0,0);
+                ev.preventDefault()
+                dx = (ev.center.x - startMouseX) * sensitivity
+                dy = (ev.center.y - startMouseY) * sensitivity
+                startMouseX = ev.center.x 
+                startMouseY = ev.center.y
+                numTouch = ev.pointers.length
+                {{mc@stars: logPan(%dx%, %dy%,0,%numTouch%) }}
+                if ((numTouch >= 2 && !isZooming && !isRotating) || shiftDown) {
+                    console.log("panning camera")
+                    dx = dx * 0.5
+                    dy = dy * 0.5
+                    var limit = (5 + (camZ/3))
+                    var limit3JS = (5 + (camZ))
+                    var movSpeedX = (dx/(20-(camZ))) 
+                    var movSpeedY = (dy/(20-(camZ)))
+                    // camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
+                    // camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
+                    camX = camX - movSpeedX
+                    camY = camY + movSpeedY
+                    {{mc@stars: setPan(%camX%, %camY%) }}
+                    // camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
+                    // camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
+                    camX3JS = camX3JS - movSpeedX/4
+                    camY3JS = camY3JS + movSpeedY/4
+                    setPan3JS(camX3JS,camY3JS)
+                } else {
+                    isRotating = true
+                    var Z = camZ - 3
+                    var propZ = -2/Z
+                    rotX = dx * propZ
+                    if (rotX < 0) {
+                        rotX = Math.max(-5,rotX)
+                    }else {
+                        rotX = Math.min(5,rotX)
+                    }
+                    rotY = dy * propZ
+                    if (rotY < 0) {
+                        rotY = Math.max(-5,rotY)
+                    }else {
+                        rotY = Math.min(5,rotY)
+                    }
+                    {{mc@stars: onRotate(%rotX%, %rotY%,0) }}
+                    onRotate3JS(rotX,rotY,0)
+                    if (playing == true) {
+                        console.log("setting new speed")
+                        {{mc@stars: setYawPitchSpeed(%dx%, %dy%) }}
+                    }
+                }
+            }
+        });
+        mc.on("tap", function(ev) {
+            // console.log(ev.type +" gesture detected.");
+        });
+
+        lastScale = 0
+        mc.on("pinchstart", function(ev){
+            if (lastScale != 0) {
+                delta = ev.scale - lastScale
+            }
+            lastScale = ev.scale
+        });
+        mc.on("pinchmove", function(ev){
+            ev.preventDefault()
+            isZooming = true
+            delta = (ev.scale - lastScale) * sensitivity
+            lastScale = ev.scale
+            if (delta > 0) {
+                delta = delta * 1.5
+            }
+            //camZ = Math.min(Math.max(camZ - delta,-30),30)
+            camZ = camZ - delta
+            camZ3JS = Math.min(Math.max(camZ3JS - (delta/10),-4.2),2)
+            {{mc@stars: setZoom(%camZ%)}}
+            setZoom3JS(camZ3JS)
+            var limit = (5 + (camZ/3))
+            var limit3JS = (5 + (camZ3JS))
+            // camX = Math.min(Math.max(camX,-limit),limit)
+            // camY = Math.min(Math.max(camY,-limit),limit)
+            // {{mc@stars: setPan(%camX%, %camY%) }}
+            if (camZ > -5.0) {
+                // camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+                // camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+                // setPan3JS(camX3JS,camY3JS)
+            }
+        });
+        mc.on("pinchend", function(ev){
+            isZooming = false
+        });
+        porthole.connected = function(event) {
+            console.log("starting App")
+            {{py startApplication(%client_id%, 'stars') }}  
+        }
+        
+        //window.blockMenuHeaderScroll = true;
+        $('body').on('touchmove', function(e) {
+            if (!navOpen){
+                e.preventDefault();
+            }
+        });
+        document.ontouchmove = function(e){ 
+            if (!navOpen){
+                e.preventDefault();
+            }
+        }
+
+        document.addEventListener("mousewheel",onMouseWheel);
+
+        function onMouseWheel(e) {
+            if (!navOpen ) {
+                //window.scrollTo(0,0);
+                e.preventDefault();
+                var e = window.event || e; // old IE support
+                delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
+                camZ = Math.min(Math.max(camZ - delta,-30),30)
+                camZ3JS = Math.min(Math.max(camZ3JS - (delta/10),-3.5),1)
+                {{mc@stars: setZoom(%camZ%)}}
+                setZoom3JS(camZ3JS)
+                var limit = (5 + (camZ/3))
+                var limit3JS = (5 + (camZ3JS))
+                // camX = Math.min(Math.max(camX,-limit),limit)
+                // camY = Math.min(Math.max(camY,-limit),limit)
+                //{{mc@stars: setPan(%camX%, %camY%) }}
+                if (camZ > -5.0) {
+                    // camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
+                    // camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
+                    // setPan3JS(camX3JS,camY3JS)
+                }
+            }
+        }
+
+        function onKeyDown(e) {
+            var keycode;
+            if (window.event)
+                keycode = window.event.keyCode;
+            else if (e)
+                keycode = e.which;
+            console.log(keycode)
+            if (keycode == 16) {
+                shiftDown = true
+                console.log("Shift Down")
+            } 
+        }
+
+        function resetImage()
+        {
+            camX=0;
+            camY=-5;
+            camZ=20;
+
+            camX3JS=0;
+            camY3JS=0;
+            camZ3JS=0;
+            {{mc@stars: setPan(%camX%, %camY%) }}
+            setPan3JS(camX,camY)
+            {{mc@stars: setZoom(%camZ%)}}
+            setZoom3JS(camZ3JS)
+
+            resetOrientation3JS()
+            {{mc@stars: pyresetOrientation(%dummyhtml%)}}
+        }
+
+        function onKeyUp(e) {
+            var keycode;
+            if (window.event)
+                keycode = window.event.keyCode;
+            else if (e)
+                keycode = e.which;
+            if (keycode == 16) {
+                console.log("shift up")
+                shiftDown = false
+            }
+        }
+        var isMouseDown = false
+        function onMouseDown(e) {
+            dx = 0
+            dy = 0
+            isMouseDown = true
+        }
+        function onMouseUp(e) {
+            isMouseDown = false
+        }
+        function onMouseMove(e) {
+            if (isMouseDown) {
+                dx = (e.clientX - startMouseX)
+                dy = (e.clientY - startMouseY)
+            }
+        }
+
+        function addloading(){
+            viewButtonClicked(event);
+        }
+
+        function noloading(dummy){
+            $.mobile.loading( "hide" );
+        }
+
+        function setSensitivity(s) {
+            sensitivity = s
+        }
+
+        //creating a jquery function for always occuring events.
+        function seekEnd(event) {
+            currentSeek = $('#slider').val()
+            setSensitivity(currentSeek/100)
+            console.log("seek end")
+        }
+        var seekMinX = 0
+        var seekMaxX = 100
+        var seekMinY = 0
+        var seekMaxY = 100
+        var seekMinZ = 0
+        var seekMaxZ = 100
+        var sizes = new Array(4)
+        var min = 0
+        var max = 100
+        function onUpdate(event,ui) {
+            requestAnimationFrame(onUpdate); 
+            if (seeking == true) {
+                val = $("#sizeSlider").val()
+                if (currentStarSet == 1){
+                    sizes[0] = val
+                } else if (currentStarSet == 2) {
+                    sizes[1] = val
+                } else if (currentStarSet == 3) {
+                    sizes[2] = val
+                } else if (currentStarSet == 3) {
+                    sizes[3] = val
+                }
+                console.log("setting star size")
+                {{mc@stars: onSliderChanged(%currentStarSet% - 1,%val%,%val%)}}
+                //{{mc@stars: changeStarSize(%currentStarSet%, %min/100.0%,%max/100.0% ) }}
+            } else {
+            }
+        }
+        onUpdate()
+        function sizeSeekStart(event) {
+            seeking = true
+        }
+        function sizeSeekEnd(event) {
+            seeking = false
+        }
+
+        function setStar1() {
+            $("#cAxis").html("Star-1");
+
+            currentStarSet = 1
+           var $elem = $('#starset-1');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #2e7bb8 !important; color:white !important;');
+            var $elem = $('#starset-2');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
+            var $elem = $('#starset-3');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
+            var $elem = $('#starset-4');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
+            $('#sizeSlider').val(sizes[0]).slider("refresh");
+        }
+        function setStar2() {
+            $("#cAxis").html("Star-2");
+            currentStarSet = 2
+           var $elem = $('#starset-2');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #2e7bb8 !important; color:white !important;');
+            var $elem = $('#starset-1');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
+            var $elem = $('#starset-3');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
+            var $elem = $('#starset-4');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
+            $('#sizeSlider').val(sizes[1]).slider("refresh");
+        } 
+        function setStar3() {
+            $("#cAxis").html("Star-3");
+            currentStarSet = 3
+           var $elem = $('#starset-3');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color:#2e7bb8 !important; color:white !important;');
+            var $elem = $('#starset-2');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
+            var $elem = $('#starset-1');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
+            var $elem = $('#starset-4');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
+            $('#sizeSlider').val(sizes[2]).slider("refresh");
+        }     
+        function setStar4() {
+            $("#cAxis").html("Star-4");
+            currentStarSet = 4
+           var $elem = $('#starset-4');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color:#2e7bb8 !important; color:white !important;');
+            var $elem = $('#starset-2');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
+            var $elem = $('#starset-1');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important ; color:black !important;');
+            var $elem = $('#starset-3');
+            $elem.attr('style', $elem.attr('style') + '; ' + 'background-color: #e8e9f0 !important; color:black !important;');
+            $('#sizeSlider').val(sizes[3]).slider("refresh");
+        }     
+
+        function viewButtonClicked(event) {
+            console.log("View Button Clicked")
+            var path = $(event.target).data('path');
+            event.target.path = path
+            currentView = path
+            {{mc@stars: loadView(%event.target.path%) }}   
+            setStar1()  
+        }
+
+        function saveView() {
+            {{mc@stars: saveView(%currentNumViews%) }}  
+            addViewButton()
+        }
+        function overwrite() {
+            if (currentView == -1) {
+                saveView()
+            } else {
+                {{mc@stars: saveView(%currentView%) }}   
+            }
+        }
+
+        function addViewButton(dummyhtml) {
+            console.log("Adding a View Button")
+            lastFolder = "defaultFolder"
+            defaultImage = "colorful boxes"
+            numButtons = numButtons + 1
+            var pageButtons = $('#Allcollapsable');
+            pageButtons.append('<input type="button" class="button" id="button'+numButtons+ '" data-path="'+ numButtons+'" value="'+ 'View Number ' +numButtons+'" onclick= "addloading()"/><img src="' + defaultImage +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
+            currentNumViews = currentNumViews + 1
+        }
+
+
+        function togglePlay(event) {
+            console.log("Play Button")
+            console.log(playing)
+            playing = !playing
+            if (playing) {
+                {{mc@stars: toggleAutoRotate(True) }} 
+            } else {
+                {{mc@stars: toggleAutoRotate(False) }} 
+            }
+        }
+
+        function updateStarBrightness(numVal) {
+            sizes[numVal[0]] = numVal[1]
+        }
+
+        function onLoaded(dummyhtml) {
+            {{mc@stars: onSliderChanged(0,%sizes[0]%,%val%)}}
+            {{mc@stars: onSliderChanged(1,%sizes[1]%,%val%)}}
+            {{mc@stars: onSliderChanged(2,%sizes[2]%,%val%)}}
+            {{mc@stars: onSliderChanged(3,%sizes[3]%,%val%)}}
+        }
+    </script>
+</body>
+</html>
