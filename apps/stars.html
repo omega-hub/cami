@@ -71,10 +71,8 @@
     canvas { width: 100%; height: 100% }
     </style> 
 <body>
-<!--<body style="overflow:hidden;">-->
     <div data-role="page" id="stars-page">
         <div data-role="header" id="header" data-position ="fixed">
-            <a href="#nav-panel" data-icon="bars"  data-iconpos="notext">Menu</a>
             <a href="#help-panel" data-icon="info"   data-iconpos="notext">Add</a>
             <h1>Star Viewer</h1>
             <script src="js/three.min.js"></script>
@@ -85,7 +83,7 @@
             <button type="button" id="starset-2" data-inline="true"onClick='setStar2()'>Star Set 2</button>
             <button type="button" id="starset-3" data-inline="true"onClick='setStar3()'>Star Set 3</button>
             <button type="button" id="starset-4" data-inline="true"onClick='setStar4()'>Star Set 4</button>
-            <button type="button" id="overWriteView" data-inline="true"onClick='overwrite()'>Overwrite Current View</button>
+            <button type="button" id="overWriteView" data-inline="true"onClick='overwrite()'>Overwrite View</button>
             <button type="button" id="newView" data-inline="true"onClick='saveView()'>Save New View</button>
 
             <button type="button" id="play" data-inline="true"onClick='togglePlay()'>
@@ -95,16 +93,9 @@
             <div id="div2"/> Fixed </div>
             </button>
             <label for="range-1a">Star Size:</label>
-            <input  input type="number" data-role="none" name="sizeSlider" id="sizeSlider" value="0" min="0" max="20" step = "0.1" data-theme="c"/>
-        </div>
-        <div data-role="panel" data-position="left" data-position-fixed="true"data-display="push" data-theme="b" id="nav-panel"> 
-            <ul data-role="listview" class="panel">
-                <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
-                <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">  
-                </div>
-        </div>
-            </ul>
-        </div>
+            <input  input type="number" data-role="none" name="sizeSlider" id="sizeSlider" value="0" min="0" max="30" step = "0.1" data-theme="c"/><BR>
+            <div data-inline="true"id="viewButtons"></div>
+        </div> 
         <div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
             <form class="userform">
                 <h2>Instructions for Use</h2>
@@ -115,6 +106,9 @@
                     <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
                     <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
                     <h4>To close the sidebars:</h4> <p> Tap on the main screen</p>
+                    <h4>Auto-Scroll Speed:</h4> <BR>
+                    <input input type="number" data-role="none" name="scrollSlider" id="scrollSlider" value="10" min="0" max="30" step="0.1" data-theme="c"/> <BR>
+
                     <h4>Sensitivity:</h4> <BR>
                     <input input type="number" data-role="none" name="slider" id="slider" value="3" min="0" max="20" step="0.1" data-theme="c"/> <BR>
                     <button onclick="resetImage()" id="reset"  type="button">Reset Orientation</button> 
@@ -130,6 +124,10 @@
             $('#slider').on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
             $( "#slider").slider() ;
             $('#slider').on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
+
+            $('#scrollSlider').on( "slidestop", function( event, ui ) {scrollSeekEnd(event,ui)} );
+            $( "#scrollSlider").slider() ;
+            $('#scrollSlider').on( "slidestop", function( event, ui ) {scrollSeekEnd(event,ui)} );
 
             $( "#sizeSlider" ).on( "slidestart", function( event, ui ) {sizeSeekStart(event,ui)} );
             $( "#sizeSlider" ).on( "slidestop", function( event, ui ) {sizeSeekEnd(event,ui)} );
@@ -170,18 +168,6 @@
             }
         };
 
-        // $(document).on( "click", ".button", function() {
-        //         var $this = $( this ),
-        //         html = $this.jqmData( "html" ) || "";
-        //     $.mobile.loading( 'show', {
-        //         text: "Loading Model",
-        //         textVisible: true,
-        //         theme: "b",
-        //         textonly: false,
-        //         icon:"ajax-loader.gif",
-        //     });
-        // })
-
         $(document).on( "click", ".hide-page-loading-msg", function() { $.mobile.loading( "hide" ); });
 
         $(document).on('visibilitychange', function(){
@@ -218,6 +204,7 @@
         camX3JS = 0;
         camY3JS = 0;
         camZ3JS = 0;
+        zoomSpeed = 0;
         shiftDown = false;
         rotateDist = 0;
         dummyhtml = 0;
@@ -263,21 +250,7 @@
         });
         // listen to events...
         numTouch = 0
-        $( "#nav-panel" ).panel({
-          beforeclose: function( event, ui ) {
-            navOpen = false
-            window.scrollTo(0,0);
-            setCubeColor(0X3b5a5f)
-            setBackgroundColor(0Xf1f1f1)
-        }
-        });
-        $( "#nav-panel" ).panel({
-          beforeopen: function( event, ui ) {
-            navOpen = true
-            window.scrollTo(0,0);
-            setCubeColor(0x0B1011)
-            setBackgroundColor(0X707070)
-        }});
+
         $( "#help-panel" ).panel({
           beforeclose: function( event, ui ) {
             navOpen = false
@@ -355,33 +328,15 @@
         lastScale = 0
         mc.on("pinchstart", function(ev){
             if (lastScale != 0) {
-                delta = ev.scale - lastScale
+                lastScale = ev.scale
+                isZooming = true
             }
             lastScale = ev.scale
         });
         mc.on("pinchmove", function(ev){
             ev.preventDefault()
             isZooming = true
-            delta = (ev.scale - lastScale) * sensitivity
-            lastScale = ev.scale
-            if (delta > 0) {
-                delta = delta * 1.5
-            }
-            //camZ = Math.min(Math.max(camZ - delta,-30),30)
-            camZ = camZ - delta
-            camZ3JS = Math.min(Math.max(camZ3JS - (delta/10),-4.2),2)
-            {{mc@stars: setZoom(%camZ%)}}
-            setZoom3JS(camZ3JS)
-            var limit = (5 + (camZ/3))
-            var limit3JS = (5 + (camZ3JS))
-            // camX = Math.min(Math.max(camX,-limit),limit)
-            // camY = Math.min(Math.max(camY,-limit),limit)
-            // {{mc@stars: setPan(%camX%, %camY%) }}
-            if (camZ > -5.0) {
-                // camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
-                // camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
-                // setPan3JS(camX3JS,camY3JS)
-            }
+            zoomSpeed = (ev.scale - lastScale)
         });
         mc.on("pinchend", function(ev){
             isZooming = false
@@ -411,20 +366,13 @@
                 e.preventDefault();
                 var e = window.event || e; // old IE support
                 delta = Math.max(-0.2, Math.min(0.2, (e.wheelDelta || -e.detail)));
-                camZ = Math.min(Math.max(camZ - delta,-30),30)
+                // camZ = Math.min(Math.max(camZ - delta,-30),30)
+                camZ = camZ - delta
                 camZ3JS = Math.min(Math.max(camZ3JS - (delta/10),-3.5),1)
                 {{mc@stars: setZoom(%camZ%)}}
                 setZoom3JS(camZ3JS)
                 var limit = (5 + (camZ/3))
                 var limit3JS = (5 + (camZ3JS))
-                // camX = Math.min(Math.max(camX,-limit),limit)
-                // camY = Math.min(Math.max(camY,-limit),limit)
-                //{{mc@stars: setPan(%camX%, %camY%) }}
-                if (camZ > -5.0) {
-                    // camX3JS = Math.min(Math.max(camX3JS,-limit3JS),limit3JS)
-                    // camY3JS = Math.min(Math.max(camY3JS,-limit3JS),limit3JS)
-                    // setPan3JS(camX3JS,camY3JS)
-                }
             }
         }
 
@@ -504,6 +452,11 @@
             setSensitivity(currentSeek/100)
             console.log("seek end")
         }
+        function scrollSeekEnd(event) {
+            currentSeek = $('#scrollSlider').val()
+            currentSeek = currentSeek / 100
+            {{mc@stars: setRotationSpeed(%currentSeek%)}}
+        }
         var seekMinX = 0
         var seekMaxX = 100
         var seekMinY = 0
@@ -511,6 +464,10 @@
         var seekMinZ = 0
         var seekMaxZ = 100
         var sizes = new Array(4)
+        sizes[0] = 5
+        sizes[1] = 5
+        sizes[2] = 5
+        sizes[3] = 5
         var min = 0
         var max = 100
         function onUpdate(event,ui) {
@@ -530,6 +487,13 @@
                 {{mc@stars: onSliderChanged(%currentStarSet% - 1,%val%,%val%)}}
                 //{{mc@stars: changeStarSize(%currentStarSet%, %min/100.0%,%max/100.0% ) }}
             } else {
+            }
+            if (isZooming == true) {
+                //camZ = Math.min(Math.max(camZ - delta,-30),30)
+                camZ = camZ - zoomSpeed
+                camZ3JS = Math.min(Math.max(camZ3JS - (zoomSpeed/10),-10),2)
+                {{mc@stars: setZoom(%camZ%)}}
+                setZoom3JS(camZ3JS)
             }
         }
         onUpdate()
@@ -620,11 +584,10 @@
             lastFolder = "defaultFolder"
             defaultImage = "colorful boxes"
             numButtons = numButtons + 1
-            var pageButtons = $('#Allcollapsable');
-            pageButtons.append('<input type="button" class="button" id="button'+numButtons+ '" data-path="'+ numButtons+'" value="'+ 'View Number ' +numButtons+'" onclick= "addloading()"/><img src="' + defaultImage +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
+            var pageButtons = $('#viewButtons');
+            pageButtons.append('<input type="button" class="button" data-inline="true" id="button'+numButtons+ '" data-path="'+ numButtons+'" value="'+ 'View ' +numButtons+'" onclick= "addloading()"/>');
             currentNumViews = currentNumViews + 1
         }
-
 
         function togglePlay(event) {
             console.log("Play Button")
@@ -642,10 +605,11 @@
         }
 
         function onLoaded(dummyhtml) {
-            {{mc@stars: onSliderChanged(0,%sizes[0]%,%val%)}}
-            {{mc@stars: onSliderChanged(1,%sizes[1]%,%val%)}}
-            {{mc@stars: onSliderChanged(2,%sizes[2]%,%val%)}}
-            {{mc@stars: onSliderChanged(3,%sizes[3]%,%val%)}}
+            console.log("setting the default star values")
+            {{mc@stars: onSliderChanged(0,%sizes[0]%,%sizes[0]%)}}
+            {{mc@stars: onSliderChanged(1,%sizes[1]%,%sizes[0]%)}}
+            {{mc@stars: onSliderChanged(2,%sizes[2]%,%sizes[0]%)}}
+            {{mc@stars: onSliderChanged(3,%sizes[3]%,%sizes[0]%)}}
         }
     </script>
 </body>

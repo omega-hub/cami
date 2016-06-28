@@ -26,6 +26,7 @@ camera.setBackgroundColor(Color('black'))
 camera.getController().setSpeed(50)
 camera.setPosition(0,-5,20)
 isRotating = False
+initialized = False
 yaw = 0
 pitch = 0
 rotSpeed = 0.1
@@ -38,7 +39,6 @@ def calljs(methodname, data):
 def center():
     for ps in galaxy:
         ps.object.setPosition(-470, -190, -620)
-
 
 center()
     
@@ -63,7 +63,6 @@ def onSliderChanged(id, i, clientId):
 def toggle(id):
     galaxy[id].object.setVisible(not galaxy[id].object.isVisible())
     print(galaxy[id].object.isVisible())
-
 
 #Model Manipulation Functions:
 def setZoom(z):
@@ -110,40 +109,22 @@ def printMessage():
     return
 
 def onReload():
+    print "on reload"
+    global reader, data, file, reader
+    file = open('moving_data.tsv','rU')
+    skip = True
+    reader = csv.reader(file, delimiter='\t')
     calljs('resetImage', 0)
-    InitializeViewList()
-
-def InitializeModelList():
-    print "----------Initializing Model List -------------"
-    # print ModelDict
-    if (localDebug):
-        os.chdir("../data")
-    else:
-        os.chdir("/fastdata/opt/data/fbx")
-    fileList = []
-    cwd = os.getcwd()
-    numfolders = 0
-    for (path, dirs, files) in os.walk(cwd):
-        numfolders = numfolders + 1
-        for file in glob.glob(path + "/*.fbx"):
-            name = file[len(path)+1:]
-            image = "../data/" + name[:len(name)-4] + ".jpg"
-
-            if len(path[len(cwd)+1:]) > 1:
-                newStr = path[len(cwd)+1:] + "/"+ name
-                # print newStr
-                if newStr in ModelDict.keys():
-                    newTuple = [path[len(cwd)+1:] + "/",name,image,"loaded"]
-                else:
-                    newTuple = [path[len(cwd)+1:] + "/",name,image,"new"]
-            else:
-                if name in ModelDict.keys():
-                    newTuple = ["",file[len(path)+1:],image,alreadyLoaded,"loaded"]
-                else:
-                    newTuple = ["",file[len(path)+1:],image,alreadyLoaded,"new"]
-
-            #print(newTuple)
-            fileList.append(newTuple)
+    for row in reader:
+        if skip: skip = False
+        else: 
+            print row[3]
+            print row[4]
+            print row[5]
+            q = quaternionFromEulerDeg(float(row[3]),float(row[4]),float(row[5]))
+            v = [float(row[0]),float(row[1]),float(row[2]),q,float(row[6]),float(row[7]),float(row[8]),float(row[9])]
+            data.append(v)
+            calljs('addViewButton', 0)
 
     #print(fileList)
     #onModelSelect("ben.fbx=
@@ -158,19 +139,12 @@ def InitializeModelList():
 
 c = getDefaultCamera()
 
-file = open('moving_data.tsv','rU')
-reader = csv.reader(file, delimiter='\t')
+file = False
+reader = False
 
 data = []
-skip = True
 
-for row in reader:
-    if skip: skip = False
-    else: 
-        q = quaternionFromEulerDeg(float(row[3]),float(row[4]),float(row[5]))
-        v = [float(row[0]),float(row[1]),float(row[2]),q,float(row[6]),float(row[7]),float(row[8]),float(row[9])]
-        data.append(v)
-        calljs('addViewButton', 0)
+onReload()
 
 file.close()
 
@@ -179,7 +153,6 @@ target = [0,0,0,Quaternion(),0,0,0,0]
 
 animationTime = 1
 currentTime = animationTime
-
 
 def loadView(id):
     global target
@@ -207,8 +180,6 @@ def loadView(id):
         
     currentTime = 0
     
-    
-
 def saveView(id):
     global data
     global file
@@ -232,13 +203,10 @@ def saveView(id):
         v = quaternionToEulerDeg(row[3])
         r = [row[0],row[1],row[2],v[0],v[1],v[2],row[4],row[5],row[6],row[7]]
         writer.writerow(r)
-     
-    
     file.close()
     
 def onEvent():
     e = getEvent()
-        
     if(e.isKeyDown(ord("u"))): 
         if(e.isFlagSet(EventFlags.Shift)): saveView(0)
         else: loadView(0)
@@ -261,8 +229,7 @@ def onUpdate(frame, time, dt):
     global current
     global target
     global currentTime
-    
-    
+
     if(currentTime <= animationTime):
         w = currentTime/animationTime
         v = []
@@ -270,37 +237,42 @@ def onUpdate(frame, time, dt):
         
         currentTime = currentTime + dt
         for i in range(0,3): v.append(mix(current[i],target[i],w))
-        
         c.setPosition(v[0],v[1],v[2])
-        
         for j in range(4,8): p.append(mix(current[j],target[j],w))
         k = 0 
         for x in galaxy: 
             x.pointScale.setFloat(p[k])
             k = k+1
-        
         q = Quaternion.new_interpolate(current[3],target[3],w)
         pivot.setOrientation(q)
     global isRotating, yaw, pitch
     if isRotating:
         pivot.yaw(yaw * dt)
         pivot.pitch(pitch * dt)
+    global initialized
+    if not initialized:
+        calljs('onLoaded',0)
+        initialized = True
+
+#################################################
 
 def setYawPitchSpeed(dx,dy):
     global yaw,pitch, rotSpeed
     totalSpeed = abs(dx) + abs(dy)
-    yaw = ((dx*1.0)/totalSpeed) * rotSpeed
-    pitch = ((dy*1.0)/totalSpeed) * rotSpeed
-    print yaw
+    if totalSpeed > 0:
+        yaw = ((dx*1.0)/totalSpeed) * rotSpeed
+        pitch = ((dy*1.0)/totalSpeed) * rotSpeed
+        print "Yaw set to: ", yaw
 
 def setRotationSpeed(spd):
-    global rotSpeed
+    global rotSpeed, yaw, pitch
+    oldRotSpeed = rotSpeed
     rotSpeed = spd
-
+    yaw = yaw * (rotSpeed/oldRotSpeed)
+    pitch = pitch * (rotSpeed/oldRotSpeed)
 
 def toggleAutoRotate(rotate):
-    global isRotatingon
+    global isRotating
     isRotating = rotate
 
-calljs('onLoaded',0)
 setUpdateFunction(onUpdate) 
