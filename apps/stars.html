@@ -198,12 +198,12 @@
         var isPanning = false
         delta = 0;
         isZooming = false;
-        camX = 0;
-        camY = 0;
-        camZ = 0;
-        camX3JS = 0;
-        camY3JS = 0;
-        camZ3JS = 0;
+        var camX = 0;
+        var camY = 0;
+        var camZ = 0;
+        var camX3JS = 0;
+        var camY3JS = 3;
+        var camZ3JS = 0;
         zoomSpeed = 0;
         shiftDown = false;
         rotateDist = 0;
@@ -223,6 +223,7 @@
         var ZEnd = 100
         var numButtons = -1
         var playing = false
+        var sensitivity = 1.0
         setSensitivity(0.8)
         mc.on("panstart", function(ev) {
             if (!navOpen){
@@ -277,25 +278,29 @@
                 startMouseX = ev.center.x 
                 startMouseY = ev.center.y
                 numTouch = ev.pointers.length
-                {{mc@stars: logPan(%dx%, %dy%,0,%numTouch%) }}
                 if ((numTouch >= 2 && !isZooming && !isRotating) || shiftDown) {
                     console.log("panning camera")
                     dx = dx * 0.5
                     dy = dy * 0.5
-                    var limit = (5 + (camZ/3))
-                    var limit3JS = (5 + (camZ))
-                    var movSpeedX = (dx/(20-(camZ))) 
-                    var movSpeedY = (dy/(20-(camZ)))
-                    // camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
-                    // camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
-                    camX = camX - movSpeedX
-                    camY = camY + movSpeedY
-                    {{mc@stars: setPan(%camX%, %camY%) }}
-                    // camX3JS = Math.min(Math.max(camX3JS - movSpeedX/4,-limit3JS),limit3JS)
-                    // camY3JS = Math.min(Math.max(camY3JS + movSpeedY/4,-limit3JS),limit3JS)
-                    camX3JS = camX3JS - movSpeedX/4
-                    camY3JS = camY3JS + movSpeedY/4
-                    setPan3JS(camX3JS,camY3JS)
+                    if (camZ != 20 ) {
+                        var limit = (5 + (camZ/3))
+                        var limit3JS = (5 + (camZ))
+                        var movSpeedX = (dx/(20-(camZ))) 
+                        var movSpeedY = (dy/(20-(camZ)))
+                        // camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
+                        // camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
+                        camX = camX - movSpeedX
+                        camY = camY + movSpeedY
+                        {{mc@stars: logPan(%dx%, %dy%,0,%numTouch%) }}
+
+                        {{mc@stars: setPan(%camX%, %camY%)}}
+                        // {{mc@stars: setPan(%0%, %0%)}}
+                        camX3JS = Math.min(Math.max(camX3JS - movSpeedX/20,-limit3JS),limit3JS)
+                        camY3JS = Math.min(Math.max(camY3JS + movSpeedY/20,-limit3JS),limit3JS)
+                        // camX3JS = camX3JS - movSpeedX/4
+                        // camY3JS = camY3JS + movSpeedY/4
+                        setPan3JS(0,-0.5)
+                    }
                 } else {
                     isRotating = true
                     var Z = camZ - 3
@@ -393,13 +398,13 @@
         {
             camX=0;
             camY=-5;
-            camZ=20;
+            camZ=0;
 
             camX3JS=0;
-            camY3JS=0;
+            camY3JS=5;
             camZ3JS=0;
             {{mc@stars: setPan(%camX%, %camY%) }}
-            setPan3JS(camX,camY)
+            setPan3JS(0,-0.5)
             {{mc@stars: setZoom(%camZ%)}}
             setZoom3JS(camZ3JS)
 
@@ -454,7 +459,7 @@
         }
         function scrollSeekEnd(event) {
             currentSeek = $('#scrollSlider').val()
-            currentSeek = currentSeek / 100
+            currentSeek = currentSeek / 10
             {{mc@stars: setRotationSpeed(%currentSeek%)}}
         }
         var seekMinX = 0

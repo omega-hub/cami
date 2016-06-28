@@ -24,12 +24,12 @@ Manipulator.root = pivot
 camera = getDefaultCamera()
 camera.setBackgroundColor(Color('black'))
 camera.getController().setSpeed(50)
-camera.setPosition(0,-5,20)
+camera.setPosition(0,-5,0)
 isRotating = False
 initialized = False
 yaw = 0
 pitch = 0
-rotSpeed = 0.1
+rotSpeed = 1
 
 def calljs(methodname, data):
     mc = getMissionControlClient()
@@ -38,7 +38,7 @@ def calljs(methodname, data):
 
 def center():
     for ps in galaxy:
-        ps.object.setPosition(-470, -190, -620)
+        ps.object.setPosition(-470, -190, -640)
 
 center()
     
@@ -95,7 +95,7 @@ def pyresetOrientation(dummy):
     print("in .py resetOrientation")
     
 def logPan(dx,dy,dz,numTouch):
-    #print "Message from HTML"
+    # print "Message from HTML"
     return 0
     #print "Pan Gesture detected."
     #print dx
@@ -158,17 +158,12 @@ def loadView(id):
     global target
     global current
     global currentTime
-
     target = data[id]
-    
     current = []
-    
     cpos = c.getPosition()
     for x in cpos: current.append(x)
-    
     q = pivot.getOrientation()
     current.append(q)
-    
     currIndex = 0
     for x in galaxy: 
         scale = []
@@ -177,13 +172,11 @@ def loadView(id):
         current.append(scale[1])
         calljs('updateStarBrightness', scale)
         currIndex = currIndex + 1
-        
     currentTime = 0
     
 def saveView(id):
     global data
     global file
-    
     row = []
     cpos = c.getPosition()
     for x in cpos: row.append(x)
@@ -193,10 +186,8 @@ def saveView(id):
         data.append(row)
     else:
         data[id] = row
-    
     file = open('moving_data.tsv','w')
     writer = csv.writer(file, delimiter='\t')
-    
     s = ['x','y','z','pitch','yaw','roll','intensity 1','intensity 2','intensity 3','intensity 4']
     writer.writerow(s)
     for row in data:
@@ -247,8 +238,11 @@ def onUpdate(frame, time, dt):
         pivot.setOrientation(q)
     global isRotating, yaw, pitch
     if isRotating:
-        pivot.yaw(yaw * dt)
-        pivot.pitch(pitch * dt)
+        pivot.rotate(Vector3(0, 1, 0), math.radians(yaw * dt), Space.World)
+        pivot.rotate(Vector3(1, 0, 0), math.radians(pitch * dt), Space.World)
+        pivot.rotate(Vector3(0, 0, 1), math.radians(0), Space.World)
+        # pivot.yaw(yaw * dt)
+        # pivot.pitch(pitch * dt)
     global initialized
     if not initialized:
         calljs('onLoaded',0)
@@ -257,12 +251,12 @@ def onUpdate(frame, time, dt):
 #################################################
 
 def setYawPitchSpeed(dx,dy):
-    global yaw,pitch, rotSpeed
+    global yaw, pitch, rotSpeed
     totalSpeed = abs(dx) + abs(dy)
     if totalSpeed > 0:
-        yaw = ((dx*1.0)/totalSpeed) * rotSpeed
-        pitch = ((dy*1.0)/totalSpeed) * rotSpeed
-        print "Yaw set to: ", yaw
+        yaw = (-(dx*1.0)/totalSpeed) * rotSpeed
+        pitch = (-(dy*1.0)/totalSpeed) * rotSpeed
+        # print "Yaw set to: ", yaw
 
 def setRotationSpeed(spd):
     global rotSpeed, yaw, pitch
