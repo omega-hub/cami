@@ -13,22 +13,55 @@
     <link rel="apple-touch-icon" href="./stars.png" />
     <style>
     .button{
-        background-color: #e8e9f0; 
-        border: 1px black;
-        color: black;
-        text-shadow: none !important;
-        text-align: center;
-        vertical-align: middle;
-        width:235px;
-        height: 40px;
-        font-size: 15px;
-        margin: 4px 2px;
-        border-radius: 1px;
-        float: center;
-        outline: none;
-        box-shadow: inset -.5px -1px 5px 0px black;
+    background-color: #e8e9f0; 
+    border: 1px black;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    width:235px;
+    height: 45px;
+    font-size: 15px;
+    margin: 4px 2px;
+    border-radius: 1px;
+    float: center;
+    outline:none;
+    box-shadow: inset -.5px -1px 5px 0px black;
     }
-    button{ text-shadow: none !important; }
+    div.hide { display:none; }
+    div.show {  }
+    .image{
+         border: 10px black;
+    }
+    .button:active{
+        background-color: #8C8C8C;
+        box-shadow: inset .5px 1px 5px 0px black;
+    }
+
+    .oldButton{
+    background-color: #2DBE46; 
+    border: 1px black;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    width:235px;
+    height: 45px;
+    font-size: 15px;
+    margin: 4px 2px;
+    border-radius: 1px;
+    float: center;
+    outline:none;
+    box-shadow: inset -.5px -1px 5px 0px black;
+    }
+    div.hide { display:none; }
+    div.show {  }
+    .image{
+         border: 10px black;
+    }
+    .oldButton:active{
+        background-color: #196826;
+        box-shadow: inset .5px 1px 5px 0px black;
+    }
+
     div.hide { display:none; }
     div.show {  }
     .image{ border: 10px black; }
@@ -100,15 +133,15 @@
             <form class="userform">
                 <h2>Instructions for Use</h2>
                 <hr class="instructions">
-                    <h4>To choose an axis:</h4> <p> Tap the button for the corresponding axis.</p> 
-                    <h4>To cut away stars:</h4> <p> Use the slide bar to cut away stars from both sides of the model on the selected axis</p> 
-                    <h4>To rotate:</h4> <p> Use one finger and swipe anywhere on the screen</p> 
-                    <h4>To move object:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
-                    <h4>To zoom:</h4> <p> Pinch the screen in and out with two fingers</p> 
+                    <h4>To Change Star Size:</h4> <p> Tap the button for the corresponding star set, then change the slider to adjust the star size for that set.</p> 
+                    <h4>Rotating the galaxy.</h4> <p> Use one finger and swipe anywhere on the screen</p> 
+                    <h4>Panning the Galaxy:</h4> <p> Use two fingers and swipe anywhere on the screen</p> 
+                    <h4>Zooming:</h4> <p> Pinch the screen in and out with two fingers. As long as the pinch is held, you will continue to zoom in and out.</p> 
+                    <h4>Auto-Scrolling:</h4> <p> Tap on the "Fixed" button to turn on "Auto-Scroll", then swipe across the screen in the direction you want to auto-scroll</p>
+                    <h4>Preset Views:</h4> <p> Tap the views at the bottom of the screen. Clicking "Overwrite View" will re-write the current view as the previous view icon pressed. Pressing "Save New View" will add an additional icon to the bottom.</p>
                     <h4>To close the sidebars:</h4> <p> Tap on the main screen</p>
                     <h4>Auto-Scroll Speed:</h4> <BR>
                     <input input type="number" data-role="none" name="scrollSlider" id="scrollSlider" value="10" min="0" max="30" step="0.1" data-theme="c"/> <BR>
-
                     <h4>Sensitivity:</h4> <BR>
                     <input input type="number" data-role="none" name="slider" id="slider" value="3" min="0" max="20" step="0.1" data-theme="c"/> <BR>
                     <button onclick="resetImage()" id="reset"  type="button">Reset Orientation</button> 
@@ -564,14 +597,27 @@
         }     
 
         function viewButtonClicked(event) {
+            if (currentView != -1) {
+                setButtonAsInactive(currentView)
+            }
             console.log("View Button Clicked")
             var path = $(event.target).data('path');
             event.target.path = path
             currentView = path
-            {{mc@stars: loadView(%event.target.path%) }}   
+            {{mc@stars: loadView(%event.target.path%) }} 
+            setButtonAsActive(currentView)  
             setStar1()  
         }
-
+        function setButtonAsActive(buttonID) {
+            console.log("setting button as active: ")
+            console.log(buttonID)
+            document.getElementById("button" + buttonID).className = "oldButton";
+        }
+        function setButtonAsInactive(buttonID) {
+            console.log("setting button as inactive: ")
+            console.log(buttonID)
+            document.getElementById("button" + buttonID).className = "button";
+        }
         function saveView() {
             {{mc@stars: saveView(%currentNumViews%) }}  
             addViewButton()
