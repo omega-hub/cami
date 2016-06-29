@@ -143,7 +143,7 @@
                     <h4>Auto-Scroll Speed:</h4> <BR>
                     <input input type="number" data-role="none" name="scrollSlider" id="scrollSlider" value="10" min="0" max="30" step="0.1" data-theme="c"/> <BR>
                     <h4>Sensitivity:</h4> <BR>
-                    <input input type="number" data-role="none" name="slider" id="slider" value="3" min="0" max="20" step="0.1" data-theme="c"/> <BR>
+                    <input input type="number" data-role="none" name="slider" id="slider" value="0.8" min="0" max="2" step="0.05" data-theme="c"/> <BR>
                     <button onclick="resetImage()" id="reset"  type="button">Reset Orientation</button> 
             </form>
         </div>
@@ -219,7 +219,7 @@
         mc.get('pan').set({ threshold: 15 });
         mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
         mc.get('pinch').set({ enable: true });
-        mc.get('pinch').set({ threshold: 0.08 });
+        mc.get('pinch').set({ threshold: 0.25 });
 
         var startMouseX = -1
         var startMouseY = -1
@@ -318,8 +318,8 @@
                     if (camZ != 20 ) {
                         var limit = (5 + (camZ/3))
                         var limit3JS = (5 + (camZ))
-                        var movSpeedX = (dx/(20-(camZ))) 
-                        var movSpeedY = (dy/(20-(camZ)))
+                        var movSpeedX = (dx/((20-camZ) * 0.4)) * sensitivity
+                        var movSpeedY = (dy/((20-camZ) * 0.4)) * sensitivity
                         // camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
                         // camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
                         camX = camX - movSpeedX
@@ -371,10 +371,15 @@
             }
             lastScale = ev.scale
         });
-        mc.on("pinchmove", function(ev){
+        mc.on("pinchin", function(ev){
             ev.preventDefault()
             isZooming = true
-            zoomSpeed = (ev.scale - lastScale)
+            zoomSpeed = ((ev.scale - lastScale)) * sensitivity
+        });
+        mc.on("pinchout", function(ev){
+            ev.preventDefault()
+            isZooming = true
+            zoomSpeed = ((ev.scale - lastScale)) * sensitivity
         });
         mc.on("pinchend", function(ev){
             isZooming = false
@@ -487,7 +492,7 @@
         //creating a jquery function for always occuring events.
         function seekEnd(event) {
             currentSeek = $('#slider').val()
-            setSensitivity(currentSeek/100)
+            setSensitivity(currentSeek)
             console.log("seek end")
         }
         function scrollSeekEnd(event) {
@@ -529,7 +534,7 @@
             if (isZooming == true) {
                 //camZ = Math.min(Math.max(camZ - delta,-30),30)
                 camZ = camZ - zoomSpeed
-                camZ3JS = Math.min(Math.max(camZ3JS - (zoomSpeed/10),-10),2)
+                camZ3JS = Math.min(Math.max(camZ3JS - (zoomSpeed/10),-10),0)
                 {{mc@stars: setZoom(%camZ%)}}
                 setZoom3JS(camZ3JS)
             }
