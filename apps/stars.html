@@ -112,12 +112,11 @@
             <script src="js/modelViewerPreview.js"></script> 
         </div>
         <div data-role="footer" id="footer" data-swipe-close = "false" data-position="fixed">
-            <button type="button" id="starset-1" data-inline="true"onClick='setStar1()'>Star Set 1</button>
-            <button type="button" id="starset-2" data-inline="true"onClick='setStar2()'>Star Set 2</button>
-            <button type="button" id="starset-3" data-inline="true"onClick='setStar3()'>Star Set 3</button>
-            <button type="button" id="starset-4" data-inline="true"onClick='setStar4()'>Star Set 4</button>
+            <button type="button" id="starset-1" data-inline="true"onClick='setStar1()'>Gases</button>
+            <button type="button" id="starset-2" data-inline="true"onClick='setStar2()'>Dark Matter</button>
+            <button type="button" id="starset-3" data-inline="true"onClick='setStar3()'>Dark Matter Low-Res</button>
+            <button type="button" id="starset-4" data-inline="true"onClick='setStar4()'>Stars</button>
             <button type="button" id="overWriteView" data-inline="true"onClick='overwrite()'>Overwrite View</button>
-            <button type="button" id="newView" data-inline="true"onClick='saveView()'>Save New View</button>
 
             <button type="button" id="play" data-inline="true"onClick='togglePlay()'>
             <div id="div1"> Auto-Scroll </div>
@@ -219,7 +218,7 @@
         mc.get('pan').set({ threshold: 15 });
         mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
         mc.get('pinch').set({ enable: true });
-        mc.get('pinch').set({ threshold: 0.25 });
+        mc.get('pinch').set({ threshold: 0.15 });
 
         var startMouseX = -1
         var startMouseY = -1
@@ -318,8 +317,8 @@
                     if (camZ != 20 ) {
                         var limit = (5 + (camZ/3))
                         var limit3JS = (5 + (camZ))
-                        var movSpeedX = (dx/((20-camZ) * 0.4)) * sensitivity
-                        var movSpeedY = (dy/((20-camZ) * 0.4)) * sensitivity
+                        var movSpeedX = dx* Math.abs(camZ) * 0.01
+                        var movSpeedY = dy* Math.abs(camZ) * 0.01
                         // camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
                         // camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
                         camX = camX - movSpeedX
@@ -332,12 +331,12 @@
                         camY3JS = Math.min(Math.max(camY3JS + movSpeedY/20,-limit3JS),limit3JS)
                         // camX3JS = camX3JS - movSpeedX/4
                         // camY3JS = camY3JS + movSpeedY/4
-                        setPan3JS(0,-0.5)
+                        // setPan3JS(0,-0.5)
                     }
                 } else {
                     isRotating = true
-                    var Z = camZ - 3
-                    var propZ = -2/Z
+                    var Z = camZ
+                    var propZ = Math.abs(Z) * 0.01
                     rotX = dx * propZ
                     if (rotX < 0) {
                         rotX = Math.max(-5,rotX)
@@ -351,7 +350,7 @@
                         rotY = Math.min(5,rotY)
                     }
                     {{mc@stars: onRotate(%rotX%, %rotY%,0) }}
-                    onRotate3JS(rotX,rotY,0)
+                    // onRotate3JS(rotX,rotY,0)
                     if (playing == true) {
                         console.log("setting new speed")
                         {{mc@stars: setYawPitchSpeed(%dx%, %dy%) }}
@@ -413,7 +412,7 @@
                 camZ = camZ - delta
                 camZ3JS = Math.min(Math.max(camZ3JS - (delta/10),-3.5),1)
                 {{mc@stars: setZoom(%camZ%)}}
-                setZoom3JS(camZ3JS)
+                // setZoom3JS(camZ3JS)
                 var limit = (5 + (camZ/3))
                 var limit3JS = (5 + (camZ3JS))
             }
@@ -436,17 +435,17 @@
         {
             camX=0;
             camY=-5;
-            camZ=0;
+            camZ=1.0;
 
             camX3JS=0;
             camY3JS=5;
             camZ3JS=0;
             {{mc@stars: setPan(%camX%, %camY%) }}
-            setPan3JS(0,-0.5)
+            // setPan3JS(0,-0.5)
             {{mc@stars: setZoom(%camZ%)}}
-            setZoom3JS(camZ3JS)
+            // setZoom3JS(camZ3JS)
 
-            resetOrientation3JS()
+            // resetOrientation3JS()
             {{mc@stars: pyresetOrientation(%dummyhtml%)}}
         }
 
@@ -513,6 +512,7 @@
         sizes[3] = 5
         var min = 0
         var max = 100
+        setPan3JS(0,-50)
         function onUpdate(event,ui) {
             requestAnimationFrame(onUpdate); 
             if (seeking == true) {
@@ -536,7 +536,7 @@
                 camZ = camZ - zoomSpeed
                 camZ3JS = Math.min(Math.max(camZ3JS - (zoomSpeed/10),-10),0)
                 {{mc@stars: setZoom(%camZ%)}}
-                setZoom3JS(camZ3JS)
+                // setZoom3JS(camZ3JS)
             }
         }
         onUpdate()
@@ -666,6 +666,17 @@
             {{mc@stars: onSliderChanged(1,%sizes[1]%,%sizes[0]%)}}
             {{mc@stars: onSliderChanged(2,%sizes[2]%,%sizes[0]%)}}
             {{mc@stars: onSliderChanged(3,%sizes[3]%,%sizes[0]%)}}
+        }
+
+        function setXYZ(x) {
+            // console.log("_--------_")
+            // console.log("Current CamX", camX)
+            camX = x[0]
+            // console.log("New CamX", camX)
+            // console.log("Current CamY", camY)
+            camY = x[1]
+            // console.log("New CamY", camY)
+            camZ = x[2]
         }
     </script>
 </body>

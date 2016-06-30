@@ -24,7 +24,7 @@ Manipulator.root = pivot
 camera = getDefaultCamera()
 camera.setBackgroundColor(Color('black'))
 camera.getController().setSpeed(50)
-camera.setPosition(0,-5,0)
+camera.setPosition(0,-5,1)
 isRotating = False
 initialized = False
 yaw = 0
@@ -161,7 +161,8 @@ def loadView(id):
     target = data[id]
     current = []
     cpos = c.getPosition()
-    for x in cpos: current.append(x)
+    for x in cpos: 
+        current.append(x)
     q = pivot.getOrientation()
     current.append(q)
     currIndex = 0
@@ -173,6 +174,7 @@ def loadView(id):
         calljs('updateStarBrightness', scale)
         currIndex = currIndex + 1
     currentTime = 0
+
     
 def saveView(id):
     global data
@@ -235,6 +237,13 @@ def onUpdate(frame, time, dt):
             x.pointScale.setFloat(p[k])
             k = k+1
         q = Quaternion.new_interpolate(current[3],target[3],w)
+        camPosition = []
+        camPosition.append(camera.getPosition().x)
+        camPosition.append(camera.getPosition().y)
+        camPosition.append(camera.getPosition().z)
+
+        calljs('setXYZ', camPosition)
+
         pivot.setOrientation(q)
     global isRotating, yaw, pitch
     if isRotating:
@@ -269,4 +278,7 @@ def toggleAutoRotate(rotate):
     global isRotating
     isRotating = rotate
 
+# print camera.getNearZ()
+# print camera.getFarZ()
+setNearFarZ(0.1,5000.0)
 setUpdateFunction(onUpdate) 
