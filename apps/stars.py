@@ -247,8 +247,8 @@ def onUpdate(frame, time, dt):
         pivot.setOrientation(q)
     global isRotating, yaw, pitch
     if isRotating:
-        pivot.rotate(Vector3(0, 1, 0), math.radians(yaw * dt), Space.World)
-        pivot.rotate(Vector3(1, 0, 0), math.radians(pitch * dt), Space.World)
+        pivot.rotate(Vector3(0, 1, 0), -math.radians(yaw * dt), Space.World)
+        pivot.rotate(Vector3(1, 0, 0), -math.radians(pitch * dt), Space.World)
         pivot.rotate(Vector3(0, 0, 1), math.radians(0), Space.World)
         # pivot.yaw(yaw * dt)
         # pivot.pitch(pitch * dt)

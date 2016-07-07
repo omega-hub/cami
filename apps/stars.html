@@ -125,7 +125,7 @@
             <div id="div2"/> Fixed </div>
             </button>
             <label for="range-1a">Star Size:</label>
-            <input  input type="number" data-role="none" name="sizeSlider" id="sizeSlider" value="0" min="0" max="30" step = "0.1" data-theme="c"/><BR>
+            <input  input type="number" data-role="none" name="sizeSlider" id="sizeSlider" value="0" min="0" max="50" step = "0.1" data-theme="c"/><BR>
             <div data-inline="true"id="viewButtons"></div>
         </div> 
         <div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
@@ -317,8 +317,8 @@
                     if (camZ != 20 ) {
                         var limit = (5 + (camZ/3))
                         var limit3JS = (5 + (camZ))
-                        var movSpeedX = dx* Math.abs(camZ) * 0.01
-                        var movSpeedY = dy* Math.abs(camZ) * 0.01
+                        var movSpeedX = dx* Math.max(2.5,Math.abs(camZ)) * 0.01
+                        var movSpeedY = dy* Math.max(2.5,Math.abs(camZ)) * 0.01
                         // camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
                         // camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
                         camX = camX - movSpeedX
@@ -336,7 +336,7 @@
                 } else {
                     isRotating = true
                     var Z = camZ
-                    var propZ = Math.abs(Z) * 0.01
+                    var propZ = Math.max(2.5,Math.abs(camZ)) * 0.01
                     rotX = dx * propZ
                     if (rotX < 0) {
                         rotX = Math.max(-5,rotX)
