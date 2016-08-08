@@ -164,11 +164,15 @@ p{
                 
             </div>
         </div>
-
+        <div data-role="footer" id="footer" data-swipe-close = "false" data-position="fixed">
+            Loaded Molecules <BR>
+            <div data-inline="true"id="loadedMolecules"></div>
+        </div> 
 
             </ul>
         </div><!-- /panel -->
         
+
         <div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
             <form class="userform">
                 <h2>Instructions for Use</h2>
@@ -272,6 +276,7 @@ p{
         var dy = 0
         var rotX = 0
         var rotY = 0
+        var numLoadedButtons = 0
         var isRotating = false
         var isPanning = false
         delta = 0;
@@ -590,6 +595,7 @@ p{
                 console.log(ml[i][3])
                 if (ml[i][3] == 'loaded'){
                     pageButtons.append('<input type="button" class="oldButton" id="b_'+ml[i][1]+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick= "addloading()"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
+                    addLoadedButton(ml[i][1],ml[i][0])
                 } else {
                     pageButtons.append('<input type="button" class="newButton" id="b_'+ml[i][1]+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick= "addloading()"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
                 }
@@ -628,14 +634,27 @@ p{
                 console.log(event.target.value)
                 console.log(event.target.id)
                 {{mc@modelViewer: onModelSelect("%event.target.path%" + "%event.target.value%") }}
+                console.log(event.target.className)
+                if (event.target.className == "newButton") {
+                    addLoadedButton(event.target.value, event.target.path)
+                }
                 //setButtonAsLoaded(event.target.id)
 
                 //$('#'+panelID).toggle(); //you can concatenate strings with +.
                 //use the '#' to gattret the object the id is referring to.
                 //var newString = "my new String"
                // $('#'+panelID+ ' .panel-body').html(newString);
-               
-            }
+        }
+
+        function addLoadedButton(modelName,path) {
+            console.log("Adding a Loaded Button")
+            lastFolder = "defaultFolder"
+            defaultImage = "colorful boxes"
+            numLoadedButtons = numLoadedButtons + 1
+            var pageButtons = $('#loadedMolecules');
+            pageButtons.append('<input type="button" class="oldButton" data-inline="true" id="'+modelName+'" data-path="'+ path+'" value="'+modelName+'" onclick= "addloading()"/>');
+        }
+
         function seekEnd(event) {
             currentSeek = $('#slider').val()
             setSensitivity(currentSeek/100)

@@ -150,6 +150,7 @@
                     <h4>Sensitivity:</h4> <BR>
                     <input input type="number" data-role="none" name="slider" id="slider" value="60" min="0" max="100" data-theme="c"/> <BR>
                     <button onclick="resetImage()" id="reset"  type="button">Reset Orientation</button> 
+                    <button onclick="resetCut()" id="reset"  type="button">Reset Slices</button> 
                 </form>
         </div><!-- /panel -->
     </div>
@@ -483,6 +484,22 @@
             resetOrientation3JS()
             {{mc@volume: pyresetOrientation(%dummyhtml%)}}
 
+        }
+
+        function resetCut()
+        {
+            XStart = 0
+            XEnd = 100
+            YStart = 0
+            YEnd = 100
+            ZStart = 0
+            ZEnd = 100
+            $("#range-1a").val(0)
+            $("#range-1b").val(100)
+            $('#cutSlider').rangeslider("refresh");
+            {{mc@volume: changeSlice(1, 0,1.0 ) }}
+            {{mc@volume: changeSlice(2, 0,1.0 ) }}
+            {{mc@volume: changeSlice(3, 0,1.0 ) }}
         }
 
         function onKeyUp(e) {
