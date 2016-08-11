@@ -1,0 +1,347 @@
+<html lang="en">
+<head>
+    <title>Picture Viewer</title>
+    <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css">
+    <script src="porthole/res/porthole.js"></script>
+    <script src="js/jquery-1.12.0.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/hammer.js"></script>
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <script src='js/THREEx.WindowResize.js'></script>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="apple-touch-icon" href="./movie.png" />
+
+    <style>
+    .button{
+    background-color: #e8e9f0; 
+    border: 1px black;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    width:235px;
+    height: 30px;
+    font-size: 15px;
+    margin: 4px 2px;
+    border-radius: 1px;
+    float: center;
+    outline:none;
+    box-shadow: inset -.5px -1px 5px 0px black;
+    display:inline !important;    
+    }
+
+    div.hide { display:none; }
+    div.show {}
+    .image{ border: 10px black;}
+    .button:active{ box-shadow: inset .5px 1px 5px 0px black;}
+    .collapsable{outline:none;}
+    #set3{ outline:none; }
+    .jquerymobileslider .ui-slider {
+        height: 50px;
+        width: 250px
+    }
+    .jquerymobileslider .ui-slider .ui-slider-handle {
+        height: 50px;
+        width: 50px;
+    }
+    .content{
+        float: center;
+        float: top;
+    }
+    .ui-slider-handle{
+        color: black;
+    }
+    body { margin: 0; }
+    canvas { width: 100%; height: 100% }
+    </style>
+</head>
+
+<body>
+    <div data-role="page" id="pic-page">
+    	<div data-role="header" id="header" data-position ="fixed">
+            <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+            <a href="#help-panel" data-icon="info"   data-iconpos="notext">Add</a>
+            <h1>Picture Viewer</h1>
+    	</div>
+
+        <div data-role="content" id="main-content" data-position="fixed">
+            <script src="js/three.min.js"></script>
+            <script src="js/pictureInterface.js"></script> 
+    </div>
+
+    	<div data-role="panel" data-display="push" data-theme="b" id="nav-panel"> 
+          <ul data-role="listview" class="panel">
+            <li data-icon="delete"><a href="#" data-rel="close"  >Close menu</a></li>
+            <div data-role="collapsible-set" class= "innerpanel" id="Allcollapsable">
+            </div>
+        </div>
+
+        <div data-role="panel" data-position="right" data-swipe-close = "false" data-position-fixed="true" data-display="overlay" data-theme="a" id="help-panel">
+            <form class="userform">
+                <h2>Instructions for Use</h2>
+                <hr class="instructions">
+                    <h4>======:</h4> <p> -----------</p>
+                    <h4>======:</h4> <p> -----------</p>
+                    <h4>======:</h4> <p> -----------</p>
+                    <h4>======:</h4> <p> -----------</p>
+                    <button onclick="resetImage()" class="button"  type="button">Reset Orientation</button> 
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).on('pageshow','#pic-page', function(e,data){ 
+            $('#main-content').css('margin-top',($(window).height() - $('[data-role=header]').height() - $('[data-role=footer]').height() - $('#index-content').outerHeight())/2);})
+
+        porthole.connected = function() {
+            console.log("Porthole connected")
+        	{{py startApplication(%client_id%, 'pictureViewer') }}
+            visible = true
+        }
+
+        var isMobile = {
+            Android: function() {
+                return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function() {
+                return navigator.userAgent.match(/BlackBerry/i);
+            },
+            iOS: function() {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function() {
+                return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function() {
+                return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function() {
+                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+            }
+        };
+
+        //$(playButton).css({ width: '300px', 'padding-top': '10px', 'padding-bottom': '10px' });
+        //creating a jquery function for always occuring events.
+        var startMouseX = -1
+        var startMouseY = -1
+        var dx = 0
+        var dy = 0
+        navOpen = false;
+        statusReady = false
+        isPanning = false
+
+        camX = 0;
+        camY = 0;
+        camZ = 0;
+        camX3JS = 0;
+        camY3JS = 0;
+        camZ3JS = 0;
+        setSensitivity(0.8)
+        // create a simple instance
+        var myElement = document.getElementById('header');
+        var mc = new Hammer(myElement);
+        mc.get('pan').set({ pointers: 0 });
+        mc.get('pan').set({ threshold: 15 });
+        mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+        mc.get('pinch').set({ enable: true });
+        mc.get('pinch').set({ threshold: 0.08 });
+
+        mc.on("panstart", function(ev) {
+            if (!navOpen){
+                ev.preventDefault()
+                if (isPanning == false) {
+                    startMouseX = ev.center.x 
+                    startMouseY = ev.center.y
+                    isPanning = true
+                }
+            }
+        });
+        mc.on("panend", function(ev) {
+            if (!navOpen){
+                ev.preventDefault()
+                isPanning = false
+            }
+        });
+
+        $('body').on('touchmove', function(e) {
+            if (!navOpen){ e.preventDefault(); }
+        });
+
+        $(document).on('visibilitychange', function(){
+            if (isMobile.any()) {
+                {{mc@pictureViewer: print "visibilityChanged closing picture Viewer" }}
+                window.close()
+            }
+        })
+
+        $('body').on('touchmove', function(e) {
+            if (!navOpen){
+                e.preventDefault();
+            }
+        });
+
+        $(document).on('visibilitychange', function(){
+            if ((isMobile.any() && visible)) {
+                {{mc@pictureViewer: print "visibilityChanged, closing pictureViewer" }}
+                visible = false
+                window.close()}
+            }
+        )
+
+        mc.on("pan", function(ev) {
+            if (!navOpen) {
+                ev.preventDefault()
+                dx = - ((ev.center.x - startMouseX) * sensitivity)
+                dy = (ev.center.y - startMouseY) * sensitivity
+                startMouseX = ev.center.x 
+                startMouseY = ev.center.y
+
+                var limit = 100//(5 + (camZ/3))
+                var limit3JS = (5 + (camZ))
+                var movSpeedX = (dx/(16-(camZ))) 
+                var movSpeedY = (dy/(16-(camZ)))
+                camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
+                camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
+
+                {{mc@pictureViewer: setCenter(%camX%, %camY%) }}
+
+                camX3JS = camX3JS - movSpeedX/4
+                camY3JS = camY3JS + movSpeedY/4
+                setPan3JS(camX3JS,camY3JS)
+            }
+        });
+        lastScale = 0
+
+        mc.on("pinchstart", function(ev){
+            if (lastScale != 0) {
+                delta = ev.scale - lastScale
+            }
+            lastScale = ev.scale
+        });
+        mc.on("pinchmove", function(ev){
+            ev.preventDefault()
+            isZooming = true
+            delta = (ev.scale - lastScale) * sensitivity
+            lastScale = ev.scale
+            if (delta < 0){
+                delta = delta * 1.5
+            }
+            delta = delta * 1.5
+            camZ = Math.min(Math.max(camZ - delta,-60),0.1)
+            camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
+            {{mc@pictureViewer: setScale(%camZ%)}}
+            setZoom3JS(camZ3JS)
+            var limit = (5 + (camZ/3))
+            var limit3JS = (5 + (camZ3JS))
+        });
+        mc.on("pinchend", function(ev){
+            isZooming = false
+        });
+
+        document.ontouchmove = function(e){ 
+            if (!navOpen) {
+                e.preventDefault(); 
+            }
+        }
+
+        var appName = 'pictureViewer'
+
+        $(document).on("pageinit","#pic-page",function(){
+            console.log("page init")
+            $( "#slider" ).on( "slidestart", function( event, ui ) {seekStart(event,ui)} );
+            $( "#slider" ).on( "slidestop", function( event, ui ) {seekEnd(event,ui)} );
+            $( "#slider").hide();
+            $( "#slider").slider() ;
+        })
+        $(document).on('visibilitychange', function(){
+            if (isMobile.any()) {
+                {{mc@pictureViewer: print "visibilityChanged closing Picture app" }}
+                window.close()
+            }
+        })
+
+        function select(event) {
+            console.log("Select Video")
+        }
+        function onUpdate(event,ui) {
+            requestAnimationFrame(onUpdate); 
+        }
+        function onPictureLoad(vidLength) {
+        }
+
+        onUpdate()
+        function createPictureButtons(ml) {
+            console.log("initializing Movie buttons")
+            pictureList=ml;
+            i=0;
+            n = ml.length;
+            j = 0
+            lastFolder = "defaultFolder"
+            while (i < n)
+            {
+               // console.log("lastfolder:" + lastFolder)
+                //console.log("currentFolder:" + ml[i][0])
+                if (ml[i][0] != lastFolder){
+                    j = j + 1
+                    var content = "<div data-role='collapsible' id='set" + j + "'><h4>" + ml[i][0].substring(0,(ml[i][0].length)-1) + "</h4><div id='pageButtons" + j + "'></div></div>";
+                    $("#Allcollapsable").append( content ).collapsibleset('refresh');;
+                    lastFolder = ml[i][0]
+                }
+                var pageButtons = $('#pageButtons' + j);
+                pageButtons.append('<input type="button" class="button" id="button'+i+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick= "addloading()"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
+                i = i + 1;
+            }
+        }
+
+        function addloading(){
+            pictureButtonClicked(event);
+        }
+
+        function noloading(dummy){}
+
+        //creating a jquery function for always occuring events.
+       function pictureButtonClicked(event) {
+            console.log("Picture Button has been clicked")
+            var path = $(event.target).data('path');
+            console.log(path);
+            event.target.path = path
+            console.log(event.target.value)
+            console.log(event.target.id)
+            {{mc@pictureViewer: onPictureSelect("%event.target.path%" + "%event.target.value%") }}
+        }
+        function setSensitivity(s) {
+            sensitivity = s
+        }
+        function showLoading(willShow) {
+            if (willShow && !isLoading) {
+                    $.mobile.loading( 'show', {
+                        text: "Seeking Video",
+                        textVisible: true,
+                        theme: "b",
+                        textonly: false,
+                        icon:"ajax-loader.gif",
+                        //html: html
+                    });
+                isLoading = true
+            } else if (!willShow) {
+                console.log("trying to hide")
+                isLoading = false
+                $.mobile.loading( "hide" );
+            }
+        }
+        function resetImage()
+        {
+            camX=0;
+            camY=0;
+            camZ=0;
+
+            camX3JS=0;
+            camY3JS=0;
+            camZ3JS=0;
+            {{mc@pictureViewer: resetScale() }}
+            setPan3JS(camX,camY)
+            {{mc@pictureViewer: resetPosition() }}
+            setZoom3JS(camZ3JS)
+        }
+    </script>
+</body>
+</html>
