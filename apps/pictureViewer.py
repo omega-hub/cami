@@ -9,6 +9,10 @@ def calljs(methodname, data):
 
 localDebug = True
 currentPictureName = 'defaultImage.jpg'
+imageWidth = 0
+imageHeight = 0
+ratio = 0
+resetScaleValue = 10
 
 getDefaultCamera().setBackgroundColor(Color('black'))
 ui = UiModule.createAndInitialize().getUi()
@@ -16,19 +20,19 @@ ui = UiModule.createAndInitialize().getUi()
 background = Image.create(ui)
 
 def setScale(scale):
-    background.setScale(-scale)
+    background.setScale(scale)
     pass
 
 def resetScale():
-    background.setScale(10)
+    background.setScale(resetScaleValue)
     pass
 
 def setCenter(posX,posY):
-    background.setCenter(Vector2(posX * 100,posY * 100))
+    background.setCenter(Vector2(posX * 100 + 4800,posY * 100 + 2700))
     pass
 
 def resetPosition():
-    background.setCenter(Vector2(2800, 3000))
+    background.setCenter(Vector2(4800, 2700))
     pass
 
 def InitializePictureList():
@@ -119,8 +123,22 @@ def LoadPicture(PictureName):
         path = "../data/" + PictureName
     else:
         path = "/fastdata/opt/data/Videos/" + PictureName
-    background.setData(loadImage(currentPictureName))
+    image = loadImage(currentPictureName)
+    imageWidth = image.getWidth()
+    imageHeight = image.getHeight()
+    ratio = (imageWidth * 1.0)/(imageHeight * 1.0)
+    background.setData(image)
     background.setLayer(WidgetLayer.Back)
+    #print image.getWidth()
+    #print (imageWidth / 9600.0)
+    denom = imageWidth/ (9600.0)
+
+    resetScaleValue = 0.5 / denom
+    #print "ResetScale Value: " , resetScaleValue
+    proportions = [imageWidth,imageHeight,resetScaleValue]
+    calljs('setImageSize',proportions)
+    resetPosition()
+    resetScale()
 
 def closePicture():
     pass

@@ -79,11 +79,10 @@
             <form class="userform">
                 <h2>Instructions for Use</h2>
                 <hr class="instructions">
-                    <h4>======:</h4> <p> -----------</p>
-                    <h4>======:</h4> <p> -----------</p>
-                    <h4>======:</h4> <p> -----------</p>
-                    <h4>======:</h4> <p> -----------</p>
-                    <button onclick="resetImage()" class="button"  type="button">Reset Orientation</button> 
+                    <h4>To Select an Image:</h4> <p> Click the circular top-left icon and search for the file you wish to display.<p>
+                    <h4>To Move the Image:</h4> <p> Drag the yellow rectangle along the touchscreen.  The large blue rectangle represents the display.</p>
+                    <h4>To Scale the Image:</h4> <p> Pinch on the touchscreen. Pinching-out scales the image up, while pinching-in scales the image down.</p>
+                    <button onclick="resetImage()" class="button"  type="button">Reset Position/Scale</button> 
             </form>
         </div>
     </div>
@@ -129,12 +128,15 @@
         statusReady = false
         isPanning = false
 
-        camX = 0;
-        camY = 0;
-        camZ = 0;
-        camX3JS = 0;
-        camY3JS = 0;
-        camZ3JS = 0;
+        posX = 0;
+        posY = 0;
+        scaleWall = 10;
+        posX3JS = 0;
+        posY3JS = 0;
+        scalePreview = 10;
+
+        resetScaleValue = 10;
+
         setSensitivity(0.8)
         // create a simple instance
         var myElement = document.getElementById('header');
@@ -195,18 +197,17 @@
                 startMouseX = ev.center.x 
                 startMouseY = ev.center.y
 
-                var limit = 100//(5 + (camZ/3))
-                var limit3JS = (5 + (camZ))
-                var movSpeedX = (dx/(16-(camZ))) 
-                var movSpeedY = (dy/(16-(camZ)))
-                camX = Math.min(Math.max(camX - movSpeedX,-limit),limit)
-                camY = Math.min(Math.max(camY + movSpeedY,-limit),limit)
+                var movSpeedX = dx/5 //(dx/Math.abs(16-(scaleWall))) 
+                var movSpeedY = dy/5 //(dy/Math.abs(16-(scaleWall)))
 
-                {{mc@pictureViewer: setCenter(%camX%, %camY%) }}
+                posX = posX - movSpeedX
+                posY = posY + movSpeedY
 
-                camX3JS = camX3JS - movSpeedX/4
-                camY3JS = camY3JS + movSpeedY/4
-                setPan3JS(camX3JS,camY3JS)
+                {{mc@pictureViewer: setCenter(%posX%, %posY%) }}
+
+                posX3JS = posX3JS - (movSpeedX * 8/96)
+                posY3JS = posY3JS - (movSpeedY * 8/96)
+                setPan3JS(posX3JS,posY3JS)
             }
         });
         lastScale = 0
@@ -226,12 +227,10 @@
                 delta = delta * 1.5
             }
             delta = delta * 1.5
-            camZ = Math.min(Math.max(camZ - delta,-60),0.1)
-            camZ3JS = Math.min(Math.max(camZ3JS - (delta/2),-4.2),2)
-            {{mc@pictureViewer: setScale(%camZ%)}}
-            setZoom3JS(camZ3JS)
-            var limit = (5 + (camZ/3))
-            var limit3JS = (5 + (camZ3JS))
+            scaleWall = Math.min(Math.max(scaleWall + delta,0.1),60)
+            scalePreview = Math.min(Math.max(scalePreview + delta,0.1),60)
+            {{mc@pictureViewer: setScale(%scaleWall%)}}
+            setZoom3JS(scalePreview)
         });
         mc.on("pinchend", function(ev){
             isZooming = false
@@ -264,8 +263,6 @@
         }
         function onUpdate(event,ui) {
             requestAnimationFrame(onUpdate); 
-        }
-        function onPictureLoad(vidLength) {
         }
 
         onUpdate()
@@ -307,6 +304,7 @@
             console.log(event.target.value)
             console.log(event.target.id)
             {{mc@pictureViewer: onPictureSelect("%event.target.path%" + "%event.target.value%") }}
+            resetImage()
         }
         function setSensitivity(s) {
             sensitivity = s
@@ -330,18 +328,29 @@
         }
         function resetImage()
         {
-            camX=0;
-            camY=0;
-            camZ=0;
+            posX=0;
+            posY=0;
+            scaleWall= resetScaleValue;
 
-            camX3JS=0;
-            camY3JS=0;
-            camZ3JS=0;
+            posX3JS=0;
+            posY3JS=0;
+            scalePreview=resetScaleValue;
             {{mc@pictureViewer: resetScale() }}
-            setPan3JS(camX,camY)
+            setPan3JS(posX,posY)
             {{mc@pictureViewer: resetPosition() }}
-            setZoom3JS(camZ3JS)
+            setZoom3JS(scalePreview)
         }
+
+        function setImageSize(proportion) {
+            console.log("set Image Size")
+            var wth = (proportion[0]/9600) * 8
+            var hght = (proportion[1]/5400) * 4.5
+            resetScaleValue = proportion[2]
+            console.log("Width: ", wth, "Height: ", hght, "ResetScale: ", resetScaleValue)
+            setCurrentWidthHeight(wth,hght)
+            resetImage()
+        }
+
     </script>
 </body>
 </html>
