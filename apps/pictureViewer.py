@@ -7,7 +7,7 @@ def calljs(methodname, data):
     if(mc != None):
         mc.postCommand('@server::calljs ' + methodname + ' ' + str(data))
 
-localDebug = True
+localDebug = False
 currentPictureName = 'defaultImage.jpg'
 imageWidth = 0
 imageHeight = 0
