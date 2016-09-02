@@ -352,14 +352,14 @@ p{
         });
 	    $(document).on('visibilitychange', function(){
 	    	if ((isMobile.any() && visible)) {
-	    	  {{mc@modelViewer: print "visibilityChanged, closing modelViewer" }}
+	    	  {{mc@modelViewer: print "visibilityChanged, closing modelViewer from html" }}
 	          //{{py onClientDisconnected(%client_id%,'modelViewer') }}
               visible = false
               window.close()
               //porthole.socket.close()
 	        }
-	    	}
-	    )
+	    })
+
         mc.on("pan", function(ev) {
             if (!navOpen) {
                 //window.scrollTo(0,0);

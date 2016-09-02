@@ -114,50 +114,51 @@ def InitializeMovieList():
     numfolders = 0
     for (path, dirs, files) in os.walk(cwd):
         numfolders = numfolders + 1
+        extra = ""
         for file in glob.glob(path + "/*.mov"):
             name = file[len(path)+1:]
-            image = "../data/" + name[:len(name)-4] + ".mov"
+            # image = "../data/" + name[:len(name)-4] + ".mov"
 
             if len(path[len(cwd)+1:]) > 1:
-                newTuple = [path[len(cwd)+1:] + "/",name,image]
+                newTuple = [path[len(cwd)+1:] + "/",name,extra]
             else:
-                newTuple = ["",file[len(path)+1:],image]
+                newTuple = ["",file[len(path)+1:],extra]
 
-            print(newTuple)
+            # print(newTuple)
             fileList.append(newTuple)
         for file in glob.glob(path + "/*.mpg"):
             name = file[len(path)+1:]
-            image = "../data/" + name[:len(name)-4] + ".mov"
+            # image = "../data/" + name[:len(name)-4] + ".mov"
 
             if len(path[len(cwd)+1:]) > 1:
-                newTuple = [path[len(cwd)+1:] + "/",name,image]
+                newTuple = [path[len(cwd)+1:] + "/",name,extra]
             else:
-                newTuple = ["",file[len(path)+1:],image]
+                newTuple = ["",file[len(path)+1:],extra]
 
-            print(newTuple)
+            # print(newTuple)
             fileList.append(newTuple)
         for file in glob.glob(path + "/*.mkv"):
             name = file[len(path)+1:]
-            image = "../data/" + name[:len(name)-4] + ".mov"
+            # image = "../data/" + name[:len(name)-4] + ".mov"
 
             if len(path[len(cwd)+1:]) > 1:
-                newTuple = [path[len(cwd)+1:] + "/",name,image]
+                newTuple = [path[len(cwd)+1:] + "/",name,extra]
             else:
-                newTuple = ["",file[len(path)+1:],image]
+                newTuple = ["",file[len(path)+1:],extra]
 
-            print(newTuple)
+            # print(newTuple)
             fileList.append(newTuple)
 
         for file in glob.glob(path + "/*.mp4"):
             name = file[len(path)+1:]
-            image = "../data/" + name[:len(name)-4] + ".mov"
+            # image = "../data/" + name[:len(name)-4] + ".mov"
 
             if len(path[len(cwd)+1:]) > 1:
-                newTuple = [path[len(cwd)+1:] + "/",name,image]
+                newTuple = [path[len(cwd)+1:] + "/",name,extra]
             else:
-                newTuple = ["",file[len(path)+1:],image]
+                newTuple = ["",file[len(path)+1:],extra]
 
-            print(newTuple)
+            # print(newTuple)
             fileList.append(newTuple)
 
     print(fileList)

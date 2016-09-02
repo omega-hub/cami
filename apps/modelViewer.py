@@ -64,8 +64,8 @@ def InitializeModelList():
         numfolders = numfolders + 1
         for file in glob.glob(path + "/*.fbx"):
             name = file[len(path)+1:]
-            image = "../data/" + name[:len(name)-4] + ".jpg"
-
+            # image = "../data/" + name[:len(name)-4] + ".jpg"
+            image = ""
             if len(path[len(cwd)+1:]) > 1:
                 newStr = path[len(cwd)+1:] + "/"+ name
                 # print newStr
