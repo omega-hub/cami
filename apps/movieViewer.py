@@ -37,6 +37,7 @@ def calljs(methodname, data):
         mc.postCommand('@server::calljs ' + methodname + ' ' + str(data))
 localDebug = False
 currentMovieName = "noMovie"
+savedMovieName = "noMovie"
 uim = UiModule.createAndInitialize()
 img = Image.create(uim.getUi())
 v = False
@@ -174,8 +175,8 @@ def onMovieSelect(MovieName):
     print(MovieName)
     global currentMovieName
     
-    if MovieName == currentMovieName:
-        #print "Current Movie is same as selected Movie"
+    if MovieName == currentMovieName or MovieName == "noMovie":
+        print "Current Movie is same as selected Movie"
         calljs('noloading', 0)
     else:
         #TODO: Hide current Movie
@@ -218,12 +219,24 @@ def LoadMovie(MovieName):
     calljs('updateDuration',duration)
 
 def closeMovie():
+    print "attempting to Close movie"
     if (v):
         print "Video Module detected, to delete module"
         v.close()
+    else:
+        print "No video module currently running"
+    global currentMovieName, savedMovieName
+    if currentMovieName != "noMovie":
+        savedMovieName = currentMovieName
+    print "Saving last movie as : " , savedMovieName
+    currentMovieName = "noMovie"
+    print "Saving last movie as : " , savedMovieName
+
 
 def onReload():
-    print "Returning to Movie Viewer"
+    global savedMovieName
+    print "Returning to Movie Viewer while loading: " , savedMovieName
     InitializeMovieList()
+    onMovieSelect(savedMovieName)
 
 # setTilesEnabled(0, 0, 5, 5, False)

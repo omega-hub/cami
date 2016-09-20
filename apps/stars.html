@@ -206,6 +206,7 @@
             if (isMobile.any() && visible == true) {
                 {{mc@stars: print "visibilityChanged closing Stars Viewer" }}
                 visible = false
+                {{py onClientDisconnected(%client_id%) }}
                 window.close()
             }
         })

@@ -355,6 +355,7 @@ p{
 	    	  {{mc@modelViewer: print "visibilityChanged, closing modelViewer from html" }}
 	          //{{py onClientDisconnected(%client_id%,'modelViewer') }}
               visible = false
+              // {{py onClientDisconnected(%client_id%) }}
               window.close()
               //porthole.socket.close()
 	        }

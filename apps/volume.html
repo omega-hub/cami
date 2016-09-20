@@ -222,6 +222,7 @@
                 {{mc@volume: print "visibilityChanged closing volume Viewer" }}
                 //{{py onClientDisconnected(%client_id%, 'volume') }}
                 visible = false
+                {{py onClientDisconnected(%client_id%) }}
                 window.close()
                 //porthole.socket.close()
             }

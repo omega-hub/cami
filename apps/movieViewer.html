@@ -195,10 +195,11 @@
         })
         $(document).on('visibilitychange', function(){
             if (isMobile.any()) {
-                {{mc@movieViewer: print "visibilityChanged closing video" }}
+                {{mc@movieViewer: print "visibilityChanged closing videoViewer from HTML" }}
                 {{mc@movieViewer: closeMovie() }}
+                visible = false
               //porthole.socket.close()
-              //{{py onClientDisconnected(%client_id%) }}
+              {{py onClientDisconnected(%client_id%) }}
               window.close()
             }
             }
@@ -410,6 +411,8 @@
                 isLoading = false
                 $.mobile.loading( "hide" );
             }
+        }
+        function setButtonAsLoaded(buttonID) {
         }
     </script>
 </body>

@@ -171,6 +171,7 @@
         $(document).on('visibilitychange', function(){
             if (isMobile.any()) {
                 {{mc@pictureViewer: print "visibilityChanged closing picture Viewer" }}
+                {{py onClientDisconnected(%client_id%) }}
                 window.close()
             }
         })
