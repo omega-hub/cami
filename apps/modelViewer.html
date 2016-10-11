@@ -587,6 +587,7 @@ p{
                 //console.log("lastfolder:" + lastFolder)
                 //console.log("currentFolder:" + ml[i][0])
                 if (ml[i][0] != lastFolder){
+                    {{py print "last folder was" , "%lastFolder%", "Current folder is: ", "%ml[i][0]%"}}
                     j = j + 1
                     var content = "<div data-role='collapsible' id='set" + j + "'><h4>" + ml[i][0].substring(0,(ml[i][0].length)-1) + "</h4><div id='pageButtons" + j + "'></div></div>";
                     $("#Allcollapsable").append( content ).collapsibleset('refresh');;
@@ -595,7 +596,7 @@ p{
                 var pageButtons = $('#pageButtons' + j);
                 console.log(ml[i][3])
                 if (ml[i][3] == 'loaded'){
-                    pageButtons.append('<input type="button" class="oldButton" id="b_'+ml[i][1]+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick= "addloading()"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
+                    pageButtons.append('<input type="button" class="newButton" id="b_'+ml[i][1]+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick= "addloading()"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
                     addLoadedButton(ml[i][1],ml[i][0])
                 } else {
                     pageButtons.append('<input type="button" class="newButton" id="b_'+ml[i][1]+'" data-path="'+ ml[i][0]+'" value="'+ ml[i][1]+'" onclick= "addloading()"/><img src="' + ml[i][2] +'" class:"leftimage" alt="colorful boxes" style="width:40%"></img>');
@@ -636,9 +637,11 @@ p{
                 console.log(event.target.id)
                 {{mc@modelViewer: onModelSelect("%event.target.path%" + "%event.target.value%") }}
                 console.log(event.target.className)
+
                 if (event.target.className == "newButton") {
                     addLoadedButton(event.target.value, event.target.path)
                 }
+                event.target.className = "oldButton"
                 //setButtonAsLoaded(event.target.id)
 
                 //$('#'+panelID).toggle(); //you can concatenate strings with +.
@@ -649,7 +652,7 @@ p{
 
         function addLoadedButton(modelName,path) {
             console.log("Adding a Loaded Button")
-            lastFolder = "defaultFolder"
+            //lastFolder = "defaultFolder"
             defaultImage = "colorful boxes"
             numLoadedButtons = numLoadedButtons + 1
             var pageButtons = $('#loadedMolecules');
